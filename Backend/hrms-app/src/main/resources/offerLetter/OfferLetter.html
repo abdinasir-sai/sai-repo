@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Letter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        .content-wrapper {
+            width: 80%;
+            max-width: 1200px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .english {
+            text-align: left;
+            width: 45%;
+        }
+        .arabic {
+            text-align: right;
+            width: 45%;
+            direction: rtl;
+            font-family: "Arial", "Tahoma", sans-serif;
+        }
+        h2 {
+            text-align: center;
+        }
+        .signature {
+            margin-top: 50px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-wrapper">
+    <h2>Employment Offer Letter</h2>
+
+    <div class="container">
+        <div class="english">
+            <p>August 16, 2024</p>
+            <p>Private & Confidential<br>$gender . $name <br>Kingdom of Saudi Arabia</p>
+            <p>Dear $name ,<br>Employment Offer – $designation – Grade code $gradeCode</p>
+
+            <p>On behalf of Aramco Digital Company (the Company), we are pleased to offer you the position of $designation based in $location, Saudi Arabia, and you will be working under $organization.</p>
+
+            <p>We have set out below the details of your offer:</p>
+
+            <ul>
+                <li><strong>Contract Term:</strong> Fixed-period – One Year (Renewable)</li>
+                <li><strong>Monthly Salary:</strong><br>
+                    Basic: $basicSalary SAR<br>
+                    Housing: $housing SAR<br>
+                    Transportation: $transportation SAR<br>
+                    Mobile: $mobile SAR
+                </li>
+                <li><strong>Probation Period:</strong> 90 days, extendable to 180 days based on agreement.</li>
+                <li><strong>Annual leave:</strong> 25 working days</li>
+                <li><strong>Relocation Allowance:</strong> One-time payment based on relocation status.</li>
+                <li><strong>Health club membership:</strong> SAR 4,200 annually</li>
+                <li><strong>Child Education Assistance:</strong> SAR 35,000 per child annually, up to 3 children</li>
+            </ul>
+
+            <p>This offer letter sets out the key benefits of the position being offered to you. Once accepted, you will be issued an employment contract that outlines detailed terms and conditions.</p>
+
+            <p><strong>This offer is valid for 7 days</strong> and is subject to cooperation with documentation requests and eligibility to work in KSA.</p>
+
+            <div class="signature">
+                <p>Signed by $name</p>
+                <p>Signed on behalf of Aramco Digital<br>Abdulrahman Thubaity<br>Chief Human Resources Officer</p>
+            </div>
+        </div>
+
+        <div class="arabic" lang="ar">
+            <p dir="rtl">‏16‏ أغسطس، 2024</p>
+            <p dir="rtl">سري و خاص<br>الأستاذ/ علي<br>المملكة العربية السعودية</p>
+            <p dir="rtl">عرض وظيفي – رئيس التخطيط– رتبه {{ gradeCode }}</p>
+
+            <p dir="rtl">بالنيابة عن أرامكو ديجيتال الشركة، يسرنا أن نقدم لك عرض وظيفي لوظيفة رئيس التخطيط و في مدينة الخبر، و سوف تعمل تحت $organization.</p>
+
+            <p dir="rtl">تفاصيل العرض الوظيفي هي كالتالي:</p>
+
+            <ul>
+                <li dir="rtl"><strong>مدة العقد:</strong> محدد المدة - سنة (قابل للتمديد)</li>
+                <li dir="rtl"><strong>الراتب الشهري:</strong><br>
+                    أساسي: $basicSalary ريال سعودي<br>
+                    بدل سكن: $housing  ريال سعودي<br>
+                    بدل مواصلات: $transportation  ريال سعودي<br>
+                    بدل هاتف: $mobile ريال سعودي
+                </li>
+                <li dir="rtl"><strong>فترة التجربة:</strong> 90 يوم، قابلة للتمديد لمدة 180 يوم</li>
+                <li dir="rtl"><strong>الاجازات السنوية:</strong> 25 يوم عمل</li>
+                <li dir="rtl"><strong>بدل انتقال:</strong> دفعة واحدة حسب حالة الانتقال</li>
+                <li dir="rtl"><strong>عضوية النادي الصحي:</strong> 4200 ريال سعودي سنويا</li>
+                <li dir="rtl"><strong>بدل تعليم الاطفال:</strong> 35000 ريال سعودي سنوياً لكل طفل، حتى 3 أطفال</li>
+            </ul>
+
+            <p dir="rtl">يهدف خطاب العرض هذا إلى تحديد المزايا الأساسية. بمجرد قبول العرض، سيتم إصدار عقد العمل لتحديد شروط وأحكام وظيفتك.</p>
+
+            <p dir="rtl"><strong>العرض ساري لمدة 7 أيام</strong> ويخضع للتعاون في تقديم الوثائق والأهلية للعمل في المملكة العربية السعودية.</p>
+
+            <div class="signature">
+                <p dir="rtl">وقع من قبل الأستاذ/ علي</p>
+                <p dir="rtl">وقع من قبل شركة أرامكو ديجيتال<br>عبدالرحمن الثبيتي<br>رئيس الموارد البشرية</p>
+            </div>
+        </div>
+    </div>
+
+   <div class="footer" lang="en">
+        <p>Global Digital Integrated Solutions Company (Aramco Digital)</p>
+        <p>Tel: (966) 13 876 7799</p>
+        <p>P.O. Box 5151, Dhahran 31311, Saudi Arabia</p>
+    </div>
+    
+    <div class="footer" lang="ar">
+        <p>شركة الحلول الرقمية المتكاملة العالمية (أرامكو ديجيتال)</p>
+        <p>هاتف: (966) 13 876 7799</p>
+        <p>ص.ب 5151، الظهران 31311، المملكة العربية السعودية</p>
+    </div>
+</div>
+
+</body>
+</html>

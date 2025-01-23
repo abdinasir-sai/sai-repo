@@ -1,0 +1,2705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_0.xsd" version="2.0">
+    <package>
+        com.enttribe.hrms.model
+    </package>
+    <access>
+        PROPERTY
+    </access>
+    <entity class="AbsentSchedule">
+        <table name="ABSENT_SCHEDULE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="department">
+                <column name="DEPARTMENT"/>
+            </basic>
+            <basic name="employee">
+                <column name="EMPLOYEE"/>
+            </basic>
+            <basic name="groupSchedules">
+                <column name="GROUP_SCHEDULES"/>
+            </basic>
+            <basic name="location">
+                <column name="LOCATION"/>
+            </basic>
+            <basic name="roles">
+                <column name="ROLES"/>
+            </basic>
+            <basic name="scheduleName">
+                <column name="SCHEDULE_NAME" length="30"/>
+            </basic>
+            <basic name="scheduleStartDate">
+                <column name="SCHEDULE_START_DATE" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Applicable">
+        <table name="APPLICABLE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="addField">
+                <column name="ADD_FIELD" column-definition="ENUM" length="3"/>
+            </basic>
+            <basic name="employmentType">
+                <column name="EMPLOYMENT_TYPE" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="gender">
+                <column name="GENDER" column-definition="ENUM" length="6"/>
+            </basic>
+            <basic name="maritalStatus">
+                <column name="MARITAL_STATUS" column-definition="ENUM" length="10"/>
+            </basic>
+            <basic name="onboardingStatus">
+                <column name="ONBOARDING_STATUS" column-definition="ENUM" length="14"/>
+            </basic>
+            <basic name="role">
+                <column name="ROLE" length="50"/>
+            </basic>
+            <basic name="sourceOfHire">
+                <column name="SOURCE_OF_HIRE" column-definition="ENUM" length="18"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="department" fetch="LAZY">
+                <join-column name="DEPARTMENT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="designation" fetch="LAZY">
+                <join-column name="DESIGNATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="location" fetch="LAZY">
+                <join-column name="LOCATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Applicant">
+        <table name="APPLICANT"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="applciantSource">
+                <column name="APPLCIANT_SOURCE" column-definition="ENUM" length="26"/>
+            </basic>
+            <basic name="candidateOwner">
+                <column name="CANDIDATE_OWNER"/>
+            </basic>
+            <basic name="candidateSource">
+                <column name="CANDIDATE_SOURCE"/>
+            </basic>
+            <basic name="candidateStatus">
+                <column name="CANDIDATE_STATUS" column-definition="ENUM" length="21"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY"/>
+            </basic>
+            <basic name="currentEmployer">
+                <column name="CURRENT_EMPLOYER"/>
+            </basic>
+            <basic name="currentJobTitle">
+                <column name="CURRENT_JOB_TITLE"/>
+            </basic>
+            <basic name="currentSalary">
+                <column name="CURRENT_SALARY" column-definition="INT"/>
+            </basic>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="emailId">
+                <column name="EMAIL_ID" length="50"/>
+            </basic>
+            <basic name="expectedSalary">
+                <column name="EXPECTED_SALARY" column-definition="INT"/>
+            </basic>
+            <basic name="experienceInYears">
+                <column name="EXPERIENCE_IN_YEARS" column-definition="INT"/>
+            </basic>
+            <basic name="fax">
+                <column name="FAX" length="20"/>
+            </basic>
+            <basic name="firstName">
+                <column name="FIRST_NAME"/>
+            </basic>
+            <basic name="highestQualification">
+                <column name="HIGHEST_QUALIFICATION"/>
+            </basic>
+            <basic name="lastName">
+                <column name="LAST_NAME"/>
+            </basic>
+            <basic name="mobile">
+                <column name="MOBILE" length="20"/>
+            </basic>
+            <basic name="phone">
+                <column name="PHONE" length="20"/>
+            </basic>
+            <basic name="postalCode">
+                <column name="POSTAL_CODE" length="20"/>
+            </basic>
+            <basic name="presentAddress">
+                <column name="PRESENT_ADDRESS"/>
+            </basic>
+            <basic name="province">
+                <column name="PROVINCE"/>
+            </basic>
+            <basic name="secondaryEmail">
+                <column name="SECONDARY_EMAIL"/>
+            </basic>
+            <basic name="skillSet">
+                <column name="SKILL_SET"/>
+            </basic>
+            <basic name="street">
+                <column name="STREET"/>
+            </basic>
+            <basic name="uniqueIdCandidate">
+                <column name="UNIQUE_ID_CANDIDATE"/>
+            </basic>
+            <basic name="website">
+                <column name="WEBSITE"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="interviews" target-entity="com.enttribe.hrms.model.Interview" mapped-by="applicant">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="jobApplications" target-entity="com.enttribe.hrms.model.JobApplication" mapped-by="applicant">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="offers" target-entity="com.enttribe.hrms.model.Offers" mapped-by="applicant">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Asset">
+        <table name="ASSET"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="deviceName">
+                <column name="DEVICE_NAME" length="30"/>
+            </basic>
+            <basic name="deviceSerialNumber">
+                <column name="DEVICE_SERIAL_NUMBER"/>
+            </basic>
+            <basic name="remark">
+                <column name="REMARK"/>
+            </basic>
+            <basic name="text1">
+                <column name="TEXT1"/>
+            </basic>
+            <basic name="text2">
+                <column name="TEXT2"/>
+            </basic>
+            <basic name="text3">
+                <column name="TEXT3"/>
+            </basic>
+            <basic name="text4">
+                <column name="TEXT4"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="AttendanceRegularization">
+        <table name="ATTENDANCE_REGULARIZATION"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalName">
+                <column name="APPROVAL_NAME" length="30"/>
+            </basic>
+            <basic name="approverEmail">
+                <column name="APPROVER_EMAIL" length="35"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION" length="70"/>
+            </basic>
+            <basic name="reportingTo">
+                <column name="REPORTING_TO" length="40"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Breakdetails">
+        <table name="BREAKDETAILS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="availableShifts">
+                <column name="AVAILABLE_SHIFTS"/>
+            </basic>
+            <basic name="breakIcon">
+                <column name="BREAK_ICON"/>
+            </basic>
+            <basic name="breakMode">
+                <column name="BREAK_MODE"/>
+            </basic>
+            <basic name="breakName">
+                <column name="BREAK_NAME" length="30"/>
+            </basic>
+            <basic name="endTime">
+                <column name="END_TIME" length="19"/>
+            </basic>
+            <basic name="payType">
+                <column name="PAY_TYPE"/>
+            </basic>
+            <basic name="startTime">
+                <column name="START_TIME" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="CalendarDefinition">
+        <table name="CALENDAR_DEFINITION"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="currentYear">
+                <column name="CURRENT_YEAR" column-definition="INT"/>
+            </basic>
+            <basic name="halfWorkingDayAndHalfWeekend">
+                <column name="HALF_WORKING_DAY_AND_HALF_WEEKEND"/>
+            </basic>
+            <basic name="statutoryWeekend">
+                <column name="STATUTORY_WEEKEND"/>
+            </basic>
+            <basic name="weekStartsOn">
+                <column name="WEEK_STARTS_ON" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="workWeekEndsOn">
+                <column name="WORK_WEEK_ENDS_ON" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="workWeekStartsOn">
+                <column name="WORK_WEEK_STARTS_ON" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <basic name="yearEndsOn">
+                <column name="YEAR_ENDS_ON" length="19"/>
+            </basic>
+            <basic name="yearStartsFrom">
+                <column name="YEAR_STARTS_FROM" length="19"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Candidate">
+        <table name="CANDIDATE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="aadhaarCardNumber">
+                <column name="AADHAAR_CARD_NUMBER" length="20"/>
+            </basic>
+            <basic name="additionalInformation">
+                <column name="ADDITIONAL_INFORMATION" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="addressLine1">
+                <column name="ADDRESS_LINE1" length="100"/>
+            </basic>
+            <basic name="addressLine11">
+                <column name="ADDRESS_LINE11" length="100"/>
+            </basic>
+            <basic name="addressLine2">
+                <column name="ADDRESS_LINE2" length="100"/>
+            </basic>
+            <basic name="addressLine21">
+                <column name="ADDRESS_LINE21" length="100"/>
+            </basic>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="candidateId">
+                <column name="CANDIDATE_ID" length="100"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY" length="50"/>
+            </basic>
+            <basic name="city1">
+                <column name="CITY1" length="50"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY" length="50"/>
+            </basic>
+            <basic name="country1">
+                <column name="COUNTRY1" length="50"/>
+            </basic>
+            <basic name="currentSalary">
+                <column name="CURRENT_SALARY"/>
+            </basic>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="emailId">
+                <column name="EMAIL_ID" length="100"/>
+            </basic>
+            <basic name="experience">
+                <column name="EXPERIENCE" column-definition="INT"/>
+            </basic>
+            <basic name="firstName">
+                <column name="FIRST_NAME" length="50"/>
+            </basic>
+            <basic name="highestQualification">
+                <column name="HIGHEST_QUALIFICATION" length="50"/>
+            </basic>
+            <basic name="lastName">
+                <column name="LAST_NAME" length="50"/>
+            </basic>
+            <basic name="officialEmail">
+                <column name="OFFICIAL_EMAIL" length="100"/>
+            </basic>
+            <basic name="onboardingStatus">
+                <column name="ONBOARDING_STATUS" column-definition="ENUM" length="24"/>
+            </basic>
+            <basic name="panCardNumber">
+                <column name="PAN_CARD_NUMBER" length="20"/>
+            </basic>
+            <basic name="permanentAddress">
+                <column name="PERMANENT_ADDRESS" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="phone">
+                <column name="PHONE" length="20"/>
+            </basic>
+            <basic name="postalCode">
+                <column name="POSTAL_CODE" column-definition="INT"/>
+            </basic>
+            <basic name="postalCode1">
+                <column name="POSTAL_CODE1" column-definition="INT"/>
+            </basic>
+            <basic name="presentAddress">
+                <column name="PRESENT_ADDRESS" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="skillSet">
+                <column name="SKILL_SET" length="100"/>
+            </basic>
+            <basic name="sourceOfHire">
+                <column name="SOURCE_OF_HIRE" length="100"/>
+            </basic>
+            <basic name="state">
+                <column name="STATE" length="50"/>
+            </basic>
+            <basic name="state1">
+                <column name="STATE1" length="50"/>
+            </basic>
+            <basic name="tentativeJoiningDate">
+                <column name="TENTATIVE_JOINING_DATE" length="19"/>
+            </basic>
+            <basic name="title">
+                <column name="TITLE" length="50"/>
+            </basic>
+            <basic name="uanNumber">
+                <column name="UAN_NUMBER" length="20"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="department" fetch="LAZY">
+                <join-column name="DEPARTMENT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="location" fetch="LAZY">
+                <join-column name="LOCATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <one-to-many name="candidateEducations" target-entity="com.enttribe.hrms.model.CandidateEducation" mapped-by="candidate">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="candidateExperiences" target-entity="com.enttribe.hrms.model.CandidateExperience" mapped-by="candidate">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="CandidateEducation">
+        <table name="CANDIDATE_EDUCATION"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="additionalNotes">
+                <column name="ADDITIONAL_NOTES" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="dateOfCompletion">
+                <column name="DATE_OF_COMPLETION" length="19"/>
+            </basic>
+            <basic name="degreeDiploma">
+                <column name="DEGREE_DIPLOMA" length="50"/>
+            </basic>
+            <basic name="fieldOfStudy">
+                <column name="FIELD_OF_STUDY" length="100"/>
+            </basic>
+            <basic name="schoolName">
+                <column name="SCHOOL_NAME" length="100"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="candidate" fetch="LAZY">
+                <join-column name="CANDIDATE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="CandidateExperience">
+        <table name="CANDIDATE_EXPERIENCE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="company">
+                <column name="COMPANY" length="100"/>
+            </basic>
+            <basic name="currentlyWorkHere">
+                <column name="CURRENTLY_WORK_HERE"/>
+            </basic>
+            <basic name="duration">
+                <column name="DURATION" length="50"/>
+            </basic>
+            <basic name="occupation">
+                <column name="OCCUPATION" length="50"/>
+            </basic>
+            <basic name="rowid">
+                <column name="ROWID" column-definition="INT"/>
+            </basic>
+            <basic name="summary">
+                <column name="SUMMARY" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="candidate" fetch="LAZY">
+                <join-column name="CANDIDATE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="City">
+        <table name="CITY"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="displayName">
+                <column name="DISPLAY_NAME" length="50"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="state" fetch="LAZY">
+                <join-column name="STATE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Clients">
+        <table name="CLIENTS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="billingMethod">
+                <column name="BILLING_METHOD" length="100"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY" length="50"/>
+            </basic>
+            <basic name="clientName">
+                <column name="CLIENT_NAME" length="50"/>
+            </basic>
+            <basic name="companySize">
+                <column name="COMPANY_SIZE" column-definition="INT"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY" length="50"/>
+            </basic>
+            <basic name="currency">
+                <column name="CURRENCY" length="50"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="emailId">
+                <column name="EMAIL_ID" length="100"/>
+            </basic>
+            <basic name="fax">
+                <column name="FAX" length="20"/>
+            </basic>
+            <basic name="firstName">
+                <column name="FIRST_NAME" length="100"/>
+            </basic>
+            <basic name="industry">
+                <column name="INDUSTRY" length="100"/>
+            </basic>
+            <basic name="lastName">
+                <column name="LAST_NAME" length="50"/>
+            </basic>
+            <basic name="mobile">
+                <column name="MOBILE" length="20"/>
+            </basic>
+            <basic name="phone">
+                <column name="PHONE" length="20"/>
+            </basic>
+            <basic name="stateProvince">
+                <column name="STATE_PROVINCE" length="50"/>
+            </basic>
+            <basic name="streetAddress">
+                <column name="STREET_ADDRESS" length="100"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <basic name="zipcode">
+                <column name="ZIPCODE" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="CompanyDetails">
+        <table name="COMPANY_DETAILS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="addressLine1">
+                <column name="ADDRESS_LINE1" length="100"/>
+            </basic>
+            <basic name="addressLine2">
+                <column name="ADDRESS_LINE2" length="100"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY" length="50"/>
+            </basic>
+            <basic name="companyName">
+                <column name="COMPANY_NAME" length="100"/>
+            </basic>
+            <basic name="contactPerson">
+                <column name="CONTACT_PERSON" length="50"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY" length="50"/>
+            </basic>
+            <basic name="email">
+                <column name="EMAIL" length="100"/>
+            </basic>
+            <basic name="industry">
+                <column name="INDUSTRY" column-definition="ENUM" length="28"/>
+            </basic>
+            <basic name="logoUpload">
+                <column name="LOGO_UPLOAD" length="50"/>
+            </basic>
+            <basic name="mobileNumber">
+                <column name="MOBILE_NUMBER" length="20"/>
+            </basic>
+            <basic name="pincode">
+                <column name="PINCODE" column-definition="INT"/>
+            </basic>
+            <basic name="state">
+                <column name="STATE" length="50"/>
+            </basic>
+            <basic name="website">
+                <column name="WEBSITE" length="100"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="CompensatoryRequestScheduler">
+        <table name="COMPENSATORY_REQUEST_SCHEDULER"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="attendanceDetails">
+                <column name="ATTENDANCE_DETAILS" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="duration">
+                <column name="DURATION" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="employeeName">
+                <column name="EMPLOYEE_NAME" length="50"/>
+            </basic>
+            <basic name="expiryDate">
+                <column name="EXPIRY_DATE" length="19"/>
+            </basic>
+            <basic name="reason">
+                <column name="REASON"/>
+            </basic>
+            <basic name="unit">
+                <column name="UNIT"/>
+            </basic>
+            <basic name="workedDate">
+                <column name="WORKED_DATE" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Country">
+        <table name="COUNTRY"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="countryCode">
+                <column name="COUNTRY_CODE" length="50"/>
+            </basic>
+            <basic name="displayName">
+                <column name="DISPLAY_NAME" length="50"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="states" target-entity="com.enttribe.hrms.model.State" mapped-by="country">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Delegations">
+        <table name="DELEGATIONS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="description">
+                <column name="DESCRIPTION"/>
+            </basic>
+            <basic name="fromDate">
+                <column name="FROM_DATE" length="19"/>
+            </basic>
+            <basic name="notification">
+                <column name="NOTIFICATION" column-definition="ENUM" length="23"/>
+            </basic>
+            <basic name="toDate">
+                <column name="TO_DATE" length="19"/>
+            </basic>
+            <basic name="type">
+                <column name="TYPE" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="DELEGATOR_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="employee2" fetch="LAZY">
+                <join-column name="DELEGATEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Department">
+        <table name="DEPARTMENT"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="departmentCode">
+                <column name="DEPARTMENT_CODE" length="50"/>
+            </basic>
+            <basic name="departmentLead">
+                <column name="DEPARTMENT_LEAD" column-definition="INT"/>
+            </basic>
+            <basic name="mailAlias">
+                <column name="MAIL_ALIAS" length="100"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="50"/>
+            </basic>
+            <basic name="parentDepartment">
+                <column name="PARENT_DEPARTMENT" column-definition="INT"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="applicables" target-entity="com.enttribe.hrms.model.Applicable" mapped-by="department">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="candidates" target-entity="com.enttribe.hrms.model.Candidate" mapped-by="department">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="employees" target-entity="com.enttribe.hrms.model.Employee" mapped-by="department">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="exceptions" target-entity="com.enttribe.hrms.model.Exceptions" mapped-by="department">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="interviews" target-entity="com.enttribe.hrms.model.Interview" mapped-by="department">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="jobOpenings" target-entity="com.enttribe.hrms.model.JobOpening" mapped-by="department">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="offers" target-entity="com.enttribe.hrms.model.Offers" mapped-by="department">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Designation">
+        <table name="DESIGNATION"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="designationCode">
+                <column name="DESIGNATION_CODE" length="50"/>
+            </basic>
+            <basic name="mailAlias">
+                <column name="MAIL_ALIAS" length="100"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="50"/>
+            </basic>
+            <basic name="parentDesignation">
+                <column name="PARENT_DESIGNATION" column-definition="INT"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="applicables" target-entity="com.enttribe.hrms.model.Applicable" mapped-by="designation">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="employees" target-entity="com.enttribe.hrms.model.Employee" mapped-by="designation">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="exceptions" target-entity="com.enttribe.hrms.model.Exceptions" mapped-by="designation">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Employee">
+        <table name="EMPLOYEE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="aadharCard">
+                <column name="AADHAR_CARD" length="50"/>
+            </basic>
+            <basic name="aboutMe">
+                <column name="ABOUT_ME" length="100"/>
+            </basic>
+            <basic name="addressLine1">
+                <column name="ADDRESS_LINE1" length="100"/>
+            </basic>
+            <basic name="addressLine11">
+                <column name="ADDRESS_LINE11" length="100"/>
+            </basic>
+            <basic name="addressLine2">
+                <column name="ADDRESS_LINE2" length="100"/>
+            </basic>
+            <basic name="addressLine21">
+                <column name="ADDRESS_LINE21" length="100"/>
+            </basic>
+            <basic name="age">
+                <column name="AGE" column-definition="INT"/>
+            </basic>
+            <basic name="allowances">
+                <column name="ALLOWANCES" length="100"/>
+            </basic>
+            <basic name="annualSalary">
+                <column name="ANNUAL_SALARY" nullable="false"/>
+            </basic>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="benefits">
+                <column name="BENEFITS" length="100"/>
+            </basic>
+            <basic name="bonuses">
+                <column name="BONUSES" nullable="false"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY" length="50"/>
+            </basic>
+            <basic name="city1">
+                <column name="CITY1" length="50"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY" length="50"/>
+            </basic>
+            <basic name="country1">
+                <column name="COUNTRY1" length="50"/>
+            </basic>
+            <basic name="currentExperience">
+                <column name="CURRENT_EXPERIENCE" column-definition="INT"/>
+            </basic>
+            <basic name="dateOfBirth">
+                <column name="DATE_OF_BIRTH" length="19"/>
+            </basic>
+            <basic name="dateOfExit">
+                <column name="DATE_OF_EXIT" length="19"/>
+            </basic>
+            <basic name="dateOfJoining">
+                <column name="DATE_OF_JOINING" length="19"/>
+            </basic>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="email">
+                <column name="EMAIL" length="100"/>
+            </basic>
+            <basic name="employeeId">
+                <column name="EMPLOYEE_ID" length="100"/>
+            </basic>
+            <basic name="employementStatus">
+                <column name="EMPLOYEMENT_STATUS" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="employementType">
+                <column name="EMPLOYEMENT_TYPE" column-definition="ENUM" length="10"/>
+            </basic>
+            <basic name="expertise">
+                <column name="EXPERTISE" length="100"/>
+            </basic>
+            <basic name="extension">
+                <column name="EXTENSION" length="50"/>
+            </basic>
+            <basic name="firstName">
+                <column name="FIRST_NAME" length="50"/>
+            </basic>
+            <basic name="gender">
+                <column name="GENDER" column-definition="ENUM" length="6"/>
+            </basic>
+            <basic name="lastName">
+                <column name="LAST_NAME" length="50"/>
+            </basic>
+            <basic name="maritialStatus">
+                <column name="MARITIAL_STATUS" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="nickName">
+                <column name="NICK_NAME" length="50"/>
+            </basic>
+            <basic name="onboardingCost">
+                <column name="ONBOARDING_COST" nullable="false"/>
+            </basic>
+            <basic name="onboardingStatus">
+                <column name="ONBOARDING_STATUS" column-definition="ENUM" length="24"/>
+            </basic>
+            <basic name="orgRole">
+                <column name="ORG_ROLE" length="50"/>
+            </basic>
+            <basic name="personalEmailAddress">
+                <column name="PERSONAL_EMAIL_ADDRESS" length="100"/>
+            </basic>
+            <basic name="personalMobileNumber">
+                <column name="PERSONAL_MOBILE_NUMBER" length="20"/>
+            </basic>
+            <basic name="postalCode">
+                <column name="POSTAL_CODE" column-definition="INT"/>
+            </basic>
+            <basic name="postalCode1">
+                <column name="POSTAL_CODE1" column-definition="INT"/>
+            </basic>
+            <basic name="recruitmentCost">
+                <column name="RECRUITMENT_COST" nullable="false"/>
+            </basic>
+            <basic name="reportingManager">
+                <column name="REPORTING_MANAGER" length="50"/>
+            </basic>
+            <basic name="seatingLocation">
+                <column name="SEATING_LOCATION" length="50"/>
+            </basic>
+            <basic name="sourceHire">
+                <column name="SOURCE_HIRE" column-definition="ENUM" length="26"/>
+            </basic>
+            <basic name="state">
+                <column name="STATE" length="50"/>
+            </basic>
+            <basic name="state1">
+                <column name="STATE1" length="50"/>
+            </basic>
+            <basic name="tags">
+                <column name="TAGS" length="50"/>
+            </basic>
+            <basic name="taxes">
+                <column name="TAXES" length="100"/>
+            </basic>
+            <basic name="totalExperience">
+                <column name="TOTAL_EXPERIENCE" column-definition="INT"/>
+            </basic>
+            <basic name="trainingCost">
+                <column name="TRAINING_COST" nullable="false"/>
+            </basic>
+            <basic name="uniqueIdentification">
+                <column name="UNIQUE_IDENTIFICATION" length="20"/>
+            </basic>
+            <basic name="workPhoneNumber">
+                <column name="WORK_PHONE_NUMBER" length="20"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="department" fetch="LAZY">
+                <join-column name="DEPARTMENT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="designation" fetch="LAZY">
+                <join-column name="DESIGNATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="location" fetch="LAZY">
+                <join-column name="LOCATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <one-to-many name="applicables" target-entity="com.enttribe.hrms.model.Applicable" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="assets" target-entity="com.enttribe.hrms.model.Asset" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="attendanceRegularizations" target-entity="com.enttribe.hrms.model.AttendanceRegularization" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="delegations" target-entity="com.enttribe.hrms.model.Delegations" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="delegations2" target-entity="com.enttribe.hrms.model.Delegations" mapped-by="employee2">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="employeeDependentDetails" target-entity="com.enttribe.hrms.model.EmployeeDependentDetails" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="employeeMonthlyAttendances" target-entity="com.enttribe.hrms.model.EmployeeMonthlyAttendance" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="employeeWorkExperiences" target-entity="com.enttribe.hrms.model.EmployeeWorkExperience" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="employeeeducationdetails" target-entity="com.enttribe.hrms.model.Employeeeducationdetails" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="hrLetters" target-entity="com.enttribe.hrms.model.HrLetters" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="interviews" target-entity="com.enttribe.hrms.model.Interview" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="leaves" target-entity="com.enttribe.hrms.model.Leaves" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="travelExpenses" target-entity="com.enttribe.hrms.model.TravelExpense" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="travelRequests" target-entity="com.enttribe.hrms.model.TravelRequest" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="workingHours" target-entity="com.enttribe.hrms.model.WorkingHours" mapped-by="employee">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="EmployeeDependentDetails">
+        <table name="EMPLOYEE_DEPENDENT_DETAILS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="dob">
+                <column name="DOB" length="19"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="100"/>
+            </basic>
+            <basic name="relationship">
+                <column name="RELATIONSHIP" column-definition="ENUM" length="7"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="EmployeeMonthlyAttendance">
+        <table name="EMPLOYEE_MONTHLY_ATTENDANCE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="actualWorkedHours">
+                <column name="ACTUAL_WORKED_HOURS" length="50"/>
+            </basic>
+            <basic name="endDate">
+                <column name="END_DATE" length="19"/>
+            </basic>
+            <basic name="expectedPayableHours">
+                <column name="EXPECTED_PAYABLE_HOURS" length="50"/>
+            </basic>
+            <basic name="expectedWorkingHours">
+                <column name="EXPECTED_WORKING_HOURS" length="50"/>
+            </basic>
+            <basic name="govHolidaysInDays">
+                <column name="GOV_HOLIDAYS_IN_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="overtimeHours">
+                <column name="OVERTIME_HOURS" length="50"/>
+            </basic>
+            <basic name="paidLeaveInDays">
+                <column name="PAID_LEAVE_IN_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="paidLeaveInHours">
+                <column name="PAID_LEAVE_IN_HOURS" length="50"/>
+            </basic>
+            <basic name="payableDays">
+                <column name="PAYABLE_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="startDate">
+                <column name="START_DATE" length="19"/>
+            </basic>
+            <basic name="totalAbsentInDays">
+                <column name="TOTAL_ABSENT_IN_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="totalPaidOffInDays">
+                <column name="TOTAL_PAID_OFF_IN_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="totalPayableDays">
+                <column name="TOTAL_PAYABLE_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="totalPayableHours">
+                <column name="TOTAL_PAYABLE_HOURS" length="50"/>
+            </basic>
+            <basic name="totalWorkedDays">
+                <column name="TOTAL_WORKED_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="totalWorkedHours">
+                <column name="TOTAL_WORKED_HOURS" length="50"/>
+            </basic>
+            <basic name="unpaidLeaveInDays">
+                <column name="UNPAID_LEAVE_IN_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="weekendsInDays">
+                <column name="WEEKENDS_IN_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="workingDays">
+                <column name="WORKING_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="EmployeeWorkExperience">
+        <table name="EMPLOYEE_WORK_EXPERIENCE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="companyName">
+                <column name="COMPANY_NAME" length="100"/>
+            </basic>
+            <basic name="experience">
+                <column name="EXPERIENCE" column-definition="INT"/>
+            </basic>
+            <basic name="fromDate">
+                <column name="FROM_DATE" length="19"/>
+            </basic>
+            <basic name="jobDescription">
+                <column name="JOB_DESCRIPTION" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="jobTitle">
+                <column name="JOB_TITLE" length="50"/>
+            </basic>
+            <basic name="relevant">
+                <column name="RELEVANT"/>
+            </basic>
+            <basic name="toDate">
+                <column name="TO_DATE" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Employeeeducationdetails">
+        <table name="EMPLOYEEEDUCATIONDETAILS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="attachment1">
+                <column name="ATTACHMENT1"/>
+            </basic>
+            <basic name="attachment2">
+                <column name="ATTACHMENT2"/>
+            </basic>
+            <basic name="attachment3">
+                <column name="ATTACHMENT3"/>
+            </basic>
+            <basic name="attachment4">
+                <column name="ATTACHMENT4"/>
+            </basic>
+            <basic name="attachment5">
+                <column name="ATTACHMENT5"/>
+            </basic>
+            <basic name="courseName">
+                <column name="COURSE_NAME" length="100"/>
+            </basic>
+            <basic name="dateOfCompletion">
+                <column name="DATE_OF_COMPLETION" length="19"/>
+            </basic>
+            <basic name="degreeDiploma">
+                <column name="DEGREE_DIPLOMA" length="50"/>
+            </basic>
+            <basic name="instituteName">
+                <column name="INSTITUTE_NAME" length="100"/>
+            </basic>
+            <basic name="rowId">
+                <column name="ROW_ID" column-definition="INT"/>
+            </basic>
+            <basic name="specialization">
+                <column name="SPECIALIZATION" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ExceptionalWorkingDay">
+        <table name="EXCEPTIONAL_WORKING_DAY"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="applicableFor">
+                <column name="APPLICABLE_FOR" column-definition="ENUM" length="21"/>
+            </basic>
+            <basic name="date">
+                <column name="DATE" length="19"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Exceptions">
+        <table name="EXCEPTIONS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="role">
+                <column name="ROLE" length="55"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="department" fetch="LAZY">
+                <join-column name="DEPARTMENT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="designation" fetch="LAZY">
+                <join-column name="DESIGNATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="location" fetch="LAZY">
+                <join-column name="LOCATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ExitDetails">
+        <table name="EXIT_DETAILS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="additionalComments">
+                <column name="ADDITIONAL_COMMENTS" length="100"/>
+            </basic>
+            <basic name="allEquipmentsHandedIn">
+                <column name="ALL_EQUIPMENTS_HANDED_IN" length="100"/>
+            </basic>
+            <basic name="allLibraryBooksSubmitted">
+                <column name="ALL_LIBRARY_BOOKS_SUBMITTED" length="100"/>
+            </basic>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="companyVehicleHandedIn">
+                <column name="COMPANY_VEHICLE_HANDED_IN" length="100"/>
+            </basic>
+            <basic name="employeeId">
+                <column name="EMPLOYEE_ID" length="50"/>
+            </basic>
+            <basic name="exitInterviewConducted">
+                <column name="EXIT_INTERVIEW_CONDUCTED" length="100"/>
+            </basic>
+            <basic name="interviewer">
+                <column name="INTERVIEWER" length="50"/>
+            </basic>
+            <basic name="likedMostAboutOrganization">
+                <column name="LIKED_MOST_ABOUT_ORGANIZATION" length="100"/>
+            </basic>
+            <basic name="managerSupervisorClearance">
+                <column name="MANAGER_SUPERVISOR_CLEARANCE" length="100"/>
+            </basic>
+            <basic name="noticePeriodFollowed">
+                <column name="NOTICE_PERIOD_FOLLOWED" length="100"/>
+            </basic>
+            <basic name="organizationImprovementSuggestions">
+                <column name="ORGANIZATION_IMPROVEMENT_SUGGESTIONS" length="100"/>
+            </basic>
+            <basic name="reasonForLeaving">
+                <column name="REASON_FOR_LEAVING" column-definition="ENUM" length="28"/>
+            </basic>
+            <basic name="resignationLetterSubmitted">
+                <column name="RESIGNATION_LETTER_SUBMITTED" length="100"/>
+            </basic>
+            <basic name="security">
+                <column name="SECURITY" length="100"/>
+            </basic>
+            <basic name="separationDate">
+                <column name="SEPARATION_DATE" length="19"/>
+            </basic>
+            <basic name="workingForOrganizationAgain">
+                <column name="WORKING_FOR_ORGANIZATION_AGAIN" column-definition="ENUM" length="3"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Faq">
+        <table name="FAQ"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="description">
+                <column name="DESCRIPTION" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="question">
+                <column name="QUESTION"/>
+            </basic>
+            <basic name="tags">
+                <column name="TAGS" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="GeneralSettingsLeave">
+        <table name="GENERAL_SETTINGS_LEAVE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="addCompensatoryRequestForFutureDate">
+                <column name="ADD_COMPENSATORY_REQUEST_FOR_FUTURE_DATE"/>
+            </basic>
+            <basic name="allowLeaveRequestUntilNext">
+                <column name="ALLOW_LEAVE_REQUEST_UNTIL_NEXT" column-definition="ENUM" length="13"/>
+            </basic>
+            <basic name="applicableLeaveTypes">
+                <column name="APPLICABLE_LEAVE_TYPES" column-definition="ENUM" length="18"/>
+            </basic>
+            <basic name="compensatoryRequestEntryMode">
+                <column name="COMPENSATORY_REQUEST_ENTRY_MODE" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="consecutiveLeavesConsideredAsLeave">
+                <column name="CONSECUTIVE_LEAVES_CONSIDERED_AS_LEAVE" column-definition="INT"/>
+            </basic>
+            <basic name="creditedLeaveExpirationDays">
+                <column name="CREDITED_LEAVE_EXPIRATION_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="currentDayAndUpcomingLeaveRequests">
+                <column name="CURRENT_DAY_AND_UPCOMING_LEAVE_REQUESTS" column-definition="ENUM" length="10"/>
+            </basic>
+            <basic name="customizeEmailTemplate">
+                <column name="CUSTOMIZE_EMAIL_TEMPLATE" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="durationsAllowed">
+                <column name="DURATIONS_ALLOWED" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="enablePasswordProtection">
+                <column name="ENABLE_PASSWORD_PROTECTION"/>
+            </basic>
+            <basic name="enablePayrollReportForAdmin">
+                <column name="ENABLE_PAYROLL_REPORT_FOR_ADMIN"/>
+            </basic>
+            <basic name="includeHolidays">
+                <column name="INCLUDE_HOLIDAYS"/>
+            </basic>
+            <basic name="includeWeekends">
+                <column name="INCLUDE_WEEKENDS"/>
+            </basic>
+            <basic name="leaveCreditedOnHolidays">
+                <column name="LEAVE_CREDITED_ON_HOLIDAYS"/>
+            </basic>
+            <basic name="leaveCreditedOnWeekend">
+                <column name="LEAVE_CREDITED_ON_WEEKEND"/>
+            </basic>
+            <basic name="leaveDisplayFormat">
+                <column name="LEAVE_DISPLAY_FORMAT" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="makeReasonForLeaveCancellationMandatory">
+                <column name="MAKE_REASON_FOR_LEAVE_CANCELLATION_MANDATORY"/>
+            </basic>
+            <basic name="makeReasonMandatory">
+                <column name="MAKE_REASON_MANDATORY"/>
+            </basic>
+            <basic name="pastLeavesWithinCurrentPayPeriod">
+                <column name="PAST_LEAVES_WITHIN_CURRENT_PAY_PERIOD" column-definition="ENUM" length="10"/>
+            </basic>
+            <basic name="reminderEmail">
+                <column name="REMINDER_EMAIL"/>
+            </basic>
+            <basic name="resourceAvailabilityReportAccess">
+                <column name="RESOURCE_AVAILABILITY_REPORT_ACCESS" column-definition="ENUM" length="10"/>
+            </basic>
+            <basic name="timeInputAllowed">
+                <column name="TIME_INPUT_ALLOWED"/>
+            </basic>
+            <basic name="unitsAllowed">
+                <column name="UNITS_ALLOWED" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="unpaidLeaveMarkedAs">
+                <column name="UNPAID_LEAVE_MARKED_AS"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Holiday">
+        <table name="HOLIDAY"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="applicableFor">
+                <column name="APPLICABLE_FOR" column-definition="ENUM" length="21"/>
+            </basic>
+            <basic name="date">
+                <column name="DATE" length="19"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="100"/>
+            </basic>
+            <basic name="notifyApplicableEmployees">
+                <column name="NOTIFY_APPLICABLE_EMPLOYEES"/>
+            </basic>
+            <basic name="reminderDays">
+                <column name="REMINDER_DAYS" column-definition="ENUM" length="6"/>
+            </basic>
+            <basic name="reprocessLeaveHoliday">
+                <column name="REPROCESS_LEAVE_HOLIDAY"/>
+            </basic>
+            <basic name="restricted">
+                <column name="RESTRICTED"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="HrLetters">
+        <table name="HR_LETTERS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="aadharCard">
+                <column name="AADHAR_CARD"/>
+            </basic>
+            <basic name="addressLine1">
+                <column name="ADDRESS_LINE1"/>
+            </basic>
+            <basic name="addressLine2">
+                <column name="ADDRESS_LINE2"/>
+            </basic>
+            <basic name="bankStatements">
+                <column name="BANK_STATEMENTS"/>
+            </basic>
+            <basic name="benefits">
+                <column name="BENEFITS"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY"/>
+            </basic>
+            <basic name="coverLetter">
+                <column name="COVER_LETTER"/>
+            </basic>
+            <basic name="currentExperience">
+                <column name="CURRENT_EXPERIENCE"/>
+            </basic>
+            <basic name="dateOfJoining">
+                <column name="DATE_OF_JOINING" length="19"/>
+            </basic>
+            <basic name="dateOfRequest">
+                <column name="DATE_OF_REQUEST" length="19"/>
+            </basic>
+            <basic name="department">
+                <column name="DEPARTMENT"/>
+            </basic>
+            <basic name="designationId">
+                <column name="DESIGNATION_ID" column-definition="INT"/>
+            </basic>
+            <basic name="driverLicense">
+                <column name="DRIVER_LICENSE" length="19"/>
+            </basic>
+            <basic name="effectiveDateOfTermination">
+                <column name="EFFECTIVE_DATE_OF_TERMINATION" length="19"/>
+            </basic>
+            <basic name="employmentVerificationLetters">
+                <column name="EMPLOYMENT_VERIFICATION_LETTERS"/>
+            </basic>
+            <basic name="isChangeInPresentAddress">
+                <column name="IS_CHANGE_IN_PRESENT_ADDRESS"/>
+            </basic>
+            <basic name="leaseAgreement">
+                <column name="LEASE_AGREEMENT"/>
+            </basic>
+            <basic name="letterType">
+                <column name="LETTER_TYPE" column-definition="ENUM" length="30"/>
+            </basic>
+            <basic name="marksheets">
+                <column name="MARKSHEETS"/>
+            </basic>
+            <basic name="noticePeriod">
+                <column name="NOTICE_PERIOD"/>
+            </basic>
+            <basic name="passport">
+                <column name="PASSPORT"/>
+            </basic>
+            <basic name="performanceAppraisals">
+                <column name="PERFORMANCE_APPRAISALS"/>
+            </basic>
+            <basic name="postalCode">
+                <column name="POSTAL_CODE"/>
+            </basic>
+            <basic name="probationPeriod">
+                <column name="PROBATION_PERIOD"/>
+            </basic>
+            <basic name="reasonsForTermination">
+                <column name="REASONS_FOR_TERMINATION"/>
+            </basic>
+            <basic name="reportingManager">
+                <column name="REPORTING_MANAGER"/>
+            </basic>
+            <basic name="resume">
+                <column name="RESUME"/>
+            </basic>
+            <basic name="salary">
+                <column name="SALARY"/>
+            </basic>
+            <basic name="schoolLeavingCertificate">
+                <column name="SCHOOL_LEAVING_CERTIFICATE"/>
+            </basic>
+            <basic name="skillsCertificates">
+                <column name="SKILLS_CERTIFICATES"/>
+            </basic>
+            <basic name="state">
+                <column name="STATE"/>
+            </basic>
+            <basic name="voterRegistrationCard">
+                <column name="VOTER_REGISTRATION_CARD"/>
+            </basic>
+            <basic name="workSchedule">
+                <column name="WORK_SCHEDULE"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Interview">
+        <table name="INTERVIEW"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="commentsForInterviewers">
+                <column name="COMMENTS_FOR_INTERVIEWERS" length="100"/>
+            </basic>
+            <basic name="departmentName">
+                <column name="DEPARTMENT_NAME" length="100"/>
+            </basic>
+            <basic name="fromDate">
+                <column name="FROM_DATE" length="19"/>
+            </basic>
+            <basic name="interviewOwner">
+                <column name="INTERVIEW_OWNER" length="100"/>
+            </basic>
+            <basic name="location">
+                <column name="LOCATION" length="100"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="100"/>
+            </basic>
+            <basic name="toDate">
+                <column name="TO_DATE" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="applicant" fetch="LAZY">
+                <join-column name="CANDIDATE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="department" fetch="LAZY">
+                <join-column name="DEPARTMENT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="INTERVIEWER" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="jobOpening" fetch="LAZY">
+                <join-column name="JOB_OPENING_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="JobApplication">
+        <table name="JOB_APPLICATION"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="applicationStatus">
+                <column name="APPLICATION_STATUS" column-definition="ENUM" length="27"/>
+            </basic>
+            <basic name="emailId">
+                <column name="EMAIL_ID" length="50"/>
+            </basic>
+            <basic name="firstName">
+                <column name="FIRST_NAME"/>
+            </basic>
+            <basic name="lastName">
+                <column name="LAST_NAME"/>
+            </basic>
+            <basic name="mobile">
+                <column name="MOBILE" length="50"/>
+            </basic>
+            <basic name="referredBy">
+                <column name="REFERRED_BY"/>
+            </basic>
+            <basic name="relationship">
+                <column name="RELATIONSHIP" column-definition="ENUM" length="38"/>
+            </basic>
+            <basic name="resume">
+                <column name="RESUME" length="200"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="applicant" fetch="LAZY">
+                <join-column name="APPLICANT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="jobOpening" fetch="LAZY">
+                <join-column name="JOB_OPENING_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="JobOpening">
+        <table name="JOB_OPENING"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="address">
+                <column name="ADDRESS" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="assignedrecruiter">
+                <column name="ASSIGNEDRECRUITER"/>
+            </basic>
+            <basic name="attachment1">
+                <column name="ATTACHMENT1" length="200"/>
+            </basic>
+            <basic name="attachment2">
+                <column name="ATTACHMENT2" length="200"/>
+            </basic>
+            <basic name="attachment3">
+                <column name="ATTACHMENT3" length="200"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY"/>
+            </basic>
+            <basic name="dateOpened">
+                <column name="DATE_OPENED" length="19"/>
+            </basic>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="descriptionRequirements">
+                <column name="DESCRIPTION_REQUIREMENTS" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="hiringManager">
+                <column name="HIRING_MANAGER"/>
+            </basic>
+            <basic name="industry">
+                <column name="INDUSTRY" column-definition="ENUM" length="28"/>
+            </basic>
+            <basic name="isRemote">
+                <column name="IS_REMOTE" column-definition="ENUM" length="3"/>
+            </basic>
+            <basic name="jobId">
+                <column name="JOB_ID" length="100"/>
+            </basic>
+            <basic name="jobOpeningStatus">
+                <column name="JOB_OPENING_STATUS" column-definition="ENUM" length="28"/>
+            </basic>
+            <basic name="jobType">
+                <column name="JOB_TYPE" column-definition="ENUM" length="10"/>
+            </basic>
+            <basic name="openPositions">
+                <column name="OPEN_POSITIONS" column-definition="INT"/>
+            </basic>
+            <basic name="postalcode">
+                <column name="POSTALCODE" length="20"/>
+            </basic>
+            <basic name="postingTitle">
+                <column name="POSTING_TITLE" length="250"/>
+            </basic>
+            <basic name="province">
+                <column name="PROVINCE"/>
+            </basic>
+            <basic name="salaryRange">
+                <column name="SALARY_RANGE"/>
+            </basic>
+            <basic name="skills">
+                <column name="SKILLS" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="targetClossingDate">
+                <column name="TARGET_CLOSSING_DATE" length="19"/>
+            </basic>
+            <basic name="workExperience">
+                <column name="WORK_EXPERIENCE"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="department" fetch="LAZY">
+                <join-column name="DEPARTMENT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <one-to-many name="interviews" target-entity="com.enttribe.hrms.model.Interview" mapped-by="jobOpening">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="jobApplications" target-entity="com.enttribe.hrms.model.JobApplication" mapped-by="jobOpening">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="offers" target-entity="com.enttribe.hrms.model.Offers" mapped-by="jobOpening">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Jobs">
+        <table name="JOBS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="billableStatus">
+                <column name="BILLABLE_STATUS" column-definition="ENUM" length="3"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="endDate">
+                <column name="END_DATE" length="19"/>
+            </basic>
+            <basic name="hours">
+                <column name="HOURS"/>
+            </basic>
+            <basic name="jobName">
+                <column name="JOB_NAME" length="50"/>
+            </basic>
+            <basic name="project">
+                <column name="PROJECT" length="50"/>
+            </basic>
+            <basic name="ratePerHour">
+                <column name="RATE_PER_HOUR"/>
+            </basic>
+            <basic name="reminder">
+                <column name="REMINDER" length="100"/>
+            </basic>
+            <basic name="reminderTime">
+                <column name="REMINDER_TIME" length="19"/>
+            </basic>
+            <basic name="startDate">
+                <column name="START_DATE" length="19"/>
+            </basic>
+            <basic name="status">
+                <column name="STATUS" column-definition="ENUM" length="11"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="timeLogs" target-entity="com.enttribe.hrms.model.TimeLogs" mapped-by="jobs">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="LeaveEntitlement">
+        <table name="LEAVE_ENTITLEMENT"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="actual">
+                <column name="ACTUAL" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="actualNoOfDays">
+                <column name="ACTUAL_NO_OF_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="actualOn">
+                <column name="ACTUAL_ON" column-definition="ENUM" length="19"/>
+            </basic>
+            <basic name="actualYear">
+                <column name="ACTUAL_YEAR" length="50"/>
+            </basic>
+            <basic name="carryForward">
+                <column name="CARRY_FORWARD" column-definition="INT"/>
+            </basic>
+            <basic name="dateOfJoining">
+                <column name="DATE_OF_JOINING" length="19"/>
+            </basic>
+            <basic name="deductibleHolidays">
+                <column name="DEDUCTIBLE_HOLIDAYS"/>
+            </basic>
+            <basic name="encashment">
+                <column name="ENCASHMENT" column-definition="INT"/>
+            </basic>
+            <basic name="maximumBalance">
+                <column name="MAXIMUM_BALANCE" column-definition="INT"/>
+            </basic>
+            <basic name="openingBalance">
+                <column name="OPENING_BALANCE" column-definition="INT"/>
+            </basic>
+            <basic name="reset">
+                <column name="RESET" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="resetOn">
+                <column name="RESET_ON" column-definition="ENUM" length="19"/>
+            </basic>
+            <basic name="resetYear">
+                <column name="RESET_YEAR" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="LeaveType">
+        <table name="LEAVE_TYPE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="balancedBasedOn">
+                <column name="BALANCED_BASED_ON"/>
+            </basic>
+            <basic name="code">
+                <column name="CODE" column-definition="INT"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION"/>
+            </basic>
+            <basic name="isLeaveTypeEnabled">
+                <column name="IS_LEAVE_TYPE_ENABLED"/>
+            </basic>
+            <basic name="leaveType">
+                <column name="LEAVE_TYPE" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="leaveTypeId">
+                <column name="LEAVE_TYPE_ID" column-definition="INT"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="50"/>
+            </basic>
+            <basic name="unit">
+                <column name="UNIT" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="validity">
+                <column name="VALIDITY" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="leaves" target-entity="com.enttribe.hrms.model.Leaves" mapped-by="leaveType">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Leaves">
+        <table name="LEAVES"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="dateOfRequest">
+                <column name="DATE_OF_REQUEST" length="19"/>
+            </basic>
+            <basic name="fromDate">
+                <column name="FROM_DATE" length="19"/>
+            </basic>
+            <basic name="isHalfDayEnabled">
+                <column name="IS_HALF_DAY_ENABLED"/>
+            </basic>
+            <basic name="leaveTaken">
+                <column name="LEAVE_TAKEN"/>
+            </basic>
+            <basic name="reasonForLeave">
+                <column name="REASON_FOR_LEAVE"/>
+            </basic>
+            <basic name="teamEmailId">
+                <column name="TEAM_EMAIL_ID" length="50"/>
+            </basic>
+            <basic name="toDate">
+                <column name="TO_DATE" length="19"/>
+            </basic>
+            <basic name="unit">
+                <column name="UNIT" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="leaveType" fetch="LAZY">
+                <join-column name="LEAVE_TYPE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Location">
+        <table name="LOCATION"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY" length="50"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION" length="100"/>
+            </basic>
+            <basic name="locationId">
+                <column name="LOCATION_ID" length="50"/>
+            </basic>
+            <basic name="mailAlias">
+                <column name="MAIL_ALIAS" length="100"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="100"/>
+            </basic>
+            <basic name="stateProvince">
+                <column name="STATE_PROVINCE" length="50"/>
+            </basic>
+            <basic name="timeZone">
+                <column name="TIME_ZONE" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="applicables" target-entity="com.enttribe.hrms.model.Applicable" mapped-by="location">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="candidates" target-entity="com.enttribe.hrms.model.Candidate" mapped-by="location">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="employees" target-entity="com.enttribe.hrms.model.Employee" mapped-by="location">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="exceptions" target-entity="com.enttribe.hrms.model.Exceptions" mapped-by="location">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+            <one-to-many name="payrolls" target-entity="com.enttribe.hrms.model.Payroll" mapped-by="location">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Offers">
+        <table name="OFFERS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="compensationAmount">
+                <column name="COMPENSATION_AMOUNT"/>
+            </basic>
+            <basic name="employmentType">
+                <column name="EMPLOYMENT_TYPE" column-definition="ENUM" length="10"/>
+            </basic>
+            <basic name="expectedJoiningDate">
+                <column name="EXPECTED_JOINING_DATE" length="19"/>
+            </basic>
+            <basic name="offerOwner">
+                <column name="OFFER_OWNER"/>
+            </basic>
+            <basic name="offersExpiry">
+                <column name="OFFERS_EXPIRY" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="applicant" fetch="LAZY">
+                <join-column name="CANDIDATE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="department" fetch="LAZY">
+                <join-column name="DEPARTMENT_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="jobOpening" fetch="LAZY">
+                <join-column name="POSTING_TITLE" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="PayPeriodSetting">
+        <table name="PAY_PERIOD_SETTING"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="applicableLocation">
+                <column name="APPLICABLE_LOCATION" length="50"/>
+            </basic>
+            <basic name="lockSetting">
+                <column name="LOCK_SETTING"/>
+            </basic>
+            <basic name="payPeriodCycleEnd">
+                <column name="PAY_PERIOD_CYCLE_END" length="19"/>
+            </basic>
+            <basic name="payPeriodCycleStart">
+                <column name="PAY_PERIOD_CYCLE_START" length="19"/>
+            </basic>
+            <basic name="payPeriodName">
+                <column name="PAY_PERIOD_NAME" length="50"/>
+            </basic>
+            <basic name="payrollProcessingDay">
+                <column name="PAYROLL_PROCESSING_DAY" length="19"/>
+            </basic>
+            <basic name="payrollReportGenerationDay">
+                <column name="PAYROLL_REPORT_GENERATION_DAY" length="19"/>
+            </basic>
+            <basic name="processLeaveEncashment">
+                <column name="PROCESS_LEAVE_ENCASHMENT"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Payroll">
+        <table name="PAYROLL"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="endDate">
+                <column name="END_DATE" length="19"/>
+            </basic>
+            <basic name="payPeriodName">
+                <column name="PAY_PERIOD_NAME" length="30"/>
+            </basic>
+            <basic name="payPeriodType">
+                <column name="PAY_PERIOD_TYPE" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="payrollDay">
+                <column name="PAYROLL_DAY" length="10"/>
+            </basic>
+            <basic name="payrollReportGenerationDay">
+                <column name="PAYROLL_REPORT_GENERATION_DAY" length="10"/>
+            </basic>
+            <basic name="startDate">
+                <column name="START_DATE" length="19"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="location" fetch="LAZY">
+                <join-column name="LOCATION_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="Projects">
+        <table name="PROJECTS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="clientName">
+                <column name="CLIENT_NAME" length="100"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION" length="100"/>
+            </basic>
+            <basic name="projectCost">
+                <column name="PROJECT_COST"/>
+            </basic>
+            <basic name="projectHead">
+                <column name="PROJECT_HEAD" length="50"/>
+            </basic>
+            <basic name="projectManager">
+                <column name="PROJECT_MANAGER" length="50"/>
+            </basic>
+            <basic name="projectName">
+                <column name="PROJECT_NAME" length="100"/>
+            </basic>
+            <basic name="status">
+                <column name="STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <one-to-many name="timeLogs" target-entity="com.enttribe.hrms.model.TimeLogs" mapped-by="projects">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="Restrictions">
+        <table name="RESTRICTIONS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="allowOnlyAdministrators">
+                <column name="ALLOW_ONLY_ADMINISTRATORS"/>
+            </basic>
+            <basic name="allowUsersToView">
+                <column name="ALLOW_USERS_TO_VIEW" column-definition="ENUM" length="14"/>
+            </basic>
+            <basic name="balanceToBeDisplayed">
+                <column name="BALANCE_TO_BE_DISPLAYED" column-definition="ENUM" length="11"/>
+            </basic>
+            <basic name="durationAllowed">
+                <column name="DURATION_ALLOWED" column-definition="ENUM" length="8"/>
+            </basic>
+            <basic name="enableFileUpload">
+                <column name="ENABLE_FILE_UPLOAD"/>
+            </basic>
+            <basic name="enableFileUploadDays">
+                <column name="ENABLE_FILE_UPLOAD_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="exceedLeaveBalance">
+                <column name="EXCEED_LEAVE_BALANCE" column-definition="INT"/>
+            </basic>
+            <basic name="futureDate">
+                <column name="FUTURE_DATE" column-definition="INT"/>
+            </basic>
+            <basic name="holidayBetweenLeavePeriod">
+                <column name="HOLIDAY_BETWEEN_LEAVE_PERIOD"/>
+            </basic>
+            <basic name="leaveApplicableOn">
+                <column name="LEAVE_APPLICABLE_ON" length="100"/>
+            </basic>
+            <basic name="leaveCannotBeTakenTogetherWith">
+                <column name="LEAVE_CANNOT_BE_TAKEN_TOGETHER_WITH" length="100"/>
+            </basic>
+            <basic name="maxApplicationsAllowed">
+                <column name="MAX_APPLICATIONS_ALLOWED" column-definition="ENUM" length="9"/>
+            </basic>
+            <basic name="maxConsecutiveDaysAllowed">
+                <column name="MAX_CONSECUTIVE_DAYS_ALLOWED" column-definition="INT"/>
+            </basic>
+            <basic name="maxConsecutiveDaysAllowedDays">
+                <column name="MAX_CONSECUTIVE_DAYS_ALLOWED_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="maxLeavePerApplication">
+                <column name="MAX_LEAVE_PER_APPLICATION" column-definition="INT"/>
+            </basic>
+            <basic name="maxLeavePerApplicationDays">
+                <column name="MAX_LEAVE_PER_APPLICATION_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="minGapBetweenApplications">
+                <column name="MIN_GAP_BETWEEN_APPLICATIONS" column-definition="INT"/>
+            </basic>
+            <basic name="minGapBetweenApplicationsDays">
+                <column name="MIN_GAP_BETWEEN_APPLICATIONS_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="minLeavePerApplication">
+                <column name="MIN_LEAVE_PER_APPLICATION" column-definition="INT"/>
+            </basic>
+            <basic name="minLeavePerApplicationDays">
+                <column name="MIN_LEAVE_PER_APPLICATION_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="pastDates">
+                <column name="PAST_DATES" column-definition="INT"/>
+            </basic>
+            <basic name="weekendBetweenLeavePeriod">
+                <column name="WEEKEND_BETWEEN_LEAVE_PERIOD"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Skill">
+        <table name="SKILL"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="description">
+                <column name="DESCRIPTION" length="100"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="100"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="State">
+        <table name="STATE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="displayName">
+                <column name="DISPLAY_NAME" length="100"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="100"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="country" fetch="LAZY">
+                <join-column name="COUNTRY_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <one-to-many name="citys" target-entity="com.enttribe.hrms.model.City" mapped-by="state">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="SubContractor">
+        <table name="SUB_CONTRACTOR"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="address">
+                <column name="ADDRESS"/>
+            </basic>
+            <basic name="businessName">
+                <column name="BUSINESS_NAME" length="100"/>
+            </basic>
+            <basic name="city">
+                <column name="CITY"/>
+            </basic>
+            <basic name="code">
+                <column name="CODE" length="100"/>
+            </basic>
+            <basic name="contractEndDate">
+                <column name="CONTRACT_END_DATE" length="19"/>
+            </basic>
+            <basic name="contractStartDate">
+                <column name="CONTRACT_START_DATE" length="19"/>
+            </basic>
+            <basic name="country">
+                <column name="COUNTRY"/>
+            </basic>
+            <basic name="emailId">
+                <column name="EMAIL_ID"/>
+            </basic>
+            <basic name="name">
+                <column name="NAME" length="100"/>
+            </basic>
+            <basic name="paymentTerms">
+                <column name="PAYMENT_TERMS"/>
+            </basic>
+            <basic name="phone">
+                <column name="PHONE" length="20"/>
+            </basic>
+            <basic name="state">
+                <column name="STATE"/>
+            </basic>
+            <basic name="text1">
+                <column name="TEXT1"/>
+            </basic>
+            <basic name="text2">
+                <column name="TEXT2"/>
+            </basic>
+            <basic name="text3">
+                <column name="TEXT3"/>
+            </basic>
+            <basic name="totalAnnualCost">
+                <column name="TOTAL_ANNUAL_COST"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="TimeLogs">
+        <table name="TIME_LOGS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="billableStatus">
+                <column name="BILLABLE_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="date">
+                <column name="DATE" length="19"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="fromTime">
+                <column name="FROM_TIME" length="19"/>
+            </basic>
+            <basic name="hours">
+                <column name="HOURS"/>
+            </basic>
+            <basic name="toTime">
+                <column name="TO_TIME" length="19"/>
+            </basic>
+            <basic name="userName">
+                <column name="USER_NAME" length="50"/>
+            </basic>
+            <basic name="workItem">
+                <column name="WORK_ITEM" length="100"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="jobs" fetch="LAZY">
+                <join-column name="JOB_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+            <many-to-one name="projects" fetch="LAZY">
+                <join-column name="PROJECT" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="TimeSheet">
+        <table name="TIME_SHEET"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="approvedBillableHours">
+                <column name="APPROVED_BILLABLE_HOURS"/>
+            </basic>
+            <basic name="approvedNonBillableHours">
+                <column name="APPROVED_NON_BILLABLE_HOURS"/>
+            </basic>
+            <basic name="approvedRatePerHour">
+                <column name="APPROVED_RATE_PER_HOUR"/>
+            </basic>
+            <basic name="approvedTotalAmount">
+                <column name="APPROVED_TOTAL_AMOUNT"/>
+            </basic>
+            <basic name="approvedTotalHours">
+                <column name="APPROVED_TOTAL_HOURS"/>
+            </basic>
+            <basic name="currencyCode">
+                <column name="CURRENCY_CODE" length="50"/>
+            </basic>
+            <basic name="description">
+                <column name="DESCRIPTION" column-definition="LONGTEXT"/>
+            </basic>
+            <basic name="submittedBillableHours">
+                <column name="SUBMITTED_BILLABLE_HOURS"/>
+            </basic>
+            <basic name="submittedRatePerHour">
+                <column name="SUBMITTED_RATE_PER_HOUR"/>
+            </basic>
+            <basic name="submittedTotalAmount">
+                <column name="SUBMITTED_TOTAL_AMOUNT"/>
+            </basic>
+            <basic name="submittedTotalHours">
+                <column name="SUBMITTED_TOTAL_HOURS"/>
+            </basic>
+            <basic name="submittednOnBillableHours">
+                <column name="SUBMITTEDN_ON_BILLABLE_HOURS"/>
+            </basic>
+            <basic name="timesheetName">
+                <column name="TIMESHEET_NAME" length="100"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="TravelExpense">
+        <table name="TRAVEL_EXPENSE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="travelExpenseId">
+                <column name="TRAVEL_EXPENSE_ID"/>
+            </basic>
+            <basic name="travelId">
+                <column name="TRAVEL_ID" column-definition="INT"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="TravelRequest">
+        <table name="TRAVEL_REQUEST"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="approvalStatus">
+                <column name="APPROVAL_STATUS" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="customerName">
+                <column name="CUSTOMER_NAME" length="50"/>
+            </basic>
+            <basic name="employeeDepartment">
+                <column name="EMPLOYEE_DEPARTMENT" length="50"/>
+            </basic>
+            <basic name="expectedDateOfArrival">
+                <column name="EXPECTED_DATE_OF_ARRIVAL" length="19"/>
+            </basic>
+            <basic name="expectedDateOfDeparture">
+                <column name="EXPECTED_DATE_OF_DEPARTURE" length="19"/>
+            </basic>
+            <basic name="expectedDurationInDays">
+                <column name="EXPECTED_DURATION_IN_DAYS" column-definition="INT"/>
+            </basic>
+            <basic name="isBillableToCustomer">
+                <column name="IS_BILLABLE_TO_CUSTOMER" length="20"/>
+            </basic>
+            <basic name="placeOfVisit">
+                <column name="PLACE_OF_VISIT" length="50"/>
+            </basic>
+            <basic name="purposeOfVisit">
+                <column name="PURPOSE_OF_VISIT" length="100"/>
+            </basic>
+            <basic name="travelId">
+                <column name="TRAVEL_ID" column-definition="INT"/>
+            </basic>
+            <basic name="travelInitiateId">
+                <column name="TRAVEL_INITIATE_ID" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="WorkingHours">
+        <table name="WORKING_HOURS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="firstCheckin">
+                <column name="FIRST_CHECKIN" length="19"/>
+            </basic>
+            <basic name="lastCheckout">
+                <column name="LAST_CHECKOUT" length="19"/>
+            </basic>
+            <basic name="maxClockedHours">
+                <column name="MAX_CLOCKED_HOURS" length="50"/>
+            </basic>
+            <basic name="minClockedHours">
+                <column name="MIN_CLOCKED_HOURS" length="50"/>
+            </basic>
+            <basic name="workspaceId">
+                <column name="WORKSPACE_ID" column-definition="INT"/>
+            </basic>
+            <many-to-one name="employee" fetch="LAZY">
+                <join-column name="EMPLOYEE_ID" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

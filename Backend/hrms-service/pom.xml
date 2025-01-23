@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.nouros.hrms</groupId>
+		<artifactId>hrms</artifactId>
+		<version>1.1.0</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<artifactId>hrms-service</artifactId>
+	<version>1.1.0</version>
+	<packaging>jar</packaging>
+	<properties>
+		<jacoco.version>0.8.8</jacoco.version>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
+		<jacoco.outputDir>${project.basedir}/../target/site/jacoco</jacoco.outputDir>
+		<sonar.coverage.jacoco.xmlReportPaths>
+			${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+	</properties>
+	<name>hrms-service</name>
+	<repositories>
+		<repository>
+			<id>internal-repository</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<releases>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>com.nouros.hrms</groupId>
+			<artifactId>hrms-api</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.objecthunter</groupId>
+			<artifactId>exp4j</artifactId>
+			<version>0.4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<version>9.44.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>5.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.camunda.bpm.springboot</groupId>
+			<artifactId>camunda-bpm-spring-boot-starter-external-task-client</artifactId>
+			<version>7.22.0-alpha1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpclient</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.enttribe.platform</groupId>
+			<artifactId>sla-api</artifactId>
+			<version>5.0.1</version>
+			<exclusions>
+			<exclusion>
+					<groupId>com.enttribe.commons</groupId>
+					<artifactId>core-utility</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.enttribe.platform</groupId>
+					<artifactId>custom-annotation</artifactId>
+				</exclusion>
+					<exclusion>
+					<groupId>com.enttribe.platform</groupId>
+					<artifactId>base-utility-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.enttribe.platform</groupId>
+			<artifactId>custom-annotation</artifactId>
+			<version>7.0.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.enttribe.platform</groupId>
+					<artifactId>sla-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.parsson</groupId>
+					<artifactId>parsson</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.elasticsearch</groupId>
+					<artifactId>elasticsearch</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.40</version>
+		</dependency>
+
+
+ 
+<dependency>
+    <groupId>org.apache.velocity.tools</groupId>
+    <artifactId>velocity-tools-generic</artifactId>
+    <version>3.1</version>
+</dependency>
+
+ 
+ 
+ 
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-test</artifactId>
+</dependency>
+
+
+
+<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf</artifactId>
+			<version>9.7.2</version>
+		</dependency>
+ 
+
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.15.4</version>
+		</dependency>
+
+
+ 
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
+					<overWrite>false</overWrite>
+					<docletArtifact>
+						<groupId>nl.talsmasoftware</groupId>
+						<artifactId>umldoclet</artifactId>
+						<version>2.1.0</version>
+					</docletArtifact>
+					<additionalOptions></additionalOptions>
+					<doclint>none</doclint>
+					<detectJavaApiLink>false</detectJavaApiLink>
+					<destDir>${project.basedir}/../doc/Javadoc</destDir>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

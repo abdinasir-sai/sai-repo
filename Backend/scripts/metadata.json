@@ -1,0 +1,23 @@
+{
+        "publisherHostname": "localhost",                                                                        # HOSTNAME OF PUBLISHER PORTAL
+        "publisherPort": "443",                                                                                        # PORT OF PUBLISHER PORTAL
+        "gatewayHostname": "localhost",                                                                                # HOSTNAME OF GATEWAY 
+        "gatewayPort": "443",                                                                                                # PORT OF GATEWAY
+        "metadata": [
+          {
+                "name": "hrms-APP",                                                                                                # API NAME
+                "version": "1.0",                                                                                                # API VERSION
+                "timeout": "180000",                                                                                        # API TIMEOUT
+                "context": "/apim/hrms",                                                                                        # API CONTEXT
+                "filePath": "/home/ubuntu/quickboot/jenkins/workspace/hrms/configuration/swagger.json",                  # Swagger file Path
+                "endpoint": "http://hrms-service/hrms",                                                                # Endpoint of Application
+                "clientName": "bootnext",                                                                        # Client name to be subscribed
+                "isDefaultVersion":false,                                                                   # 'false' if api Run on version, 'true' if needed default 
+                "certificate_path":null,                                                                    # Certificate File path if needed, 'null' if not needed
+                "certificate_alias":null,	                                                                # Certificate Alias( SHOULD BE UNIQUE  )
+                "enableCors":false, 
+                "requested_by":"quickboot"
+                                                                  
+          }
+        ]
+}

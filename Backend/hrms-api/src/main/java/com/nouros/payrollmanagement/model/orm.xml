@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_0.xsd" version="2.0">
+    <package>
+        com.enttribe.payrollmanagement.model
+    </package>
+    <access>
+        PROPERTY
+    </access>
+    <entity class="EmployeeSalaryStructure">
+        <table name="EMPLOYEE_SALARY_STRUCTURE"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="basicSalary">
+                <column name="BASIC_SALARY"/>
+            </basic>
+            <basic name="criticalSkills">
+                <column name="CRITICAL_SKILLS"/>
+            </basic>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="empolyeePk">
+                <column name="EMPOLYEE_PK" column-definition="INT"/>
+            </basic>
+            <basic name="endDate">
+                <column name="END_DATE" length="19"/>
+            </basic>
+            <basic name="hra">
+                <column name="HRA"/>
+            </basic>
+            <basic name="localCurrency">
+                <column name="LOCAL_CURRENCY" length="10"/>
+            </basic>
+            <basic name="mobileAllowance">
+                <column name="MOBILE_ALLOWANCE"/>
+            </basic>
+            <basic name="overbase">
+                <column name="OVERBASE"/>
+            </basic>
+            <basic name="overtime">
+                <column name="OVERTIME"/>
+            </basic>
+            <basic name="payFrequency">
+                <column name="PAY_FREQUENCY" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="payRate">
+                <column name="PAY_RATE" length="10"/>
+            </basic>
+            <basic name="relocationAllowance">
+                <column name="RELOCATION_ALLOWANCE"/>
+            </basic>
+            <basic name="relocationAllowanceDate">
+                <column name="RELOCATION_ALLOWANCE_DATE" length="19"/>
+            </basic>
+            <basic name="signUpBonus">
+                <column name="SIGN_UP_BONUS"/>
+            </basic>
+            <basic name="signUpBonusDate">
+                <column name="SIGN_UP_BONUS_DATE" length="19"/>
+            </basic>
+            <basic name="startDate">
+                <column name="START_DATE" length="19"/>
+            </basic>
+            <basic name="sti">
+                <column name="STI"/>
+            </basic>
+            <basic name="stiDate">
+                <column name="STI_DATE" length="19"/>
+            </basic>
+            <basic name="ta">
+                <column name="TA"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="EmployeeSalaryStructureHistory">
+        <table name="EMPLOYEE_SALARY_STRUCTURE_HISTORY"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="basicSalary">
+                <column name="BASIC_SALARY"/>
+            </basic>
+            <basic name="criticalSkills">
+                <column name="CRITICAL_SKILLS"/>
+            </basic>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="empolyeePk">
+                <column name="EMPOLYEE_PK" column-definition="INT"/>
+            </basic>
+            <basic name="endDate">
+                <column name="END_DATE" length="19"/>
+            </basic>
+            <basic name="hra">
+                <column name="HRA"/>
+            </basic>
+            <basic name="localCurrency">
+                <column name="LOCAL_CURRENCY" length="10"/>
+            </basic>
+            <basic name="mobileAllowance">
+                <column name="MOBILE_ALLOWANCE"/>
+            </basic>
+            <basic name="overbase">
+                <column name="OVERBASE"/>
+            </basic>
+            <basic name="overtime">
+                <column name="OVERTIME"/>
+            </basic>
+            <basic name="payFrequency">
+                <column name="PAY_FREQUENCY" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="payRate">
+                <column name="PAY_RATE" length="10"/>
+            </basic>
+            <basic name="relocationAllowance">
+                <column name="RELOCATION_ALLOWANCE"/>
+            </basic>
+            <basic name="relocationDate">
+                <column name="RELOCATION_DATE" length="19"/>
+            </basic>
+            <basic name="signUpBonus">
+                <column name="SIGN_UP_BONUS"/>
+            </basic>
+            <basic name="signUpBonusDate">
+                <column name="SIGN_UP_BONUS_DATE" length="19"/>
+            </basic>
+            <basic name="startDate">
+                <column name="START_DATE" length="19"/>
+            </basic>
+            <basic name="sti">
+                <column name="STI"/>
+            </basic>
+            <basic name="stiDate">
+                <column name="STI_DATE" length="19"/>
+            </basic>
+            <basic name="ta">
+                <column name="TA"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="GradeMetaInfo">
+        <table name="GRADE_META_INFO"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="grade">
+                <column name="GRADE" length="20"/>
+            </basic>
+            <basic name="maxBasic">
+                <column name="MAX_BASIC"/>
+            </basic>
+            <basic name="minBasic">
+                <column name="MIN_BASIC"/>
+            </basic>
+            <basic name="stiMultiplier">
+                <column name="STI_MULTIPLIER"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="HrmsSystemConfig">
+        <table name="HRMS_SYSTEM_CONFIG"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="keyName">
+                <column name="KEY_NAME" length="50"/>
+            </basic>
+            <basic name="keyValue">
+                <column name="KEY_VALUE" length="200"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="PayrollRun">
+        <table name="PAYROLL_RUN"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="endDate">
+                <column name="END_DATE" length="19"/>
+            </basic>
+            <basic name="runDate">
+                <column name="RUN_DATE" length="19"/>
+            </basic>
+            <basic name="startDate">
+                <column name="START_DATE" length="19"/>
+            </basic>
+            <basic name="status">
+                <column name="STATUS" length="50"/>
+            </basic>
+            <one-to-many name="runDetails" target-entity="com.enttribe.payrollmanagement.model.RunDetails" mapped-by="payrollRun">
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+    <entity class="RunDetails">
+        <table name="RUN_DETAILS"/>
+        <attributes>
+            <id name="id">
+                <column name="ID" column-definition="INT"/>
+            </id>
+            <basic name="basicSalary">
+                <column name="BASIC_SALARY"/>
+            </basic>
+            <basic name="criticalSkills">
+                <column name="CRITICAL_SKILLS"/>
+            </basic>
+            <basic name="deleted">
+                <column name="DELETED"/>
+            </basic>
+            <basic name="empolyeePk">
+                <column name="EMPOLYEE_PK" column-definition="INT"/>
+            </basic>
+            <basic name="gosiEmployee">
+                <column name="GOSI_EMPLOYEE"/>
+            </basic>
+            <basic name="gosiEmployer">
+                <column name="GOSI_EMPLOYER"/>
+            </basic>
+            <basic name="hra">
+                <column name="HRA"/>
+            </basic>
+            <basic name="localCurrency">
+                <column name="LOCAL_CURRENCY" length="10"/>
+            </basic>
+            <basic name="mobileAllowance">
+                <column name="MOBILE_ALLOWANCE"/>
+            </basic>
+            <basic name="netAmount">
+                <column name="NET_AMOUNT"/>
+            </basic>
+            <basic name="overbase">
+                <column name="OVERBASE"/>
+            </basic>
+            <basic name="overtime">
+                <column name="OVERTIME"/>
+            </basic>
+            <basic name="payFrequency">
+                <column name="PAY_FREQUENCY" column-definition="ENUM" length="12"/>
+            </basic>
+            <basic name="payRate">
+                <column name="PAY_RATE" length="10"/>
+            </basic>
+            <basic name="relocationAllowance">
+                <column name="RELOCATION_ALLOWANCE"/>
+            </basic>
+            <basic name="signUpBonus">
+                <column name="SIGN_UP_BONUS"/>
+            </basic>
+            <basic name="sti">
+                <column name="STI"/>
+            </basic>
+            <basic name="ta">
+                <column name="TA"/>
+            </basic>
+            <basic name="totalDeductionAmount">
+                <column name="TOTAL_DEDUCTION_AMOUNT"/>
+            </basic>
+            <basic name="totalEarningAmount">
+                <column name="TOTAL_EARNING_AMOUNT"/>
+            </basic>
+            <many-to-one name="payrollRun" fetch="LAZY">
+                <join-column name="PAYROLL_RUN_FK" column-definition="INT"/>
+                <cascade>
+                    <cascade-merge/>
+                </cascade>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

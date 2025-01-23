@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+	
+	<Properties>
+    <Property name="LOG_DIR">logs</Property>
+  </Properties>
+  
+	<Appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<JSONLayout complete="false" compact="true" eventEol="true" stacktraceAsString="true" includeTimeMillis="true">
+				<KeyValuePair key="timestamp" value="$${date:yyyy-MM-dd'T'HH:mm:ss.SSSZ}" />
+				<KeyValuePair key="X-Correlation-ID" value="$${ctx:X-Correlation-ID:-}" />
+			</JSONLayout>
+		</Console>
+		<RollingFile name="RollingFile"
+			fileName="${LOG_DIR}/service.log"
+			filePattern="${LOG_DIR}/archived/service-%d{-dd-MMMM-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<pattern>%d %p %C{1.} [%t] %notEmpty{X-Correlation-ID=%X{X-Correlation-ID}} %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy
+					size="50 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<DefaultRolloverStrategy max="10">
+			</DefaultRolloverStrategy>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="STDOUT" />
+			<AppenderRef ref="RollingFile" />
+			<!-- <AppenderRef ref="FILE" />-->
+		</Root>
+	</Loggers>
+</Configuration>
+
