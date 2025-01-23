@@ -1,0 +1,227 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hrms-service.fullname" . }}
+  labels:
+    {{- include "hrms-service.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.rollingUpdate.maxSurge }}
+      maxUnavailable: {{ .Values.rollingUpdate.maxUnavailable }}
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{- include "hrms-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "hrms-service.selectorLabels" . | nindent 8 }}
+    spec:
+      hostAliases:
+       - ip: "101.0.205.11"
+         hostnames:
+         - "hdp-master-01.local.com"
+       - ip: "101.0.205.12"
+         hostnames:
+         - "hdp-master-02.local.com"
+       - ip: "101.0.205.15"
+         hostnames:
+         - "hdp-worker-01.local.com"
+       - ip: "101.0.205.16"
+         hostnames:
+         - "hdp-worker-02.local.com"
+       - ip: "101.0.205.17"
+         hostnames:
+         - "hdp-worker-03.local.com"
+       - ip: "101.0.205.18"
+         hostnames:
+         - "hdp-worker-04.local.com"
+       - ip: "101.0.205.19"
+         hostnames:
+         - "hdp-worker-05.local.com"
+       - ip: "101.0.205.13"
+         hostnames:
+         - "hdp-kafka-01.local.com"
+       - ip: "101.0.205.14"
+         hostnames:
+         - "hdp-kafka-02.local.com"
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.ports.containerPort }}
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.ports.containerPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          {{- if .Values.livenessProbe.enable }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: {{ .Values.ports.containerPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          {{- end }}
+          resources:
+            limits:
+              cpu: {{ .Values.resourcesLimits.cpu }}
+              memory: {{ .Values.resourcesLimits.memory }}
+            requests:
+              cpu: {{ .Values.requestsResources.cpu }}
+              memory: {{ .Values.requestsResources.memory }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+          env:
+          - name: MYSQL_URL
+            value: {{ .Values.env.mysqlUrl }}
+          - name: MYSQL_USERNAME
+            value: {{ .Values.env.mysqlUsername }}
+          - name: MYSQL_CHECKSUM
+            value: {{ .Values.env.mysqlChecksum }}
+          - name: VAULT_ENABLED
+            value: {{ .Values.env.vaultEnabled | quote }}
+          - name: VAULT_TOKEN
+            value: {{ .Values.env.vaultToken }}
+          - name: preferIPv6Addresses
+            value: {{ .Values.env.ipv6 | quote }}
+          - name: MICRO_BASE_URL
+            value: {{ .Values.env.microBaseUrl | quote }}
+          - name: NODE_BASE_URL
+            value: {{ .Values.env.nodeBaseUrl | quote }}
+          - name: PHOENIX_URL
+            value: {{ .Values.env.phoenixUrl | quote }}
+          - name: auditKafkaServiceEnable
+            value: {{ .Values.env.auditKafkaEnable | quote }}
+          - name: APACHE_DOWNLOAD_BASE_URL
+            value: {{ .Values.env.apacheDownloadUrl | quote }}
+          - name: SERVICE_PORT
+            value: {{ .Values.env.servicePort | quote }}
+          - name: SERVICE_CONTEXT
+            value: {{ .Values.env.serviceContext | quote }}
+          - name: SERVICE_JAVAMELODY_USERPASS
+            value: {{ .Values.env.serviceJavamelodyUserpass | quote }}
+          - name: redisMaster
+            value: {{ .Values.env.redisMaster | quote }}
+          - name: redisSenitalList
+            value: {{ .Values.env.redisSenitalList | quote }}
+          - name: redisMasterAuth
+            value: {{ .Values.env.redisMasterAuth | quote }}
+          - name: redisSenitalEnable
+            value: {{ .Values.env.redisSenitalEnable | quote }}
+          - name: Xmx
+            value: {{ .Values.env.Xmx | quote }}
+          - name: Xms
+            value: {{ .Values.env.Xms | quote }}
+          - name: HBASE_CONFPATH
+            value: {{ .Values.env.hbaseConfPath | quote }}
+          - name: ATTACHMENT_URL
+            value: {{ .Values.env.attachementUrl | quote }}
+          - name: UM_URL
+            value: {{ .Values.env.umUrl | quote }}
+          - name: GEO_URL
+            value: {{ .Values.env.geoUrl | quote }}
+          - name: INVENTORY_URL
+            value: {{ .Values.env.inventoryUrl | quote }}
+          - name: PLATFORM_URL
+            value: {{ .Values.env.platformUrl | quote }}
+          - name: FM_URL
+            value: {{ .Values.env.fmUrl | quote }} 
+          - name: PM_URL
+            value: {{ .Values.env.pmUrl | quote }}   
+          - name: NOTIFICATION_URL
+            value: {{ .Values.env.notificationUrl }}
+          - name: WFM_URL
+            value: {{ .Values.env.workflowServiceURL }}
+          - name: VB_URL
+            value: {{ .Values.env.viewBuilderUrl }}
+          - name: NAMING_URL
+            value: {{ .Values.env.namingServiceurl }}
+          - name: CHECLIST_BUILDER_URL
+            value: {{ .Values.env.checklistBuilderUrl }}
+          - name: DOC_MGMT_URL
+            value: {{ .Values.env.documentManagementUrl }}
+          - name: PLATFORM_SERVICE_URL
+            value: {{ .Values.env.basePlatformServiceUrl }}
+          - name: CB_URL
+            value: {{ .Values.env.catalogueBuilderUrl }}
+          - name: COMMENT_SERVICE_URL
+            value: {{ .Values.env.commentServiceUrl }}
+          - name: SLA_URL
+            value: {{ .Values.env.slaServiceUrl }}
+          - name: ONESEARCH_URL
+            value: {{ .Values.env.oneSearchUrl }}                                                        
+          {{- if .Values.collectServer.register }}
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/bash","{{ .Values.collectServer.postStartScript }}"]
+            {{- if .Values.collectServer.preStopEnable }}
+            preStop:
+              exec:
+                command: ["/bin/bash","{{ .Values.collectServer.preStopScript }}"]
+            {{- end }}
+          {{- end }}
+                 
+          volumeMounts:
+          - name: {{ .Values.volumeName.sharedDir1 }}
+            mountPath: {{ .Values.volumeMounts.protectedPath }}
+#          - name: {{ .Values.volumeName.hadoopConfig }}
+#            mountPath: {{ .Values.volumeMounts.hadoopPath }}
+#          - name: {{ .Values.volumeName.hbaseConfig }}
+#            mountPath: {{ .Values.volumeMounts.hbasePath }}
+        - name: {{ .Values.sidecar.Name }}
+          image: "{{ .Values.sidecar.image.repository }}:{{ .Values.sidecar.image.tag }}"
+          imagePullPolicy: {{ .Values.sidecar.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.sidecar.ports.containerPort }}
+              protocol: TCP
+      volumes:
+      - name: shared-vol1
+#        nfs:
+ #         server: {{ .Values.volumes.nfsServerUrl }} 
+  #        path: {{ .Values.volumes.nfsServerPath }}
+#      - name: shared-vol2
+#        nfs:
+#          server: {{ .Values.volumes.nfsServerUrl }}
+#          path: {{ .Values.volumes.nfsProtectedPath }}
+#      - name: {{ .Values.volumeName.hadoopConfig }}
+#        configMap:
+#          defaultMode: {{ .Values.configMap.defaultMode }}
+#          name: {{ .Values.volumes.hadoopConfigmapName }}
+#      - name: {{ .Values.volumeName.hbaseConfig }}
+#        configMap:
+#          defaultMode: {{ .Values.configMap.defaultMode }}
+#          name: {{ .Values.volumes.hbaseConfigmapName }}

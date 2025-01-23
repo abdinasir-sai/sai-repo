@@ -1,0 +1,20 @@
+{{- if .Values.virtualService.enabled -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "hrms-service.fullname" . }}
+spec:
+  hosts:
+  - {{ .Values.virtualService.hosts | quote }}
+  gateways:
+  - {{ .Values.virtualService.gateways }}
+  http:
+  - match:
+    - uri:
+        prefix: {{ .Values.virtualService.context }}
+    route:
+    - destination:
+        port:
+          number: {{ .Values.service.port }}
+        host: {{ include "hrms-service.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+{{- end }}
