@@ -1,0 +1,29 @@
+apiVersion: "kafka.strimzi.io/v1beta2"
+kind: "KafkaConnector"
+metadata:
+  name: "hrms-user-sink-connector"
+  labels:
+    strimzi.io/cluster: kafka-connect
+spec:
+  class: io.confluent.connect.jdbc.JdbcSinkConnector
+  tasksMax: 3
+  config:
+    connection.url: "jdbc:mysql://bootnext-r-mysqlrouter-router:6446/hrms?autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true&allowPublicKeyRetrieval=true&disableSslHostnameVerification=true"
+    connection.user: "clusteradmin"
+    connection.password: "CL7@k#us5er@dmin4"
+    topics: "User"
+    key.converter: "org.apache.kafka.connect.json.JsonConverter"
+    value.converter: "org.apache.kafka.connect.json.JsonConverter"
+    key.converter.schemas.enable: "true"
+    value.converter.schemas.enable: "true"
+    table.name.format: "User"
+    transforms: "unwrap"
+    transforms.unwrap.type: "io.debezium.transforms.ExtractNewRecordState"
+    transforms.unwrap.drop.tombstones: "false"
+    transforms.unwrap.drop.deletes: "false"
+    fields.whitelist: "userid_pk,firstname,lastname,middlename,username"
+    insert.mode: "upsert"
+    delete.enabled: "true"
+    pk.fields: "userid_pk"
+    pk.mode: "record_key"
+    behavior.on.null.values: "delete"

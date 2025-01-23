@@ -1,0 +1,2418 @@
+-- MySQL dump 10.13  Distrib 8.0.35, for Linux (x86_64)
+--
+-- Host: localhost    Database: hrms
+-- ------------------------------------------------------
+-- Server version	8.0.35-0ubuntu0.22.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `hrms`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `hrms` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+USE `hrms`;
+
+--
+-- Table structure for table `ABSENT_SCHEDULE`
+--
+
+DROP TABLE IF EXISTS `ABSENT_SCHEDULE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ABSENT_SCHEDULE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `SCHEDULE_NAME` varchar(30) DEFAULT NULL,
+  `SCHEDULE_START_DATE` datetime(6) DEFAULT NULL,
+  `ROLES` varchar(255) DEFAULT NULL,
+  `DEPARTMENT` varchar(255) DEFAULT NULL,
+  `LOCATION` varchar(255) DEFAULT NULL,
+  `GROUP_SCHEDULES` varchar(255) DEFAULT NULL,
+  `EMPLOYEE` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKojd5f8wf2xy5gu0s6jg47hhmh` (`CREATOR`),
+  KEY `FKbqhj95x8rcq569gu1s71enfc1` (`LAST_MODIFIER`),
+  CONSTRAINT `FKbqhj95x8rcq569gu1s71enfc1` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKojd5f8wf2xy5gu0s6jg47hhmh` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ABSENT_SCHEDULE`
+--
+
+LOCK TABLES `ABSENT_SCHEDULE` WRITE;
+/*!40000 ALTER TABLE `ABSENT_SCHEDULE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ABSENT_SCHEDULE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `APPLICABLE`
+--
+
+DROP TABLE IF EXISTS `APPLICABLE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `APPLICABLE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `GENDER` enum('Male','Female','Other') DEFAULT NULL,
+  `MARITAL_STATUS` enum('Single','UnMarrried','Married','Divorced') DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  `DESIGNATION_ID` int DEFAULT NULL,
+  `LOCATION_ID` int DEFAULT NULL,
+  `ROLE` varchar(50) DEFAULT NULL,
+  `ADD_FIELD` enum('Yes','No') DEFAULT NULL,
+  `EMPLOYMENT_TYPE` enum('Full-Time','Part-Time','Contract','Temporary') DEFAULT NULL,
+  `SOURCE_OF_HIRE` enum('Recruitment Agency','Employee Referral','Online Job Board','Other') DEFAULT NULL,
+  `ONBOARDING_STATUS` enum('Complete','Incomplete','Pending','Not Applicable') DEFAULT NULL,
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `DEPARTMENT_ID` (`DEPARTMENT_ID`),
+  KEY `DESIGNATION_ID` (`DESIGNATION_ID`),
+  KEY `LOCATION_ID` (`LOCATION_ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FKl2o4p7jxojhe8a2jc840ujqgq` (`CREATOR`),
+  KEY `FKgw73pdw8um3luq1fl6rm9hg50` (`LAST_MODIFIER`),
+  CONSTRAINT `APPLICABLE_ibfk_1` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `DEPARTMENT` (`ID`),
+  CONSTRAINT `APPLICABLE_ibfk_2` FOREIGN KEY (`DESIGNATION_ID`) REFERENCES `DESIGNATION` (`ID`),
+  CONSTRAINT `APPLICABLE_ibfk_3` FOREIGN KEY (`LOCATION_ID`) REFERENCES `LOCATION` (`ID`),
+  CONSTRAINT `APPLICABLE_ibfk_4` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FKgw73pdw8um3luq1fl6rm9hg50` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKl2o4p7jxojhe8a2jc840ujqgq` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `APPLICABLE`
+--
+
+LOCK TABLES `APPLICABLE` WRITE;
+/*!40000 ALTER TABLE `APPLICABLE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `APPLICABLE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `APPLICANT`
+--
+
+DROP TABLE IF EXISTS `APPLICANT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `APPLICANT` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `DELETED` tinyint(1) NOT NULL DEFAULT '0',
+  `WORKSPACE_ID` int DEFAULT '1',
+  `FIRST_NAME` varchar(255) DEFAULT NULL,
+  `LAST_NAME` varchar(255) DEFAULT NULL,
+  `EMAIL_ID` varchar(50) DEFAULT NULL,
+  `MOBILE` varchar(20) DEFAULT NULL,
+  `PHONE` varchar(20) DEFAULT NULL,
+  `FAX` varchar(20) DEFAULT NULL,
+  `WEBSITE` varchar(255) DEFAULT NULL,
+  `SECONDARY_EMAIL` varchar(255) DEFAULT NULL,
+  `PRESENT_ADDRESS` varchar(255) DEFAULT NULL,
+  `STREET` varchar(255) DEFAULT NULL,
+  `CITY` varchar(255) DEFAULT NULL,
+  `PROVINCE` varchar(255) DEFAULT NULL,
+  `POSTAL_CODE` varchar(20) DEFAULT NULL,
+  `COUNTRY` varchar(255) DEFAULT NULL,
+  `EXPERIENCE_IN_YEARS` int DEFAULT NULL,
+  `HIGHEST_QUALIFICATION` varchar(255) DEFAULT NULL,
+  `CURRENT_JOB_TITLE` varchar(255) DEFAULT NULL,
+  `CURRENT_EMPLOYER` varchar(255) DEFAULT NULL,
+  `EXPECTED_SALARY` int DEFAULT NULL,
+  `CURRENT_SALARY` int DEFAULT NULL,
+  `SKILL_SET` varchar(255) DEFAULT NULL,
+  `UNIQUE_ID_CANDIDATE` varchar(255) DEFAULT NULL,
+  `CANDIDATE_SOURCE` varchar(255) DEFAULT NULL,
+  `CANDIDATE_STATUS` enum('New','In review','Qualified','Unqualified','Reviewed','Converted-employee','Converted-temporary','Forward to onboarding') DEFAULT NULL,
+  `APPLCIANT_SOURCE` enum('Internal-Referral','Job-Boards','Career-Sites','Recruitment-Agencies','Social-Media','Direct-Applications','Campus-Recruitment','Employee-Referral-Programs') DEFAULT NULL,
+  `CANDIDATE_OWNER` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `PROCESS_INSTANCE_ID` varchar(255) DEFAULT NULL,
+  `WORKFLOW_STAGE` varchar(255) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKi4xxlc71wrx0napidqx39djkm` (`CREATOR`),
+  KEY `FKs5o2353n4qg1420dcxjicpt71` (`LAST_MODIFIER`),
+  CONSTRAINT `FKi4xxlc71wrx0napidqx39djkm` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKs5o2353n4qg1420dcxjicpt71` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `APPLICANT`
+--
+
+LOCK TABLES `APPLICANT` WRITE;
+/*!40000 ALTER TABLE `APPLICANT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `APPLICANT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ASSET`
+--
+
+DROP TABLE IF EXISTS `ASSET`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ASSET` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `DELETED` tinyint(1) NOT NULL DEFAULT '0',
+  `WORKSPACE_ID` int DEFAULT '1',
+  `DEVICE_NAME` varchar(30) DEFAULT NULL,
+  `DEVICE_SERIAL_NUMBER` varchar(255) DEFAULT NULL,
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `REMARK` varchar(255) DEFAULT NULL,
+  `TEXT1` varchar(255) DEFAULT NULL,
+  `TEXT2` varchar(255) DEFAULT NULL,
+  `TEXT3` varchar(255) DEFAULT NULL,
+  `TEXT4` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `PROCESS_INSTANCE_ID` varchar(255) DEFAULT NULL,
+  `WORKFLOW_STAGE` varchar(255) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FKgpccyjrq58s97qec8m26kqsb0` (`CREATOR`),
+  KEY `FK2wohvmltt8qf29k2l79kbgipy` (`LAST_MODIFIER`),
+  CONSTRAINT `ASSET_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FK2wohvmltt8qf29k2l79kbgipy` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKgpccyjrq58s97qec8m26kqsb0` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ASSET`
+--
+
+LOCK TABLES `ASSET` WRITE;
+/*!40000 ALTER TABLE `ASSET` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ASSET` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ATTENDANCE_REGULARIZATION`
+--
+
+DROP TABLE IF EXISTS `ATTENDANCE_REGULARIZATION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ATTENDANCE_REGULARIZATION` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `APPROVAL_NAME` varchar(30) DEFAULT NULL,
+  `DESCRIPTION` varchar(70) DEFAULT NULL,
+  `REPORTING_TO` varchar(40) DEFAULT NULL,
+  `APPROVER_EMAIL` varchar(35) DEFAULT NULL,
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FK8ll5vt43l90in9ijkf46271uk` (`CREATOR`),
+  KEY `FK23de0seunc2b836u9sfisihoh` (`LAST_MODIFIER`),
+  CONSTRAINT `ATTENDANCE_REGULARIZATION_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FK23de0seunc2b836u9sfisihoh` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FK8ll5vt43l90in9ijkf46271uk` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ATTENDANCE_REGULARIZATION`
+--
+
+LOCK TABLES `ATTENDANCE_REGULARIZATION` WRITE;
+/*!40000 ALTER TABLE `ATTENDANCE_REGULARIZATION` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ATTENDANCE_REGULARIZATION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `BREAKDETAILS`
+--
+
+DROP TABLE IF EXISTS `BREAKDETAILS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `BREAKDETAILS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `BREAK_NAME` varchar(30) DEFAULT NULL,
+  `BREAK_ICON` varchar(255) DEFAULT NULL,
+  `PAY_TYPE` bit(1) DEFAULT b'0',
+  `BREAK_MODE` bit(1) DEFAULT b'0',
+  `START_TIME` datetime(6) DEFAULT NULL,
+  `END_TIME` datetime(6) DEFAULT NULL,
+  `AVAILABLE_SHIFTS` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK8d2jds69oh98h55g5ne1o0fmc` (`CREATOR`),
+  KEY `FK4v7573h5b926s2iohetaxvxwy` (`LAST_MODIFIER`),
+  CONSTRAINT `FK4v7573h5b926s2iohetaxvxwy` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FK8d2jds69oh98h55g5ne1o0fmc` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `BREAKDETAILS`
+--
+
+LOCK TABLES `BREAKDETAILS` WRITE;
+/*!40000 ALTER TABLE `BREAKDETAILS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `BREAKDETAILS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CALENDAR_DEFINITION`
+--
+
+DROP TABLE IF EXISTS `CALENDAR_DEFINITION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `CALENDAR_DEFINITION` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `WEEK_STARTS_ON` enum('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') DEFAULT NULL,
+  `WORK_WEEK_STARTS_ON` enum('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') DEFAULT NULL,
+  `WORK_WEEK_ENDS_ON` enum('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') DEFAULT NULL,
+  `HALF_WORKING_DAY_AND_HALF_WEEKEND` bit(1) DEFAULT b'0',
+  `CURRENT_YEAR` int DEFAULT NULL,
+  `YEAR_STARTS_FROM` datetime(6) DEFAULT NULL,
+  `YEAR_ENDS_ON` datetime(6) DEFAULT NULL,
+  `STATUTORY_WEEKEND` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKl342xmj1rl6vkpf8l4mk3bjje` (`CREATOR`),
+  KEY `FK4chx7bhtbititrcon8skykm7s` (`LAST_MODIFIER`),
+  CONSTRAINT `FK4chx7bhtbititrcon8skykm7s` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKl342xmj1rl6vkpf8l4mk3bjje` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CALENDAR_DEFINITION`
+--
+
+LOCK TABLES `CALENDAR_DEFINITION` WRITE;
+/*!40000 ALTER TABLE `CALENDAR_DEFINITION` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CALENDAR_DEFINITION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CANDIDATE`
+--
+
+DROP TABLE IF EXISTS `CANDIDATE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `CANDIDATE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `DELETED` tinyint(1) NOT NULL DEFAULT '0',
+  `WORKSPACE_ID` int DEFAULT '1',
+  `ADDRESS_LINE1` varchar(100) DEFAULT NULL,
+  `ADDRESS_LINE2` varchar(100) DEFAULT NULL,
+  `CITY` varchar(50) DEFAULT NULL,
+  `STATE` varchar(50) DEFAULT NULL,
+  `COUNTRY` varchar(50) DEFAULT NULL,
+  `POSTAL_CODE` int DEFAULT NULL,
+  `ADDRESS_LINE11` varchar(100) DEFAULT NULL,
+  `ADDRESS_LINE21` varchar(100) DEFAULT NULL,
+  `CITY1` varchar(50) DEFAULT NULL,
+  `STATE1` varchar(50) DEFAULT NULL,
+  `COUNTRY1` varchar(50) DEFAULT NULL,
+  `POSTAL_CODE1` int DEFAULT NULL,
+  `PRESENT_ADDRESS` longtext,
+  `FIRST_NAME` varchar(50) DEFAULT NULL,
+  `PERMANENT_ADDRESS` longtext,
+  `LAST_NAME` varchar(50) DEFAULT NULL,
+  `EMAIL_ID` varchar(100) DEFAULT NULL,
+  `PHONE` varchar(20) DEFAULT NULL,
+  `EXPERIENCE` int DEFAULT NULL,
+  `UAN_NUMBER` varchar(20) DEFAULT NULL,
+  `AADHAAR_CARD_NUMBER` varchar(20) DEFAULT NULL,
+  `PAN_CARD_NUMBER` varchar(20) DEFAULT NULL,
+  `SOURCE_OF_HIRE` varchar(100) DEFAULT NULL,
+  `OFFICIAL_EMAIL` varchar(100) DEFAULT NULL,
+  `SKILL_SET` varchar(100) DEFAULT NULL,
+  `HIGHEST_QUALIFICATION` varchar(50) DEFAULT NULL,
+  `LOCATION_ID` int DEFAULT NULL,
+  `TITLE` varchar(50) DEFAULT NULL,
+  `CURRENT_SALARY` double DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  `ADDITIONAL_INFORMATION` longtext,
+  `TENTATIVE_JOINING_DATE` datetime(6) DEFAULT NULL,
+  `ONBOARDING_STATUS` enum('Pending','In-progress','Completed','Probationary-Period','Extended-Onboarding','On-Hold','Exited-During-Onboarding') DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `CANDIDATE_ID` varchar(100) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `PROCESS_INSTANCE_ID` varchar(255) DEFAULT NULL,
+  `WORKFLOW_STAGE` varchar(255) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `LOCATION_ID` (`LOCATION_ID`),
+  KEY `DEPARTMENT_ID` (`DEPARTMENT_ID`),
+  KEY `FKo355oii0a5lxxbkw3dtxihcg8` (`CREATOR`),
+  KEY `FKb3vuafdaqe2t6rdxm93wr5ojv` (`LAST_MODIFIER`),
+  CONSTRAINT `CANDIDATE_ibfk_1` FOREIGN KEY (`LOCATION_ID`) REFERENCES `LOCATION` (`ID`),
+  CONSTRAINT `CANDIDATE_ibfk_2` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `DEPARTMENT` (`ID`),
+  CONSTRAINT `FKb3vuafdaqe2t6rdxm93wr5ojv` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKo355oii0a5lxxbkw3dtxihcg8` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CANDIDATE`
+--
+
+LOCK TABLES `CANDIDATE` WRITE;
+/*!40000 ALTER TABLE `CANDIDATE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CANDIDATE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CANDIDATE_EDUCATION`
+--
+
+DROP TABLE IF EXISTS `CANDIDATE_EDUCATION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `CANDIDATE_EDUCATION` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `SCHOOL_NAME` varchar(100) DEFAULT NULL,
+  `DEGREE_DIPLOMA` varchar(50) DEFAULT NULL,
+  `FIELD_OF_STUDY` varchar(100) DEFAULT NULL,
+  `DATE_OF_COMPLETION` datetime(6) DEFAULT NULL,
+  `ADDITIONAL_NOTES` longtext,
+  `CANDIDATE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `CANDIDATE_ID` (`CANDIDATE_ID`),
+  KEY `FKm0sc9fj9gtwpgok1wyq34c7fs` (`CREATOR`),
+  KEY `FKrwhd4u70b8j6s84nl96ugotha` (`LAST_MODIFIER`),
+  CONSTRAINT `CANDIDATE_EDUCATION_ibfk_1` FOREIGN KEY (`CANDIDATE_ID`) REFERENCES `CANDIDATE` (`ID`),
+  CONSTRAINT `FKm0sc9fj9gtwpgok1wyq34c7fs` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKrwhd4u70b8j6s84nl96ugotha` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CANDIDATE_EDUCATION`
+--
+
+LOCK TABLES `CANDIDATE_EDUCATION` WRITE;
+/*!40000 ALTER TABLE `CANDIDATE_EDUCATION` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CANDIDATE_EDUCATION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CANDIDATE_EXPERIENCE`
+--
+
+DROP TABLE IF EXISTS `CANDIDATE_EXPERIENCE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `CANDIDATE_EXPERIENCE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `OCCUPATION` varchar(50) DEFAULT NULL,
+  `COMPANY` varchar(100) DEFAULT NULL,
+  `SUMMARY` longtext,
+  `DURATION` varchar(50) DEFAULT NULL,
+  `CURRENTLY_WORK_HERE` bit(1) DEFAULT b'0',
+  `ROWID` int DEFAULT NULL,
+  `CANDIDATE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `CANDIDATE_ID` (`CANDIDATE_ID`),
+  KEY `FK14r9c6f43p9n8j0auwgt0bobh` (`CREATOR`),
+  KEY `FKscv1fuhdck7ex54phr88v5ayu` (`LAST_MODIFIER`),
+  CONSTRAINT `CANDIDATE_EXPERIENCE_ibfk_1` FOREIGN KEY (`CANDIDATE_ID`) REFERENCES `CANDIDATE` (`ID`),
+  CONSTRAINT `FK14r9c6f43p9n8j0auwgt0bobh` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKscv1fuhdck7ex54phr88v5ayu` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CANDIDATE_EXPERIENCE`
+--
+
+LOCK TABLES `CANDIDATE_EXPERIENCE` WRITE;
+/*!40000 ALTER TABLE `CANDIDATE_EXPERIENCE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CANDIDATE_EXPERIENCE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CITY`
+--
+
+DROP TABLE IF EXISTS `CITY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `CITY` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `STATE_ID` int DEFAULT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
+  `DISPLAY_NAME` varchar(50) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `STATE_ID` (`STATE_ID`),
+  KEY `FKc75418g32i3gqjy3cnbsmkwd3` (`CREATOR`),
+  KEY `FKku7fvaxvmi809tyq2ebm2kj8l` (`LAST_MODIFIER`),
+  CONSTRAINT `CITY_ibfk_1` FOREIGN KEY (`STATE_ID`) REFERENCES `STATE` (`ID`),
+  CONSTRAINT `FKc75418g32i3gqjy3cnbsmkwd3` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKku7fvaxvmi809tyq2ebm2kj8l` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CITY`
+--
+
+LOCK TABLES `CITY` WRITE;
+/*!40000 ALTER TABLE `CITY` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CITY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CLIENTS`
+--
+
+DROP TABLE IF EXISTS `CLIENTS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `CLIENTS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `CLIENT_NAME` varchar(50) DEFAULT NULL,
+  `CURRENCY` varchar(50) DEFAULT NULL,
+  `BILLING_METHOD` varchar(100) DEFAULT NULL,
+  `EMAIL_ID` varchar(100) DEFAULT NULL,
+  `FIRST_NAME` varchar(100) DEFAULT NULL,
+  `LAST_NAME` varchar(50) DEFAULT NULL,
+  `PHONE` varchar(20) DEFAULT NULL,
+  `MOBILE` varchar(20) DEFAULT NULL,
+  `FAX` varchar(20) DEFAULT NULL,
+  `STREET_ADDRESS` varchar(100) DEFAULT NULL,
+  `CITY` varchar(50) DEFAULT NULL,
+  `STATE_PROVINCE` varchar(50) DEFAULT NULL,
+  `ZIPCODE` int DEFAULT NULL,
+  `COUNTRY` varchar(50) DEFAULT NULL,
+  `INDUSTRY` varchar(100) DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `COMPANY_SIZE` int DEFAULT NULL,
+  `DESCRIPTION` longtext,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `PROCESS_INSTANCE_ID` varchar(255) DEFAULT NULL,
+  `WORKFLOW_STAGE` varchar(255) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK3qx1uow1mwpg54hm4wa9gag1w` (`CREATOR`),
+  KEY `FKme2qgfc6qh2gg3ukk0l1n30k1` (`LAST_MODIFIER`),
+  CONSTRAINT `FK3qx1uow1mwpg54hm4wa9gag1w` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKme2qgfc6qh2gg3ukk0l1n30k1` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CLIENTS`
+--
+
+LOCK TABLES `CLIENTS` WRITE;
+/*!40000 ALTER TABLE `CLIENTS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CLIENTS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `COMPANY_DETAILS`
+--
+
+DROP TABLE IF EXISTS `COMPANY_DETAILS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `COMPANY_DETAILS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `LOGO_UPLOAD` varchar(50) DEFAULT NULL,
+  `COMPANY_NAME` varchar(100) DEFAULT NULL,
+  `WEBSITE` varchar(100) DEFAULT NULL,
+  `CONTACT_PERSON` varchar(50) DEFAULT NULL,
+  `MOBILE_NUMBER` varchar(20) DEFAULT NULL,
+  `EMAIL` varchar(100) DEFAULT NULL,
+  `ADDRESS_LINE1` varchar(100) DEFAULT NULL,
+  `ADDRESS_LINE2` varchar(100) DEFAULT NULL,
+  `CITY` varchar(50) DEFAULT NULL,
+  `STATE` varchar(50) DEFAULT NULL,
+  `COUNTRY` varchar(50) DEFAULT NULL,
+  `PINCODE` int DEFAULT NULL,
+  `INDUSTRY` enum('Information Technology','Healthcare','Finance','Manufacturing','Retail','Hospitality and Tourism','Telecommunications','Education','Transportation and Logistics','Energy') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKmm13bp7kbtcta1f5ssq0sit13` (`CREATOR`),
+  KEY `FKbo171kv6f03w8fcm3t4ulwr74` (`LAST_MODIFIER`),
+  CONSTRAINT `FKbo171kv6f03w8fcm3t4ulwr74` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKmm13bp7kbtcta1f5ssq0sit13` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `COMPANY_DETAILS`
+--
+
+LOCK TABLES `COMPANY_DETAILS` WRITE;
+/*!40000 ALTER TABLE `COMPANY_DETAILS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `COMPANY_DETAILS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `COMPENSATORY_REQUEST_SCHEDULER`
+--
+
+DROP TABLE IF EXISTS `COMPENSATORY_REQUEST_SCHEDULER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `COMPENSATORY_REQUEST_SCHEDULER` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `EMPLOYEE_NAME` varchar(50) DEFAULT NULL,
+  `WORKED_DATE` datetime(6) DEFAULT NULL,
+  `UNIT` bit(1) DEFAULT b'0',
+  `DURATION` enum('Full Day','Half Day','Hours') DEFAULT NULL,
+  `EXPIRY_DATE` datetime(6) DEFAULT NULL,
+  `ATTENDANCE_DETAILS` longtext,
+  `REASON` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK6tlonshfpc4503nlice7nlb2a` (`CREATOR`),
+  KEY `FKhul41g3aq8kxafqvc71yep4xx` (`LAST_MODIFIER`),
+  CONSTRAINT `FK6tlonshfpc4503nlice7nlb2a` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKhul41g3aq8kxafqvc71yep4xx` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `COMPENSATORY_REQUEST_SCHEDULER`
+--
+
+LOCK TABLES `COMPENSATORY_REQUEST_SCHEDULER` WRITE;
+/*!40000 ALTER TABLE `COMPENSATORY_REQUEST_SCHEDULER` DISABLE KEYS */;
+/*!40000 ALTER TABLE `COMPENSATORY_REQUEST_SCHEDULER` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `COUNTRY`
+--
+
+DROP TABLE IF EXISTS `COUNTRY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `COUNTRY` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(50) DEFAULT NULL,
+  `DISPLAY_NAME` varchar(50) DEFAULT NULL,
+  `COUNTRY_CODE` varchar(50) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKcgggq7m5nu63ysv3jbvsowjof` (`CREATOR`),
+  KEY `FKuqflkyaggxu9wegxajlddf60` (`LAST_MODIFIER`),
+  CONSTRAINT `FKcgggq7m5nu63ysv3jbvsowjof` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKuqflkyaggxu9wegxajlddf60` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `COUNTRY`
+--
+
+LOCK TABLES `COUNTRY` WRITE;
+/*!40000 ALTER TABLE `COUNTRY` DISABLE KEYS */;
+/*!40000 ALTER TABLE `COUNTRY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DELEGATIONS`
+--
+
+DROP TABLE IF EXISTS `DELEGATIONS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `DELEGATIONS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `DELEGATOR_ID` int DEFAULT NULL,
+  `DELEGATEE_ID` int DEFAULT NULL,
+  `TYPE` enum('Temporary','Permanent') DEFAULT NULL,
+  `FROM_DATE` datetime(6) DEFAULT NULL,
+  `TO_DATE` datetime(6) DEFAULT NULL,
+  `NOTIFICATION` enum('Delegator And Delegatee','Delegatee') DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `DELEGATOR_ID` (`DELEGATOR_ID`),
+  KEY `DELEGATEE_ID` (`DELEGATEE_ID`),
+  KEY `FKaeibeen9frhk1su9fks90vxuf` (`CREATOR`),
+  KEY `FKfsq4s5ywswnd2oi636oqc8yci` (`LAST_MODIFIER`),
+  CONSTRAINT `DELEGATIONS_ibfk_1` FOREIGN KEY (`DELEGATOR_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `DELEGATIONS_ibfk_2` FOREIGN KEY (`DELEGATEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FKaeibeen9frhk1su9fks90vxuf` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKfsq4s5ywswnd2oi636oqc8yci` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DELEGATIONS`
+--
+
+LOCK TABLES `DELEGATIONS` WRITE;
+/*!40000 ALTER TABLE `DELEGATIONS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DELEGATIONS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DEPARTMENT`
+--
+
+DROP TABLE IF EXISTS `DEPARTMENT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `DEPARTMENT` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `DEPARTMENT_CODE` varchar(50) DEFAULT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
+  `MAIL_ALIAS` varchar(100) DEFAULT NULL,
+  `DEPARTMENT_LEAD` int DEFAULT NULL,
+  `PARENT_DEPARTMENT` int DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK6crtr3h3316388isj5tlx0jvt` (`CREATOR`),
+  KEY `FKjpp210jhgbwtd2fnmr29th44p` (`LAST_MODIFIER`),
+  CONSTRAINT `FK6crtr3h3316388isj5tlx0jvt` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKjpp210jhgbwtd2fnmr29th44p` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DEPARTMENT`
+--
+
+LOCK TABLES `DEPARTMENT` WRITE;
+/*!40000 ALTER TABLE `DEPARTMENT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DEPARTMENT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DESIGNATION`
+--
+
+DROP TABLE IF EXISTS `DESIGNATION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `DESIGNATION` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(50) DEFAULT NULL,
+  `MAIL_ALIAS` varchar(100) DEFAULT NULL,
+  `DESIGNATION_CODE` varchar(50) DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `PARENT_DESIGNATION` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKp1tvilciqttd5k8ri3e8ka5ve` (`CREATOR`),
+  KEY `FK74og0it085blf5f2j9f2vhi2k` (`LAST_MODIFIER`),
+  CONSTRAINT `FK74og0it085blf5f2j9f2vhi2k` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKp1tvilciqttd5k8ri3e8ka5ve` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DESIGNATION`
+--
+
+LOCK TABLES `DESIGNATION` WRITE;
+/*!40000 ALTER TABLE `DESIGNATION` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DESIGNATION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EMPLOYEE`
+--
+
+DROP TABLE IF EXISTS `EMPLOYEE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EMPLOYEE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `DELETED` tinyint(1) NOT NULL DEFAULT '0',
+  `WORKSPACE_ID` int DEFAULT '1',
+  `ADDRESS_LINE1` varchar(100) DEFAULT NULL,
+  `ADDRESS_LINE2` varchar(100) DEFAULT NULL,
+  `CITY` varchar(50) DEFAULT NULL,
+  `STATE` varchar(50) DEFAULT NULL,
+  `COUNTRY` varchar(50) DEFAULT NULL,
+  `POSTAL_CODE` int DEFAULT NULL,
+  `ADDRESS_LINE11` varchar(100) DEFAULT NULL,
+  `ADDRESS_LINE21` varchar(100) DEFAULT NULL,
+  `CITY1` varchar(50) DEFAULT NULL,
+  `STATE1` varchar(50) DEFAULT NULL,
+  `COUNTRY1` varchar(50) DEFAULT NULL,
+  `POSTAL_CODE1` int DEFAULT NULL,
+  `FIRST_NAME` varchar(50) DEFAULT NULL,
+  `LAST_NAME` varchar(50) DEFAULT NULL,
+  `NICK_NAME` varchar(50) DEFAULT NULL,
+  `EMAIL` varchar(100) DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  `LOCATION_ID` int DEFAULT NULL,
+  `DESIGNATION_ID` int DEFAULT NULL,
+  `AADHAR_CARD` varchar(50) DEFAULT NULL,
+  `ORG_ROLE` varchar(50) DEFAULT NULL,
+  `EMPLOYEMENT_TYPE` enum('Full-time','part-time','permanent','contract','temporary','training','internship','volunteer','freelance') DEFAULT NULL,
+  `EMPLOYEMENT_STATUS` enum('Active','Inactive') DEFAULT NULL,
+  `SOURCE_HIRE` enum('Internal-Referral','Job-Boards','Career-Sites','Recruitment-Agencies','Social-Media','Direct-Applications','Campus-Recruitment','Employee-Referral-Programs') DEFAULT NULL,
+  `DATE_OF_JOINING` datetime(6) DEFAULT NULL,
+  `CURRENT_EXPERIENCE` int DEFAULT NULL,
+  `TOTAL_EXPERIENCE` int DEFAULT NULL,
+  `REPORTING_MANAGER` varchar(50) DEFAULT NULL,
+  `DATE_OF_BIRTH` datetime(6) DEFAULT NULL,
+  `AGE` int DEFAULT NULL,
+  `GENDER` enum('Male','Female','Other') DEFAULT NULL,
+  `MARITIAL_STATUS` enum('Single','Married','Divorced','Widowed','Other') DEFAULT NULL,
+  `ABOUT_ME` varchar(100) DEFAULT NULL,
+  `EXPERTISE` varchar(100) DEFAULT NULL,
+  `UNIQUE_IDENTIFICATION` varchar(20) DEFAULT NULL,
+  `WORK_PHONE_NUMBER` varchar(20) DEFAULT NULL,
+  `EXTENSION` varchar(50) DEFAULT NULL,
+  `SEATING_LOCATION` varchar(50) DEFAULT NULL,
+  `TAGS` varchar(50) DEFAULT NULL,
+  `PERSONAL_MOBILE_NUMBER` varchar(20) DEFAULT NULL,
+  `PERSONAL_EMAIL_ADDRESS` varchar(100) DEFAULT NULL,
+  `DATE_OF_EXIT` datetime(6) DEFAULT NULL,
+  `ONBOARDING_STATUS` enum('Pending','In-progress','Completed','Probationary-Period','Extended-Onboarding','On-Hold','Exited-During-Onboarding') DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `ANNUAL_SALARY` double NOT NULL,
+  `bonuses` double NOT NULL,
+  `BENEFITS` varchar(100) DEFAULT NULL,
+  `ALLOWANCES` varchar(100) DEFAULT NULL,
+  `TAXES` varchar(100) DEFAULT NULL,
+  `TRAINING_COST` double NOT NULL,
+  `RECRUITMENT_COST` double NOT NULL,
+  `ONBOARDING_COST` double NOT NULL,
+  `EMPLOYEE_ID` varchar(100) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `PROCESS_INSTANCE_ID` varchar(255) DEFAULT NULL,
+  `WORKFLOW_STAGE` varchar(255) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `DEPARTMENT_ID` (`DEPARTMENT_ID`),
+  KEY `LOCATION_ID` (`LOCATION_ID`),
+  KEY `DESIGNATION_ID` (`DESIGNATION_ID`),
+  KEY `FKirmuqjf8k18t72nbyyw0p5cab` (`CREATOR`),
+  KEY `FK2rq39dovka9cv5nneo3v9vkjr` (`LAST_MODIFIER`),
+  CONSTRAINT `EMPLOYEE_ibfk_1` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `DEPARTMENT` (`ID`),
+  CONSTRAINT `EMPLOYEE_ibfk_2` FOREIGN KEY (`LOCATION_ID`) REFERENCES `LOCATION` (`ID`),
+  CONSTRAINT `EMPLOYEE_ibfk_3` FOREIGN KEY (`DESIGNATION_ID`) REFERENCES `DESIGNATION` (`ID`),
+  CONSTRAINT `FK2rq39dovka9cv5nneo3v9vkjr` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKirmuqjf8k18t72nbyyw0p5cab` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EMPLOYEE`
+--
+
+LOCK TABLES `EMPLOYEE` WRITE;
+/*!40000 ALTER TABLE `EMPLOYEE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EMPLOYEE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EMPLOYEEEDUCATIONDETAILS`
+--
+
+DROP TABLE IF EXISTS `EMPLOYEEEDUCATIONDETAILS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EMPLOYEEEDUCATIONDETAILS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `INSTITUTE_NAME` varchar(100) DEFAULT NULL,
+  `DEGREE_DIPLOMA` varchar(50) DEFAULT NULL,
+  `SPECIALIZATION` varchar(50) DEFAULT NULL,
+  `ATTACHMENT1` varchar(255) DEFAULT NULL,
+  `ATTACHMENT2` varchar(255) DEFAULT NULL,
+  `ATTACHMENT3` varchar(255) DEFAULT NULL,
+  `ATTACHMENT4` varchar(255) DEFAULT NULL,
+  `ATTACHMENT5` varchar(255) DEFAULT NULL,
+  `COURSE_NAME` varchar(100) DEFAULT NULL,
+  `DATE_OF_COMPLETION` datetime(6) DEFAULT NULL,
+  `ROW_ID` int DEFAULT NULL,
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FKl3xtjxx9hn7ppkloud9pe4w3m` (`CREATOR`),
+  KEY `FKg00aiqu579cfrattvp656g6ut` (`LAST_MODIFIER`),
+  CONSTRAINT `EMPLOYEEEDUCATIONDETAILS_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FKg00aiqu579cfrattvp656g6ut` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKl3xtjxx9hn7ppkloud9pe4w3m` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EMPLOYEEEDUCATIONDETAILS`
+--
+
+LOCK TABLES `EMPLOYEEEDUCATIONDETAILS` WRITE;
+/*!40000 ALTER TABLE `EMPLOYEEEDUCATIONDETAILS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EMPLOYEEEDUCATIONDETAILS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EMPLOYEE_DEPENDENT_DETAILS`
+--
+
+DROP TABLE IF EXISTS `EMPLOYEE_DEPENDENT_DETAILS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EMPLOYEE_DEPENDENT_DETAILS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(100) DEFAULT NULL,
+  `RELATIONSHIP` enum('Mother','Father','Brother','Sister','Wife','Child','Husband') DEFAULT NULL,
+  `dob` datetime(6) DEFAULT NULL,
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FK195gpi69nuexpqv3wglryf4o4` (`CREATOR`),
+  KEY `FKoras8b15bgf9qmdo1njw4o6oy` (`LAST_MODIFIER`),
+  CONSTRAINT `EMPLOYEE_DEPENDENT_DETAILS_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FK195gpi69nuexpqv3wglryf4o4` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKoras8b15bgf9qmdo1njw4o6oy` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EMPLOYEE_DEPENDENT_DETAILS`
+--
+
+LOCK TABLES `EMPLOYEE_DEPENDENT_DETAILS` WRITE;
+/*!40000 ALTER TABLE `EMPLOYEE_DEPENDENT_DETAILS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EMPLOYEE_DEPENDENT_DETAILS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EMPLOYEE_MONTHLY_ATTENDANCE`
+--
+
+DROP TABLE IF EXISTS `EMPLOYEE_MONTHLY_ATTENDANCE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EMPLOYEE_MONTHLY_ATTENDANCE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `PAYABLE_DAYS` int DEFAULT NULL,
+  `WORKING_DAYS` int DEFAULT NULL,
+  `TOTAL_PAYABLE_DAYS` int DEFAULT NULL,
+  `TOTAL_WORKED_DAYS` int DEFAULT NULL,
+  `PAID_LEAVE_IN_DAYS` int DEFAULT NULL,
+  `GOV_HOLIDAYS_IN_DAYS` int DEFAULT NULL,
+  `WEEKENDS_IN_DAYS` int DEFAULT NULL,
+  `TOTAL_PAID_OFF_IN_DAYS` int DEFAULT NULL,
+  `UNPAID_LEAVE_IN_DAYS` int DEFAULT NULL,
+  `TOTAL_ABSENT_IN_DAYS` int DEFAULT NULL,
+  `EXPECTED_PAYABLE_HOURS` varchar(50) DEFAULT NULL,
+  `ACTUAL_WORKED_HOURS` varchar(50) DEFAULT NULL,
+  `PAID_LEAVE_IN_HOURS` varchar(50) DEFAULT NULL,
+  `TOTAL_PAYABLE_HOURS` varchar(50) DEFAULT NULL,
+  `EXPECTED_WORKING_HOURS` varchar(50) DEFAULT NULL,
+  `TOTAL_WORKED_HOURS` varchar(50) DEFAULT NULL,
+  `OVERTIME_HOURS` varchar(50) DEFAULT NULL,
+  `START_DATE` datetime(6) DEFAULT NULL,
+  `END_DATE` datetime(6) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FKs7bvsugsw1sod48o91i6c9dw1` (`CREATOR`),
+  KEY `FKe9hpcxb30uj5jdxqj1t2juqi0` (`LAST_MODIFIER`),
+  CONSTRAINT `EMPLOYEE_MONTHLY_ATTENDANCE_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FKe9hpcxb30uj5jdxqj1t2juqi0` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKs7bvsugsw1sod48o91i6c9dw1` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EMPLOYEE_MONTHLY_ATTENDANCE`
+--
+
+LOCK TABLES `EMPLOYEE_MONTHLY_ATTENDANCE` WRITE;
+/*!40000 ALTER TABLE `EMPLOYEE_MONTHLY_ATTENDANCE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EMPLOYEE_MONTHLY_ATTENDANCE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EMPLOYEE_WORK_EXPERIENCE`
+--
+
+DROP TABLE IF EXISTS `EMPLOYEE_WORK_EXPERIENCE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EMPLOYEE_WORK_EXPERIENCE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `COMPANY_NAME` varchar(100) DEFAULT NULL,
+  `JOB_TITLE` varchar(50) DEFAULT NULL,
+  `EXPERIENCE` int DEFAULT NULL,
+  `FROM_DATE` datetime(6) DEFAULT NULL,
+  `TO_DATE` datetime(6) DEFAULT NULL,
+  `JOB_DESCRIPTION` longtext,
+  `RELEVANT` bit(1) DEFAULT b'0',
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FK3pnbhr4001qqv4omse4vfvv5u` (`CREATOR`),
+  KEY `FKri6nmpow3f7aoj8q6au7gq9mr` (`LAST_MODIFIER`),
+  CONSTRAINT `EMPLOYEE_WORK_EXPERIENCE_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `FK3pnbhr4001qqv4omse4vfvv5u` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKri6nmpow3f7aoj8q6au7gq9mr` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EMPLOYEE_WORK_EXPERIENCE`
+--
+
+LOCK TABLES `EMPLOYEE_WORK_EXPERIENCE` WRITE;
+/*!40000 ALTER TABLE `EMPLOYEE_WORK_EXPERIENCE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EMPLOYEE_WORK_EXPERIENCE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EXCEPTIONAL_WORKING_DAY`
+--
+
+DROP TABLE IF EXISTS `EXCEPTIONAL_WORKING_DAY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EXCEPTIONAL_WORKING_DAY` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(50) DEFAULT NULL,
+  `date` datetime(6) DEFAULT NULL,
+  `APPLICABLE_FOR` enum('All Employees','Specific Departments','Specific Designations') DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKiqtfwtnf3j8boptt5yho4r66p` (`CREATOR`),
+  KEY `FK52nkrww28a0427jpap54wh6s` (`LAST_MODIFIER`),
+  CONSTRAINT `FK52nkrww28a0427jpap54wh6s` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKiqtfwtnf3j8boptt5yho4r66p` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EXCEPTIONAL_WORKING_DAY`
+--
+
+LOCK TABLES `EXCEPTIONAL_WORKING_DAY` WRITE;
+/*!40000 ALTER TABLE `EXCEPTIONAL_WORKING_DAY` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EXCEPTIONAL_WORKING_DAY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EXCEPTIONS`
+--
+
+DROP TABLE IF EXISTS `EXCEPTIONS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EXCEPTIONS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  `DESIGNATION_ID` int DEFAULT NULL,
+  `LOCATION_ID` int DEFAULT NULL,
+  `ROLE` varchar(55) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `DEPARTMENT_ID` (`DEPARTMENT_ID`),
+  KEY `DESIGNATION_ID` (`DESIGNATION_ID`),
+  KEY `LOCATION_ID` (`LOCATION_ID`),
+  KEY `FKp2mm3ww10l4t7xattbxpx5dp6` (`CREATOR`),
+  KEY `FK7alm6iahynr0myd3muufihejy` (`LAST_MODIFIER`),
+  CONSTRAINT `EXCEPTIONS_ibfk_1` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `DEPARTMENT` (`ID`),
+  CONSTRAINT `EXCEPTIONS_ibfk_2` FOREIGN KEY (`DESIGNATION_ID`) REFERENCES `DESIGNATION` (`ID`),
+  CONSTRAINT `EXCEPTIONS_ibfk_3` FOREIGN KEY (`LOCATION_ID`) REFERENCES `LOCATION` (`ID`),
+  CONSTRAINT `FK7alm6iahynr0myd3muufihejy` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKp2mm3ww10l4t7xattbxpx5dp6` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EXCEPTIONS`
+--
+
+LOCK TABLES `EXCEPTIONS` WRITE;
+/*!40000 ALTER TABLE `EXCEPTIONS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EXCEPTIONS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EXIT_DETAILS`
+--
+
+DROP TABLE IF EXISTS `EXIT_DETAILS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EXIT_DETAILS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `EMPLOYEE_ID` varchar(50) DEFAULT NULL,
+  `INTERVIEWER` varchar(50) DEFAULT NULL,
+  `SEPARATION_DATE` datetime(6) DEFAULT NULL,
+  `REASON_FOR_LEAVING` enum('Better Employment Condition','Career Prospect','Death','Dessertion','Dismissed','Dissatisfaction with the job','Emigrating','Health','Higher Pay','Personality Conflict','Retirement','Retrenchment') DEFAULT NULL,
+  `WORKING_FOR_ORGANIZATION_AGAIN` enum('Yes','No') DEFAULT NULL,
+  `ORGANIZATION_IMPROVEMENT_SUGGESTIONS` varchar(100) DEFAULT NULL,
+  `LIKED_MOST_ABOUT_ORGANIZATION` varchar(100) DEFAULT NULL,
+  `ADDITIONAL_COMMENTS` varchar(100) DEFAULT NULL,
+  `COMPANY_VEHICLE_HANDED_IN` varchar(100) DEFAULT NULL,
+  `ALL_LIBRARY_BOOKS_SUBMITTED` varchar(100) DEFAULT NULL,
+  `EXIT_INTERVIEW_CONDUCTED` varchar(100) DEFAULT NULL,
+  `RESIGNATION_LETTER_SUBMITTED` varchar(100) DEFAULT NULL,
+  `ALL_EQUIPMENTS_HANDED_IN` varchar(100) DEFAULT NULL,
+  `SECURITY` varchar(100) DEFAULT NULL,
+  `NOTICE_PERIOD_FOLLOWED` varchar(100) DEFAULT NULL,
+  `MANAGER_SUPERVISOR_CLEARANCE` varchar(100) DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold','Completed') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKgowiyvc49sbbh49cmpa1njuip` (`CREATOR`),
+  KEY `FKstutjjgqln8gvkjsp1yg5cc3` (`LAST_MODIFIER`),
+  CONSTRAINT `FKgowiyvc49sbbh49cmpa1njuip` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKstutjjgqln8gvkjsp1yg5cc3` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EXIT_DETAILS`
+--
+
+LOCK TABLES `EXIT_DETAILS` WRITE;
+/*!40000 ALTER TABLE `EXIT_DETAILS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EXIT_DETAILS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `FAQ`
+--
+
+DROP TABLE IF EXISTS `FAQ`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `FAQ` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `QUESTION` varchar(255) DEFAULT NULL,
+  `DESCRIPTION` longtext,
+  `TAGS` longtext,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKirnmqenib82n5t8uchq09bau8` (`CREATOR`),
+  KEY `FKb0cstoe25d3e95sbgard1qnps` (`LAST_MODIFIER`),
+  CONSTRAINT `FKb0cstoe25d3e95sbgard1qnps` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKirnmqenib82n5t8uchq09bau8` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `FAQ`
+--
+
+LOCK TABLES `FAQ` WRITE;
+/*!40000 ALTER TABLE `FAQ` DISABLE KEYS */;
+/*!40000 ALTER TABLE `FAQ` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `GENERAL_SETTINGS_LEAVE`
+--
+
+DROP TABLE IF EXISTS `GENERAL_SETTINGS_LEAVE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `GENERAL_SETTINGS_LEAVE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `CONSECUTIVE_LEAVES_CONSIDERED_AS_LEAVE` int DEFAULT NULL,
+  `APPLICABLE_LEAVE_TYPES` enum('Annual Leave','Sick Leave','Compensatory Leave','Other') DEFAULT NULL,
+  `COMPENSATORY_REQUEST_ENTRY_MODE` enum('Manual','Automatic') DEFAULT NULL,
+  `ADD_COMPENSATORY_REQUEST_FOR_FUTURE_DATE` bit(1) DEFAULT b'0',
+  `LEAVE_CREDITED_ON_WEEKEND` double DEFAULT NULL,
+  `LEAVE_CREDITED_ON_HOLIDAYS` double DEFAULT NULL,
+  `CREDITED_LEAVE_EXPIRATION_DAYS` int DEFAULT NULL,
+  `UNITS_ALLOWED` enum('Full Day','Half Day','Hours') DEFAULT NULL,
+  `DURATIONS_ALLOWED` enum('Full Day','Half Day','Hours') DEFAULT NULL,
+  `TIME_INPUT_ALLOWED` bit(1) DEFAULT b'0',
+  `MAKE_REASON_MANDATORY` bit(1) DEFAULT b'0',
+  `RESOURCE_AVAILABILITY_REPORT_ACCESS` enum('All','Department','Individual','None') DEFAULT NULL,
+  `ENABLE_PAYROLL_REPORT_FOR_ADMIN` bit(1) DEFAULT b'0',
+  `INCLUDE_WEEKENDS` bit(1) DEFAULT b'0',
+  `INCLUDE_HOLIDAYS` bit(1) DEFAULT b'0',
+  `UNPAID_LEAVE_MARKED_AS` bit(1) DEFAULT b'0',
+  `ENABLE_PASSWORD_PROTECTION` bit(1) DEFAULT b'0',
+  `ALLOW_LEAVE_REQUEST_UNTIL_NEXT` enum('Pay Period','Month','Specific Date','None') DEFAULT NULL,
+  `PAST_LEAVES_WITHIN_CURRENT_PAY_PERIOD` enum('All','Department','Individual','None') DEFAULT NULL,
+  `CURRENT_DAY_AND_UPCOMING_LEAVE_REQUESTS` enum('All','Department','Individual','None') DEFAULT NULL,
+  `MAKE_REASON_FOR_LEAVE_CANCELLATION_MANDATORY` bit(1) DEFAULT b'0',
+  `LEAVE_DISPLAY_FORMAT` enum('Google','Office365') DEFAULT NULL,
+  `REMINDER_EMAIL` bit(1) DEFAULT b'0',
+  `CUSTOMIZE_EMAIL_TEMPLATE` longtext,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKooquftg6w5ukc650oh19fhejh` (`CREATOR`),
+  KEY `FKearydhgki0bjiu7n85t2ihm1b` (`LAST_MODIFIER`),
+  CONSTRAINT `FKearydhgki0bjiu7n85t2ihm1b` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKooquftg6w5ukc650oh19fhejh` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `GENERAL_SETTINGS_LEAVE`
+--
+
+LOCK TABLES `GENERAL_SETTINGS_LEAVE` WRITE;
+/*!40000 ALTER TABLE `GENERAL_SETTINGS_LEAVE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `GENERAL_SETTINGS_LEAVE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `HOLIDAY`
+--
+
+DROP TABLE IF EXISTS `HOLIDAY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `HOLIDAY` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(100) DEFAULT NULL,
+  `date` datetime(6) DEFAULT NULL,
+  `RESTRICTED` bit(1) DEFAULT b'0',
+  `APPLICABLE_FOR` enum('All Employees','Specific Departments','Specific Designations') DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `REMINDER_DAYS` enum('1 Day','3 Days','7 Days') DEFAULT NULL,
+  `NOTIFY_APPLICABLE_EMPLOYEES` bit(1) DEFAULT b'0',
+  `REPROCESS_LEAVE_HOLIDAY` bit(1) DEFAULT b'0',
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKcv5ivawawmj0vlec8myia1bjn` (`CREATOR`),
+  KEY `FKshe79j8qu9uqg1ux0bw4b443x` (`LAST_MODIFIER`),
+  CONSTRAINT `FKcv5ivawawmj0vlec8myia1bjn` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKshe79j8qu9uqg1ux0bw4b443x` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `HOLIDAY`
+--
+
+LOCK TABLES `HOLIDAY` WRITE;
+/*!40000 ALTER TABLE `HOLIDAY` DISABLE KEYS */;
+/*!40000 ALTER TABLE `HOLIDAY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `HR_LETTERS`
+--
+
+DROP TABLE IF EXISTS `HR_LETTERS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `HR_LETTERS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `DATE_OF_JOINING` datetime(6) DEFAULT NULL,
+  `DESIGNATION_ID` int DEFAULT NULL,
+  `DATE_OF_REQUEST` datetime(6) DEFAULT NULL,
+  `IS_CHANGE_IN_PRESENT_ADDRESS` bit(1) DEFAULT b'0',
+  `ADDRESS_LINE1` varchar(255) DEFAULT NULL,
+  `ADDRESS_LINE2` varchar(255) DEFAULT NULL,
+  `CITY` varchar(255) DEFAULT NULL,
+  `STATE` varchar(255) DEFAULT NULL,
+  `COUNTRY` varchar(255) DEFAULT NULL,
+  `POSTAL_CODE` varchar(255) DEFAULT NULL,
+  `DEPARTMENT` varchar(255) DEFAULT NULL,
+  `CURRENT_EXPERIENCE` varchar(255) DEFAULT NULL,
+  `LETTER_TYPE` enum('Offer letter','Appointment letter','Confirmation letter','Performance review letter','Warning letter','Termination letter','Employment verification letter','Experience certificate','Salary Increment Offer') DEFAULT NULL,
+  `SCHOOL_LEAVING_CERTIFICATE` varchar(255) DEFAULT NULL,
+  `MARKSHEETS` varchar(255) DEFAULT NULL,
+  `PASSPORT` varchar(255) DEFAULT NULL,
+  `AADHAR_CARD` varchar(255) DEFAULT NULL,
+  `RESUME` varchar(255) DEFAULT NULL,
+  `COVER_LETTER` varchar(255) DEFAULT NULL,
+  `EMPLOYMENT_VERIFICATION_LETTERS` varchar(255) DEFAULT NULL,
+  `SKILLS_CERTIFICATES` varchar(255) DEFAULT NULL,
+  `PERFORMANCE_APPRAISALS` varchar(255) DEFAULT NULL,
+  `BANK_STATEMENTS` varchar(255) DEFAULT NULL,
+  `LEASE_AGREEMENT` varchar(255) DEFAULT NULL,
+  `VOTER_REGISTRATION_CARD` varchar(255) DEFAULT NULL,
+  `SALARY` varchar(255) DEFAULT NULL,
+  `BENEFITS` varchar(255) DEFAULT NULL,
+  `PROBATION_PERIOD` varchar(255) DEFAULT NULL,
+  `NOTICE_PERIOD` varchar(255) DEFAULT NULL,
+  `REPORTING_MANAGER` varchar(255) DEFAULT NULL,
+  `WORK_SCHEDULE` varchar(255) DEFAULT NULL,
+  `REASONS_FOR_TERMINATION` varchar(255) DEFAULT NULL,
+  `EFFECTIVE_DATE_OF_TERMINATION` datetime(6) DEFAULT NULL,
+  `DRIVER_LICENSE` datetime(6) DEFAULT NULL,
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FKivsn5s4ebc94ovjsauiygb3wh` (`CREATOR`),
+  KEY `FK7c2g8nx07s17pi5pmbuow4hhd` (`LAST_MODIFIER`),
+  CONSTRAINT `FK7c2g8nx07s17pi5pmbuow4hhd` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKivsn5s4ebc94ovjsauiygb3wh` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `HR_LETTERS_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `HR_LETTERS`
+--
+
+LOCK TABLES `HR_LETTERS` WRITE;
+/*!40000 ALTER TABLE `HR_LETTERS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `HR_LETTERS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `INTERVIEW`
+--
+
+DROP TABLE IF EXISTS `INTERVIEW`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `INTERVIEW` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(100) DEFAULT NULL,
+  `CANDIDATE_ID` int DEFAULT NULL,
+  `JOB_OPENING_ID` int DEFAULT NULL,
+  `FROM_DATE` datetime(6) DEFAULT NULL,
+  `INTERVIEW_OWNER` varchar(100) DEFAULT NULL,
+  `LOCATION` varchar(100) DEFAULT NULL,
+  `COMMENTS_FOR_INTERVIEWERS` varchar(100) DEFAULT NULL,
+  `DEPARTMENT_NAME` varchar(100) DEFAULT NULL,
+  `TO_DATE` datetime(6) DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  `INTERVIEWER` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `CANDIDATE_ID` (`CANDIDATE_ID`),
+  KEY `JOB_OPENING_ID` (`JOB_OPENING_ID`),
+  KEY `DEPARTMENT_ID` (`DEPARTMENT_ID`),
+  KEY `INTERVIEWER` (`INTERVIEWER`),
+  KEY `FK9pecec1p30ojpcvlngme1bmyy` (`CREATOR`),
+  KEY `FKl675ajsbt8gw0ek8kh9i9eijn` (`LAST_MODIFIER`),
+  CONSTRAINT `FK9pecec1p30ojpcvlngme1bmyy` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKl675ajsbt8gw0ek8kh9i9eijn` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `INTERVIEW_ibfk_1` FOREIGN KEY (`CANDIDATE_ID`) REFERENCES `APPLICANT` (`ID`),
+  CONSTRAINT `INTERVIEW_ibfk_2` FOREIGN KEY (`JOB_OPENING_ID`) REFERENCES `JOB_OPENING` (`ID`),
+  CONSTRAINT `INTERVIEW_ibfk_3` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `DEPARTMENT` (`ID`),
+  CONSTRAINT `INTERVIEW_ibfk_4` FOREIGN KEY (`INTERVIEWER`) REFERENCES `EMPLOYEE` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `INTERVIEW`
+--
+
+LOCK TABLES `INTERVIEW` WRITE;
+/*!40000 ALTER TABLE `INTERVIEW` DISABLE KEYS */;
+/*!40000 ALTER TABLE `INTERVIEW` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `JOBS`
+--
+
+DROP TABLE IF EXISTS `JOBS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `JOBS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `JOB_NAME` varchar(50) DEFAULT NULL,
+  `PROJECT` varchar(50) DEFAULT NULL,
+  `START_DATE` datetime(6) DEFAULT NULL,
+  `END_DATE` datetime(6) DEFAULT NULL,
+  `hours` double DEFAULT NULL,
+  `RATE_PER_HOUR` double DEFAULT NULL,
+  `DESCRIPTION` longtext,
+  `STATUS` enum('Open','In-Progress','Pending','Closed','On Hold') DEFAULT NULL,
+  `REMINDER` varchar(100) DEFAULT NULL,
+  `REMINDER_TIME` datetime(6) DEFAULT NULL,
+  `BILLABLE_STATUS` enum('Yes','No') DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKrn1xcks4glj9ycmn7gjr40tpr` (`CREATOR`),
+  KEY `FKmrxnfqktkbtinyd3cxgl94alo` (`LAST_MODIFIER`),
+  CONSTRAINT `FKmrxnfqktkbtinyd3cxgl94alo` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKrn1xcks4glj9ycmn7gjr40tpr` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `JOBS`
+--
+
+LOCK TABLES `JOBS` WRITE;
+/*!40000 ALTER TABLE `JOBS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `JOBS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `JOB_APPLICATION`
+--
+
+DROP TABLE IF EXISTS `JOB_APPLICATION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `JOB_APPLICATION` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `FIRST_NAME` varchar(255) DEFAULT NULL,
+  `LAST_NAME` varchar(255) DEFAULT NULL,
+  `REFERRED_BY` varchar(255) DEFAULT NULL,
+  `MOBILE` varchar(50) DEFAULT NULL,
+  `EMAIL_ID` varchar(50) DEFAULT NULL,
+  `APPLICATION_STATUS` enum('Archived','In Review','Qualified','Junk candidate','Associated','Applied','Submitted-to-hiring manager','Approved by hiring manager','Interview to be scheduled','Interview-Scheduled','Interview in progress','On hold','Rejected hirable','Hired','Joined','No show','Converted - Employee','Converted - Temp','Offer planned','Offer accepted','Offer made','Offer declined','Hired-for-Interview','Forward-to-Onboarding','Rejected','Unqualified','Rejected by hiring manager','Rejected for interview') DEFAULT NULL,
+  `RELATIONSHIP` enum('Personally known','Former Colleague','Socially Connected','Got the resume through a common friend','Others') DEFAULT NULL,
+  `RESUME` varchar(200) DEFAULT NULL,
+  `APPLICANT_ID` int DEFAULT NULL,
+  `JOB_OPENING_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `APPLICANT_ID` (`APPLICANT_ID`),
+  KEY `JOB_OPENING_ID` (`JOB_OPENING_ID`),
+  KEY `FKq40lpkk6ieu3lbnpcoc0w9d4q` (`CREATOR`),
+  KEY `FKl58smqo4ijwg158kgj4jqbuiy` (`LAST_MODIFIER`),
+  CONSTRAINT `FKl58smqo4ijwg158kgj4jqbuiy` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKq40lpkk6ieu3lbnpcoc0w9d4q` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `JOB_APPLICATION_ibfk_1` FOREIGN KEY (`APPLICANT_ID`) REFERENCES `APPLICANT` (`ID`),
+  CONSTRAINT `JOB_APPLICATION_ibfk_2` FOREIGN KEY (`JOB_OPENING_ID`) REFERENCES `JOB_OPENING` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `JOB_APPLICATION`
+--
+
+LOCK TABLES `JOB_APPLICATION` WRITE;
+/*!40000 ALTER TABLE `JOB_APPLICATION` DISABLE KEYS */;
+/*!40000 ALTER TABLE `JOB_APPLICATION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `JOB_OPENING`
+--
+
+DROP TABLE IF EXISTS `JOB_OPENING`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `JOB_OPENING` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `DELETED` tinyint(1) NOT NULL DEFAULT '0',
+  `WORKSPACE_ID` int DEFAULT '1',
+  `POSTING_TITLE` varchar(250) DEFAULT NULL,
+  `ASSIGNEDRECRUITER` varchar(255) DEFAULT NULL,
+  `TARGET_CLOSSING_DATE` datetime(6) DEFAULT NULL,
+  `JOB_OPENING_STATUS` enum('In progress','none','waiting for approval','on-hold','filled','cancelled','declined','inactive submitted by client') DEFAULT NULL,
+  `INDUSTRY` enum('Information Technology','Healthcare','Finance','Manufacturing','Retail','Hospitality and Tourism','Telecommunications','Education','Transportation and Logistics','Energy') DEFAULT NULL,
+  `SALARY_RANGE` varchar(255) DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  `HIRING_MANAGER` varchar(255) DEFAULT NULL,
+  `DATE_OPENED` datetime(6) DEFAULT NULL,
+  `JOB_TYPE` enum('Full-time','part-time','permanent','contract','temporary','training','internship','volunteer','freelance') DEFAULT NULL,
+  `WORK_EXPERIENCE` varchar(255) DEFAULT NULL,
+  `SKILLS` longtext,
+  `ADDRESS` longtext,
+  `CITY` varchar(255) DEFAULT NULL,
+  `PROVINCE` varchar(255) DEFAULT NULL,
+  `POSTALCODE` varchar(20) DEFAULT NULL,
+  `COUNTRY` varchar(255) DEFAULT NULL,
+  `IS_REMOTE` enum('Yes','No') DEFAULT NULL,
+  `DESCRIPTION_REQUIREMENTS` longtext,
+  `ATTACHMENT1` varchar(200) DEFAULT NULL,
+  `ATTACHMENT2` varchar(200) DEFAULT NULL,
+  `ATTACHMENT3` varchar(200) DEFAULT NULL,
+  `OPEN_POSITIONS` int DEFAULT NULL,
+  `JOB_ID` varchar(100) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `PROCESS_INSTANCE_ID` varchar(255) DEFAULT NULL,
+  `WORKFLOW_STAGE` varchar(255) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `DEPARTMENT_ID` (`DEPARTMENT_ID`),
+  KEY `FKa56gbqx4782g6dwtk36vj77bp` (`CREATOR`),
+  KEY `FKn1m4kyikfe7mj6ga8phu66fk` (`LAST_MODIFIER`),
+  CONSTRAINT `FKa56gbqx4782g6dwtk36vj77bp` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKn1m4kyikfe7mj6ga8phu66fk` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `JOB_OPENING_ibfk_1` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `DEPARTMENT` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `JOB_OPENING`
+--
+
+LOCK TABLES `JOB_OPENING` WRITE;
+/*!40000 ALTER TABLE `JOB_OPENING` DISABLE KEYS */;
+/*!40000 ALTER TABLE `JOB_OPENING` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LEAVES`
+--
+
+DROP TABLE IF EXISTS `LEAVES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `LEAVES` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `LEAVE_TYPE_ID` int DEFAULT NULL,
+  `IS_HALF_DAY_ENABLED` bit(1) DEFAULT b'0',
+  `FROM_DATE` datetime(6) DEFAULT NULL,
+  `TO_DATE` datetime(6) DEFAULT NULL,
+  `TEAM_EMAIL_ID` varchar(50) DEFAULT NULL,
+  `DATE_OF_REQUEST` datetime(6) DEFAULT NULL,
+  `LEAVE_TAKEN` double DEFAULT NULL,
+  `UNIT` enum('Half Day','Full Day','Hours','Shifts') DEFAULT NULL,
+  `REASON_FOR_LEAVE` varchar(255) DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `LEAVE_TYPE_ID` (`LEAVE_TYPE_ID`),
+  KEY `FKpiehg4k3c0a2ljn5a47prfh2n` (`CREATOR`),
+  KEY `FKemdn7xlk1ixn1ach7ptpr261g` (`LAST_MODIFIER`),
+  CONSTRAINT `FKemdn7xlk1ixn1ach7ptpr261g` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKpiehg4k3c0a2ljn5a47prfh2n` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `LEAVES_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`),
+  CONSTRAINT `LEAVES_ibfk_2` FOREIGN KEY (`LEAVE_TYPE_ID`) REFERENCES `LEAVE_TYPE` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LEAVES`
+--
+
+LOCK TABLES `LEAVES` WRITE;
+/*!40000 ALTER TABLE `LEAVES` DISABLE KEYS */;
+/*!40000 ALTER TABLE `LEAVES` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LEAVE_ENTITLEMENT`
+--
+
+DROP TABLE IF EXISTS `LEAVE_ENTITLEMENT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `LEAVE_ENTITLEMENT` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `DATE_OF_JOINING` datetime(6) DEFAULT NULL,
+  `ACTUAL` enum('Monthly','Annually','Custom') DEFAULT NULL,
+  `ACTUAL_YEAR` varchar(50) DEFAULT NULL,
+  `ACTUAL_ON` enum('Calendar Year','Service Anniversary','Custom Date') DEFAULT NULL,
+  `ACTUAL_NO_OF_DAYS` int DEFAULT NULL,
+  `RESET` enum('Never','Annually','Custom') DEFAULT NULL,
+  `RESET_YEAR` varchar(50) DEFAULT NULL,
+  `RESET_ON` enum('Calendar Year','Service Anniversary','Custom Date') DEFAULT NULL,
+  `CARRY_FORWARD` int DEFAULT NULL,
+  `ENCASHMENT` int DEFAULT NULL,
+  `OPENING_BALANCE` int DEFAULT NULL,
+  `MAXIMUM_BALANCE` int DEFAULT NULL,
+  `DEDUCTIBLE_HOLIDAYS` bit(1) DEFAULT b'0',
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKlwelulxhfebqep49ahs7ir18h` (`CREATOR`),
+  KEY `FK4d0wrypsbsvhbk05xm5u6e3ss` (`LAST_MODIFIER`),
+  CONSTRAINT `FK4d0wrypsbsvhbk05xm5u6e3ss` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKlwelulxhfebqep49ahs7ir18h` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LEAVE_ENTITLEMENT`
+--
+
+LOCK TABLES `LEAVE_ENTITLEMENT` WRITE;
+/*!40000 ALTER TABLE `LEAVE_ENTITLEMENT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `LEAVE_ENTITLEMENT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LEAVE_TYPE`
+--
+
+DROP TABLE IF EXISTS `LEAVE_TYPE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `LEAVE_TYPE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(50) DEFAULT NULL,
+  `CODE` int DEFAULT NULL,
+  `LEAVE_TYPE` enum('Paid','Unpaid','Sick','Vacation','Other') DEFAULT NULL,
+  `UNIT` enum('Half Day','Full Day','Hours','Shifts') DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `BALANCED_BASED_ON` bit(1) DEFAULT b'0',
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `validity` datetime(6) DEFAULT NULL,
+  `IS_LEAVE_TYPE_ENABLED` bit(1) DEFAULT b'0',
+  `LEAVE_TYPE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKi6us55shaoeenosb8djcfm6no` (`CREATOR`),
+  KEY `FKghksaiu9qd6p2whx2dpcg4jos` (`LAST_MODIFIER`),
+  CONSTRAINT `FKghksaiu9qd6p2whx2dpcg4jos` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKi6us55shaoeenosb8djcfm6no` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LEAVE_TYPE`
+--
+
+LOCK TABLES `LEAVE_TYPE` WRITE;
+/*!40000 ALTER TABLE `LEAVE_TYPE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `LEAVE_TYPE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LOCATION`
+--
+
+DROP TABLE IF EXISTS `LOCATION`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `LOCATION` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(100) DEFAULT NULL,
+  `MAIL_ALIAS` varchar(100) DEFAULT NULL,
+  `COUNTRY` varchar(50) DEFAULT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `STATE_PROVINCE` varchar(50) DEFAULT NULL,
+  `TIME_ZONE` varchar(50) DEFAULT NULL,
+  `LOCATION_ID` varchar(50) DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKk1gsun5ont0ll06u7n082q41y` (`CREATOR`),
+  KEY `FKs8bcn2f31g38oqkqa5pqiemid` (`LAST_MODIFIER`),
+  CONSTRAINT `FKk1gsun5ont0ll06u7n082q41y` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKs8bcn2f31g38oqkqa5pqiemid` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LOCATION`
+--
+
+LOCK TABLES `LOCATION` WRITE;
+/*!40000 ALTER TABLE `LOCATION` DISABLE KEYS */;
+/*!40000 ALTER TABLE `LOCATION` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `OFFERS`
+--
+
+DROP TABLE IF EXISTS `OFFERS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `OFFERS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `POSTING_TITLE` int DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  `CANDIDATE_ID` int DEFAULT NULL,
+  `COMPENSATION_AMOUNT` double DEFAULT NULL,
+  `EMPLOYMENT_TYPE` enum('Full-time','part-time','permanent','contract','temporary','training','internship','volunteer','freelance') DEFAULT NULL,
+  `EXPECTED_JOINING_DATE` datetime(6) DEFAULT NULL,
+  `OFFERS_EXPIRY` datetime(6) DEFAULT NULL,
+  `OFFER_OWNER` varchar(255) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `POSTING_TITLE` (`POSTING_TITLE`),
+  KEY `DEPARTMENT_ID` (`DEPARTMENT_ID`),
+  KEY `CANDIDATE_ID` (`CANDIDATE_ID`),
+  KEY `FK47fp90maccg1ifiiucg9cucjx` (`CREATOR`),
+  KEY `FKifbbe63owccr92pf489b2h099` (`LAST_MODIFIER`),
+  CONSTRAINT `FK47fp90maccg1ifiiucg9cucjx` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKifbbe63owccr92pf489b2h099` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `OFFERS_ibfk_1` FOREIGN KEY (`POSTING_TITLE`) REFERENCES `JOB_OPENING` (`ID`),
+  CONSTRAINT `OFFERS_ibfk_2` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `DEPARTMENT` (`ID`),
+  CONSTRAINT `OFFERS_ibfk_3` FOREIGN KEY (`CANDIDATE_ID`) REFERENCES `APPLICANT` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `OFFERS`
+--
+
+LOCK TABLES `OFFERS` WRITE;
+/*!40000 ALTER TABLE `OFFERS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `OFFERS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PAYROLL`
+--
+
+DROP TABLE IF EXISTS `PAYROLL`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `PAYROLL` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `PAY_PERIOD_NAME` varchar(30) DEFAULT NULL,
+  `PAY_PERIOD_TYPE` enum('Weekly','Bi-Weekly','Monthly') DEFAULT NULL,
+  `START_DATE` datetime(6) DEFAULT NULL,
+  `END_DATE` datetime(6) DEFAULT NULL,
+  `PAYROLL_DAY` varchar(10) DEFAULT NULL,
+  `PAYROLL_REPORT_GENERATION_DAY` varchar(10) DEFAULT NULL,
+  `LOCATION_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `LOCATION_ID` (`LOCATION_ID`),
+  KEY `FKxndf00h2pwy81bmrkassa66y` (`CREATOR`),
+  KEY `FKe7s9eut0txc2k2h35bsxegtdm` (`LAST_MODIFIER`),
+  CONSTRAINT `FKe7s9eut0txc2k2h35bsxegtdm` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKxndf00h2pwy81bmrkassa66y` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `PAYROLL_ibfk_1` FOREIGN KEY (`LOCATION_ID`) REFERENCES `LOCATION` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PAYROLL`
+--
+
+LOCK TABLES `PAYROLL` WRITE;
+/*!40000 ALTER TABLE `PAYROLL` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PAYROLL` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PAY_PERIOD_SETTING`
+--
+
+DROP TABLE IF EXISTS `PAY_PERIOD_SETTING`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `PAY_PERIOD_SETTING` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `PAY_PERIOD_NAME` varchar(50) DEFAULT NULL,
+  `PAY_PERIOD_CYCLE_START` datetime(6) DEFAULT NULL,
+  `PAY_PERIOD_CYCLE_END` datetime(6) DEFAULT NULL,
+  `PAYROLL_PROCESSING_DAY` datetime(6) DEFAULT NULL,
+  `PAYROLL_REPORT_GENERATION_DAY` datetime(6) DEFAULT NULL,
+  `PROCESS_LEAVE_ENCASHMENT` bit(1) DEFAULT b'0',
+  `LOCK_SETTING` bit(1) DEFAULT b'0',
+  `APPLICABLE_LOCATION` varchar(50) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKoayn9jps4kogmxc78kbg0dnm8` (`CREATOR`),
+  KEY `FK5w3hocop6ssabxrrcthp3bl0x` (`LAST_MODIFIER`),
+  CONSTRAINT `FK5w3hocop6ssabxrrcthp3bl0x` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKoayn9jps4kogmxc78kbg0dnm8` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PAY_PERIOD_SETTING`
+--
+
+LOCK TABLES `PAY_PERIOD_SETTING` WRITE;
+/*!40000 ALTER TABLE `PAY_PERIOD_SETTING` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PAY_PERIOD_SETTING` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PROJECTS`
+--
+
+DROP TABLE IF EXISTS `PROJECTS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `PROJECTS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `PROJECT_NAME` varchar(100) DEFAULT NULL,
+  `CLIENT_NAME` varchar(100) DEFAULT NULL,
+  `PROJECT_COST` double DEFAULT NULL,
+  `STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `PROJECT_HEAD` varchar(50) DEFAULT NULL,
+  `PROJECT_MANAGER` varchar(50) DEFAULT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKq7u8t9ex2th3am1yb1hljchtf` (`CREATOR`),
+  KEY `FK3xujrpywyuaku4688s2w8lrly` (`LAST_MODIFIER`),
+  CONSTRAINT `FK3xujrpywyuaku4688s2w8lrly` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKq7u8t9ex2th3am1yb1hljchtf` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PROJECTS`
+--
+
+LOCK TABLES `PROJECTS` WRITE;
+/*!40000 ALTER TABLE `PROJECTS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PROJECTS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `RESOURCE_FIELD_AUDIT`
+--
+
+DROP TABLE IF EXISTS `RESOURCE_FIELD_AUDIT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `RESOURCE_FIELD_AUDIT` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR_FK` int DEFAULT NULL,
+  `CREATOR_NAME` varchar(100) DEFAULT NULL,
+  `MODIFIER_FK` int DEFAULT NULL,
+  `MODIFIER_NAME` varchar(100) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `USER_NAME` varchar(100) DEFAULT NULL,
+  `ACTION` varchar(255) DEFAULT NULL,
+  `APPLICATION_NAME` varchar(255) DEFAULT NULL,
+  `COLUMN_NAME` varchar(255) DEFAULT NULL,
+  `ENTITY_ID` varchar(255) DEFAULT NULL,
+  `ENTITY_NAME` varchar(255) DEFAULT NULL,
+  `ENTITY_TYPE` varchar(255) DEFAULT NULL,
+  `FIELD_KEY` varchar(255) DEFAULT NULL,
+  `FIELD_TYPE` varchar(255) DEFAULT NULL,
+  `IDENTIFIER1` varchar(255) DEFAULT NULL,
+  `IDENTIFIER2` varchar(255) DEFAULT NULL,
+  `IDENTIFIER3` varchar(255) DEFAULT NULL,
+  `IDENTIFIER4` varchar(255) DEFAULT NULL,
+  `LABEL` varchar(255) DEFAULT NULL,
+  `NEW_VALUE` varchar(255) DEFAULT NULL,
+  `OLD_VALUE` varchar(255) DEFAULT NULL,
+  `RESOURCE_NAME` varchar(255) DEFAULT NULL,
+  `SEQUENCE` varchar(255) DEFAULT NULL,
+  `TASK_CODE` varchar(255) DEFAULT NULL,
+  `VIEW_ID` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `RESOURCE_FIELD_AUDIT`
+--
+
+LOCK TABLES `RESOURCE_FIELD_AUDIT` WRITE;
+/*!40000 ALTER TABLE `RESOURCE_FIELD_AUDIT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RESOURCE_FIELD_AUDIT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `RESOURCE_JSON_AUDIT`
+--
+
+DROP TABLE IF EXISTS `RESOURCE_JSON_AUDIT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `RESOURCE_JSON_AUDIT` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR_FK` int DEFAULT NULL,
+  `CREATOR_NAME` varchar(100) DEFAULT NULL,
+  `MODIFIER_FK` int DEFAULT NULL,
+  `MODIFIER_NAME` varchar(100) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `USER_NAME` varchar(100) DEFAULT NULL,
+  `ACTION_TYPE` varchar(255) DEFAULT NULL,
+  `CONTEXT_JSON` varchar(10000) DEFAULT NULL,
+  `PROCESS` bit(1) DEFAULT NULL,
+  `VIEW_ID` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `RESOURCE_JSON_AUDIT`
+--
+
+LOCK TABLES `RESOURCE_JSON_AUDIT` WRITE;
+/*!40000 ALTER TABLE `RESOURCE_JSON_AUDIT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RESOURCE_JSON_AUDIT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `RESTRICTIONS`
+--
+
+DROP TABLE IF EXISTS `RESTRICTIONS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `RESTRICTIONS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `WEEKEND_BETWEEN_LEAVE_PERIOD` bit(1) DEFAULT b'0',
+  `HOLIDAY_BETWEEN_LEAVE_PERIOD` bit(1) DEFAULT b'0',
+  `EXCEED_LEAVE_BALANCE` int DEFAULT NULL,
+  `ALLOW_USERS_TO_VIEW` enum('All','Specific Roles','No One') DEFAULT NULL,
+  `BALANCE_TO_BE_DISPLAYED` enum('Entitlement','Utilized','Remaining') DEFAULT NULL,
+  `DURATION_ALLOWED` enum('Full Day','Half Day','Both') DEFAULT NULL,
+  `PAST_DATES` int DEFAULT NULL,
+  `FUTURE_DATE` int DEFAULT NULL,
+  `ALLOW_ONLY_ADMINISTRATORS` bit(1) DEFAULT b'0',
+  `MIN_LEAVE_PER_APPLICATION` int DEFAULT NULL,
+  `MAX_LEAVE_PER_APPLICATION` int DEFAULT NULL,
+  `MAX_CONSECUTIVE_DAYS_ALLOWED` int DEFAULT NULL,
+  `MIN_GAP_BETWEEN_APPLICATIONS` int DEFAULT NULL,
+  `ENABLE_FILE_UPLOAD` bit(1) DEFAULT b'0',
+  `MAX_APPLICATIONS_ALLOWED` enum('Unlimited','Limited') DEFAULT NULL,
+  `LEAVE_APPLICABLE_ON` varchar(100) DEFAULT NULL,
+  `LEAVE_CANNOT_BE_TAKEN_TOGETHER_WITH` varchar(100) DEFAULT NULL,
+  `MIN_LEAVE_PER_APPLICATION_DAYS` int DEFAULT NULL,
+  `MAX_LEAVE_PER_APPLICATION_DAYS` int DEFAULT NULL,
+  `MAX_CONSECUTIVE_DAYS_ALLOWED_DAYS` int DEFAULT NULL,
+  `MIN_GAP_BETWEEN_APPLICATIONS_DAYS` int DEFAULT NULL,
+  `ENABLE_FILE_UPLOAD_DAYS` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKfx24s9l5hj2s1mqa1cgbsnnhv` (`CREATOR`),
+  KEY `FKm7htnojdy463mwg35s7vhqpmt` (`LAST_MODIFIER`),
+  CONSTRAINT `FKfx24s9l5hj2s1mqa1cgbsnnhv` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKm7htnojdy463mwg35s7vhqpmt` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `RESTRICTIONS`
+--
+
+LOCK TABLES `RESTRICTIONS` WRITE;
+/*!40000 ALTER TABLE `RESTRICTIONS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RESTRICTIONS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SKILL`
+--
+
+DROP TABLE IF EXISTS `SKILL`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `SKILL` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(100) DEFAULT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FKlyust233r8kg27qnd5vw61od4` (`CREATOR`),
+  KEY `FKfnsvht93nh88sta8url5ne02e` (`LAST_MODIFIER`),
+  CONSTRAINT `FKfnsvht93nh88sta8url5ne02e` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKlyust233r8kg27qnd5vw61od4` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SKILL`
+--
+
+LOCK TABLES `SKILL` WRITE;
+/*!40000 ALTER TABLE `SKILL` DISABLE KEYS */;
+/*!40000 ALTER TABLE `SKILL` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `STATE`
+--
+
+DROP TABLE IF EXISTS `STATE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `STATE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `COUNTRY_ID` int DEFAULT NULL,
+  `NAME` varchar(100) DEFAULT NULL,
+  `DISPLAY_NAME` varchar(100) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `COUNTRY_ID` (`COUNTRY_ID`),
+  KEY `FKdg1484q1ncjlm7ywymgsex983` (`CREATOR`),
+  KEY `FKsxsu79ga474h4iwfmbihrqawt` (`LAST_MODIFIER`),
+  CONSTRAINT `FKdg1484q1ncjlm7ywymgsex983` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKsxsu79ga474h4iwfmbihrqawt` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `STATE_ibfk_1` FOREIGN KEY (`COUNTRY_ID`) REFERENCES `COUNTRY` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `STATE`
+--
+
+LOCK TABLES `STATE` WRITE;
+/*!40000 ALTER TABLE `STATE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `STATE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SUB_CONTRACTOR`
+--
+
+DROP TABLE IF EXISTS `SUB_CONTRACTOR`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `SUB_CONTRACTOR` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `NAME` varchar(100) DEFAULT NULL,
+  `CODE` varchar(100) DEFAULT NULL,
+  `BUSINESS_NAME` varchar(100) DEFAULT NULL,
+  `EMAIL_ID` varchar(255) DEFAULT NULL,
+  `PHONE` varchar(20) DEFAULT NULL,
+  `ADDRESS` varchar(255) DEFAULT NULL,
+  `CITY` varchar(255) DEFAULT NULL,
+  `TEXT1` varchar(255) DEFAULT NULL,
+  `TEXT2` varchar(255) DEFAULT NULL,
+  `TEXT3` varchar(255) DEFAULT NULL,
+  `COUNTRY` varchar(255) DEFAULT NULL,
+  `STATE` varchar(255) DEFAULT NULL,
+  `PAYMENT_TERMS` varchar(255) DEFAULT NULL,
+  `CONTRACT_START_DATE` datetime(6) DEFAULT NULL,
+  `CONTRACT_END_DATE` datetime(6) DEFAULT NULL,
+  `TOTAL_ANNUAL_COST` double DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK1edk67yh7gc32etjyb4au7uwf` (`CREATOR`),
+  KEY `FKmtclr5u27swa3pk5bw6p71wwn` (`LAST_MODIFIER`),
+  CONSTRAINT `FK1edk67yh7gc32etjyb4au7uwf` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKmtclr5u27swa3pk5bw6p71wwn` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SUB_CONTRACTOR`
+--
+
+LOCK TABLES `SUB_CONTRACTOR` WRITE;
+/*!40000 ALTER TABLE `SUB_CONTRACTOR` DISABLE KEYS */;
+/*!40000 ALTER TABLE `SUB_CONTRACTOR` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TIME_LOGS`
+--
+
+DROP TABLE IF EXISTS `TIME_LOGS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `TIME_LOGS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `PROJECT` int DEFAULT NULL,
+  `JOB_ID` int DEFAULT NULL,
+  `WORK_ITEM` varchar(100) DEFAULT NULL,
+  `date` datetime(6) DEFAULT NULL,
+  `DESCRIPTION` longtext,
+  `hours` double DEFAULT NULL,
+  `BILLABLE_STATUS` enum('Billable','Non-Billable') DEFAULT NULL,
+  `FROM_TIME` datetime(6) DEFAULT NULL,
+  `TO_TIME` datetime(6) DEFAULT NULL,
+  `USER_NAME` varchar(50) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `PROJECT` (`PROJECT`),
+  KEY `JOB_ID` (`JOB_ID`),
+  KEY `FK7cuo1f4lfos14jht02f55biad` (`CREATOR`),
+  KEY `FKqgj7131peo00782yim2rokqtu` (`LAST_MODIFIER`),
+  CONSTRAINT `FK7cuo1f4lfos14jht02f55biad` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKqgj7131peo00782yim2rokqtu` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `TIME_LOGS_ibfk_1` FOREIGN KEY (`PROJECT`) REFERENCES `PROJECTS` (`ID`),
+  CONSTRAINT `TIME_LOGS_ibfk_2` FOREIGN KEY (`JOB_ID`) REFERENCES `JOBS` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TIME_LOGS`
+--
+
+LOCK TABLES `TIME_LOGS` WRITE;
+/*!40000 ALTER TABLE `TIME_LOGS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TIME_LOGS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TIME_SHEET`
+--
+
+DROP TABLE IF EXISTS `TIME_SHEET`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `TIME_SHEET` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `TIMESHEET_NAME` varchar(100) DEFAULT NULL,
+  `CURRENCY_CODE` varchar(50) DEFAULT NULL,
+  `DESCRIPTION` longtext,
+  `SUBMITTED_BILLABLE_HOURS` double DEFAULT NULL,
+  `SUBMITTEDN_ON_BILLABLE_HOURS` double DEFAULT NULL,
+  `SUBMITTED_TOTAL_HOURS` double DEFAULT NULL,
+  `SUBMITTED_RATE_PER_HOUR` double DEFAULT NULL,
+  `SUBMITTED_TOTAL_AMOUNT` double DEFAULT NULL,
+  `APPROVED_BILLABLE_HOURS` double DEFAULT NULL,
+  `APPROVED_NON_BILLABLE_HOURS` double DEFAULT NULL,
+  `APPROVED_TOTAL_HOURS` double DEFAULT NULL,
+  `APPROVED_RATE_PER_HOUR` double DEFAULT NULL,
+  `APPROVED_TOTAL_AMOUNT` double DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK1tv8eufpeg2rw8qgmil61ei6k` (`CREATOR`),
+  KEY `FKcj0k9rpfnyc47xx81pis0grob` (`LAST_MODIFIER`),
+  CONSTRAINT `FK1tv8eufpeg2rw8qgmil61ei6k` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKcj0k9rpfnyc47xx81pis0grob` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TIME_SHEET`
+--
+
+LOCK TABLES `TIME_SHEET` WRITE;
+/*!40000 ALTER TABLE `TIME_SHEET` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TIME_SHEET` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TRAVEL_EXPENSE`
+--
+
+DROP TABLE IF EXISTS `TRAVEL_EXPENSE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `TRAVEL_EXPENSE` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `TRAVEL_ID` int DEFAULT NULL,
+  `TRAVEL_EXPENSE_ID` double DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FKcto2jxitp6p6mt02tm50md63n` (`CREATOR`),
+  KEY `FK95hf76ho5ykssreeq9pne36ks` (`LAST_MODIFIER`),
+  CONSTRAINT `FK95hf76ho5ykssreeq9pne36ks` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKcto2jxitp6p6mt02tm50md63n` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `TRAVEL_EXPENSE_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TRAVEL_EXPENSE`
+--
+
+LOCK TABLES `TRAVEL_EXPENSE` WRITE;
+/*!40000 ALTER TABLE `TRAVEL_EXPENSE` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TRAVEL_EXPENSE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TRAVEL_REQUEST`
+--
+
+DROP TABLE IF EXISTS `TRAVEL_REQUEST`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `TRAVEL_REQUEST` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `TRAVEL_ID` int DEFAULT NULL,
+  `EMPLOYEE_DEPARTMENT` varchar(50) DEFAULT NULL,
+  `PLACE_OF_VISIT` varchar(50) DEFAULT NULL,
+  `EXPECTED_DATE_OF_DEPARTURE` datetime(6) DEFAULT NULL,
+  `EXPECTED_DATE_OF_ARRIVAL` datetime(6) DEFAULT NULL,
+  `PURPOSE_OF_VISIT` varchar(100) DEFAULT NULL,
+  `EXPECTED_DURATION_IN_DAYS` int DEFAULT NULL,
+  `IS_BILLABLE_TO_CUSTOMER` varchar(20) DEFAULT NULL,
+  `CUSTOMER_NAME` varchar(50) DEFAULT NULL,
+  `APPROVAL_STATUS` enum('Pending','Approved','Reject','Under-Review','Closed','On Hold') DEFAULT NULL,
+  `TRAVEL_INITIATE_ID` varchar(50) DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FK586lugtm0hx3tapjf649mbl69` (`CREATOR`),
+  KEY `FKt9txe6qh39w51yj2b1oivap2` (`LAST_MODIFIER`),
+  CONSTRAINT `FK586lugtm0hx3tapjf649mbl69` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FKt9txe6qh39w51yj2b1oivap2` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `TRAVEL_REQUEST_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TRAVEL_REQUEST`
+--
+
+LOCK TABLES `TRAVEL_REQUEST` WRITE;
+/*!40000 ALTER TABLE `TRAVEL_REQUEST` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TRAVEL_REQUEST` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `User`
+--
+
+DROP TABLE IF EXISTS `User`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `User` (
+  `userid_pk` int NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `middlename` varchar(50) DEFAULT NULL,
+  `username` varchar(100) NOT NULL,
+  PRIMARY KEY (`userid_pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `User`
+--
+
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `WORKING_HOURS`
+--
+
+DROP TABLE IF EXISTS `WORKING_HOURS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `WORKING_HOURS` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `WORKSPACE_ID` int DEFAULT '1',
+  `FIRST_CHECKIN` datetime(6) DEFAULT NULL,
+  `LAST_CHECKOUT` datetime(6) DEFAULT NULL,
+  `MIN_CLOCKED_HOURS` varchar(50) DEFAULT NULL,
+  `MAX_CLOCKED_HOURS` varchar(50) DEFAULT NULL,
+  `EMPLOYEE_ID` int DEFAULT NULL,
+  `CREATED_TIME` datetime(6) DEFAULT NULL,
+  `MODIFIED_TIME` datetime(6) DEFAULT NULL,
+  `CREATOR` int DEFAULT NULL,
+  `LAST_MODIFIER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`),
+  KEY `FK8vbnm0pkfsswlbyij6b1nqwju` (`CREATOR`),
+  KEY `FK234m7sln2i4bmr75msw6yuidf` (`LAST_MODIFIER`),
+  CONSTRAINT `FK234m7sln2i4bmr75msw6yuidf` FOREIGN KEY (`LAST_MODIFIER`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `FK8vbnm0pkfsswlbyij6b1nqwju` FOREIGN KEY (`CREATOR`) REFERENCES `User` (`userid_pk`),
+  CONSTRAINT `WORKING_HOURS_ibfk_1` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `EMPLOYEE` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `WORKING_HOURS`
+--
+
+LOCK TABLES `WORKING_HOURS` WRITE;
+/*!40000 ALTER TABLE `WORKING_HOURS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WORKING_HOURS` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-12-01 17:13:18
