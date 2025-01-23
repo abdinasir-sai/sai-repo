@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Faq Scenario
+participant User
+User -> CXFServlet: Faq
+activate CXFServlet
+CXFServlet -> Faq: << export >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: export(:Faq)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: search(:Faq)
+activate FaqService
+FaqService -> FaqJPARepository: search(:Faq)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: save(:Faq)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted Faq >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted Faq >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: response(:List<Faq>)
+FaqControllerImpl -> FaqService: export(:Faq)
+FaqService -> FaqControllerImpl: << persisted Faq.xlsx >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted Faq.xlsx >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

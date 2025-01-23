@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Interview Scenario
+participant User
+User -> CXFServlet: POST, Interview
+activate CXFServlet
+CXFServlet -> Interview: << importData >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: importData(:Interview)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: importData(:Interview)
+activate InterviewService
+activate InterviewServiceImpl
+InterviewService -> InterviewServiceImpl: importData(:Interview)
+InterviewServiceImpl -> InterviewJPARepository: saveAll(:Interview)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: save(:Interview)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewServiceImpl: << persisted Interview >>
+InterviewServiceImpl -> InterviewService: << persisted Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted Interview >>
+deactivate InterviewServiceImpl
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted Interview >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

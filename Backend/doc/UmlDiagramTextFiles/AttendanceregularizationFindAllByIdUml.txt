@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById AttendanceRegularization Scenario
+participant User
+User -> CXFServlet: GET, AttendanceRegularization
+activate CXFServlet
+CXFServlet -> AttendanceRegularization: << findAllById >>
+activate AttendanceRegularization
+AttendanceRegularization -> CXFServlet: << instance >>
+deactivate AttendanceRegularization
+CXFServlet -> AttendanceRegularizationControllerImpl: findAllById(:List<AttendanceRegularization> id)
+activate AttendanceRegularizationControllerImpl
+AttendanceRegularizationControllerImpl -> AttendanceRegularizationService: findAllById(:List<AttendanceRegularization> id)
+activate AttendanceRegularizationService
+AttendanceRegularizationService -> AttendanceRegularizationJPARepository: findAllById(:List<AttendanceRegularization> id)
+activate AttendanceRegularizationJPARepository
+AttendanceRegularizationJPARepository -> EntityManager: response(:List<AttendanceRegularization>findAllById)
+activate EntityManager
+EntityManager -> AttendanceRegularizationJPARepository: << persisted List AttendanceRegularization >>
+deactivate EntityManager
+AttendanceRegularizationJPARepository -> AttendanceRegularizationService: << persisted List AttendanceRegularization >>
+deactivate AttendanceRegularizationJPARepository
+AttendanceRegularizationService -> AttendanceRegularizationControllerImpl: << persisted List AttendanceRegularization >>
+deactivate AttendanceRegularizationService
+AttendanceRegularizationControllerImpl -> CXFServlet: << persisted List AttendanceRegularization >>
+deactivate AttendanceRegularizationControllerImpl
+CXFServlet -> User: marshalled AttendanceRegularization XML
+deactivate CXFServlet
+@enduml

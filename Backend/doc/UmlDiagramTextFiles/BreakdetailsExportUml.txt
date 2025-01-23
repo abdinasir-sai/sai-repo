@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Breakdetails Scenario
+participant User
+User -> CXFServlet: Breakdetails
+activate CXFServlet
+CXFServlet -> Breakdetails: << export >>
+activate Breakdetails
+Breakdetails -> CXFServlet: << instance >>
+deactivate Breakdetails
+CXFServlet -> BreakdetailsControllerImpl: export(:Breakdetails)
+activate BreakdetailsControllerImpl
+BreakdetailsControllerImpl -> BreakdetailsService: search(:Breakdetails)
+activate BreakdetailsService
+BreakdetailsService -> BreakdetailsJPARepository: search(:Breakdetails)
+activate BreakdetailsJPARepository
+BreakdetailsJPARepository -> EntityManager: save(:Breakdetails)
+activate EntityManager
+EntityManager -> BreakdetailsJPARepository: << persisted Breakdetails >>
+deactivate EntityManager
+BreakdetailsJPARepository -> BreakdetailsService: << persisted Breakdetails >>
+deactivate BreakdetailsJPARepository
+BreakdetailsService -> BreakdetailsControllerImpl: response(:List<Breakdetails>)
+BreakdetailsControllerImpl -> BreakdetailsService: export(:Breakdetails)
+BreakdetailsService -> BreakdetailsControllerImpl: << persisted Breakdetails.xlsx >>
+deactivate BreakdetailsService
+BreakdetailsControllerImpl -> CXFServlet: << persisted Breakdetails.xlsx >>
+deactivate BreakdetailsControllerImpl
+CXFServlet -> User: marshalled Breakdetails XML
+deactivate CXFServlet
+@enduml

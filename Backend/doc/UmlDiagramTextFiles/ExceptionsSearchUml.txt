@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Exceptions Scenario
+participant User
+User -> CXFServlet: GET, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << search >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: search(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: search(:Exceptions)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: search(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: response(:Exceptions)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted Exceptions >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted Exceptions >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted Exceptions >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted Exceptions >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Delegations Scenario
+participant User
+User -> CXFServlet: POST, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << importData >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: importData(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: importData(:Delegations)
+activate DelegationsService
+activate DelegationsServiceImpl
+DelegationsService -> DelegationsServiceImpl: importData(:Delegations)
+DelegationsServiceImpl -> DelegationsJPARepository: saveAll(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: save(:Delegations)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted Delegations >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsServiceImpl: << persisted Delegations >>
+DelegationsServiceImpl -> DelegationsService: << persisted Delegations >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted Delegations >>
+deactivate DelegationsServiceImpl
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted Delegations >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

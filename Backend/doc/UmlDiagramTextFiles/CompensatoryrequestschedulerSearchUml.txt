@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search CompensatoryRequestScheduler Scenario
+participant User
+User -> CXFServlet: GET, CompensatoryRequestScheduler
+activate CXFServlet
+CXFServlet -> CompensatoryRequestScheduler: << search >>
+activate CompensatoryRequestScheduler
+CompensatoryRequestScheduler -> CXFServlet: << instance >>
+deactivate CompensatoryRequestScheduler
+CXFServlet -> CompensatoryRequestSchedulerControllerImpl: search(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerControllerImpl
+CompensatoryRequestSchedulerControllerImpl -> CompensatoryRequestSchedulerService: search(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerJPARepository: search(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerJPARepository -> EntityManager: response(:CompensatoryRequestScheduler)
+activate EntityManager
+EntityManager -> CompensatoryRequestSchedulerJPARepository: << persisted CompensatoryRequestScheduler >>
+deactivate EntityManager
+CompensatoryRequestSchedulerJPARepository -> CompensatoryRequestSchedulerService: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerControllerImpl: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerControllerImpl -> CXFServlet: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerControllerImpl
+CXFServlet -> User: marshalled CompensatoryRequestScheduler XML
+deactivate CXFServlet
+@enduml

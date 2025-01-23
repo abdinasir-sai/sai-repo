@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search City Scenario
+participant User
+User -> CXFServlet: GET, City
+activate CXFServlet
+CXFServlet -> City: << search >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: search(:City)
+activate CityControllerImpl
+CityControllerImpl -> CityService: search(:City)
+activate CityService
+CityService -> CityJPARepository: search(:City)
+activate CityJPARepository
+CityJPARepository -> EntityManager: response(:City)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted City >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted City >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted City >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted City >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

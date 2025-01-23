@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Leaves Scenario
+participant User
+User -> CXFServlet: DELETE, Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << bulkdelete >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesControllerImpl: bulkdelete(:List<Leaves>)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesService: bulkDelete(:List<Leaves>)
+activate LeavesService
+LeavesService -> LeavesJPARepository: deleteAll(:List<Leaves>)
+activate LeavesJPARepository
+LeavesJPARepository -> EntityManager: delete(:List<Leaves>)
+activate EntityManager
+EntityManager -> LeavesJPARepository: << persisted Leaves >>
+deactivate EntityManager
+LeavesJPARepository -> LeavesService: << persisted Leaves >>
+deactivate LeavesJPARepository
+LeavesService -> LeavesControllerImpl: << persisted Leaves >>
+deactivate LeavesService
+LeavesControllerImpl -> CXFServlet: << persisted Leaves >>
+deactivate LeavesControllerImpl
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

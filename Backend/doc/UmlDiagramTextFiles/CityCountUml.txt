@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count City Scenario
+participant User
+User -> CXFServlet: GET, City
+activate CXFServlet
+CXFServlet -> City: << count >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: count(:City)
+activate CityControllerImpl
+CityControllerImpl -> CityService: count(:City)
+activate CityService
+CityService -> CityJPARepository: count(:City)
+activate CityJPARepository
+CityJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted Count >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted Count >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted Count >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted Count >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

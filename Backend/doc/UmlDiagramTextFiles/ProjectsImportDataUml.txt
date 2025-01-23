@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Projects Scenario
+participant User
+User -> CXFServlet: POST, Projects
+activate CXFServlet
+CXFServlet -> Projects: << importData >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: importData(:Projects)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: importData(:Projects)
+activate ProjectsService
+activate ProjectsServiceImpl
+ProjectsService -> ProjectsServiceImpl: importData(:Projects)
+ProjectsServiceImpl -> ProjectsJPARepository: saveAll(:Projects)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: save(:Projects)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsServiceImpl: << persisted Projects >>
+ProjectsServiceImpl -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: << persisted Projects >>
+deactivate ProjectsServiceImpl
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

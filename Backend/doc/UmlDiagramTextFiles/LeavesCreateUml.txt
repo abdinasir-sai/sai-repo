@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Leaves Scenario
+participant User
+User -> CXFServlet: POST, Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << create >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesControllerImpl: create(:Leaves)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesService: create(:Leaves)
+activate LeavesService
+LeavesService -> LeavesJPARepository: create(:Leaves)
+activate LeavesJPARepository
+LeavesJPARepository -> EntityManager: save(:Leaves)
+activate EntityManager
+EntityManager -> LeavesJPARepository: << persisted Leaves >>
+deactivate EntityManager
+LeavesJPARepository -> LeavesService: << persisted Leaves >>
+deactivate LeavesJPARepository
+LeavesService -> LeavesControllerImpl: << persisted Leaves >>
+deactivate LeavesService
+LeavesControllerImpl -> CXFServlet: << persisted Leaves >>
+deactivate LeavesControllerImpl
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

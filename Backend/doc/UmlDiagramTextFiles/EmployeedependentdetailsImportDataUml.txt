@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data EmployeeDependentDetails Scenario
+participant User
+User -> CXFServlet: POST, EmployeeDependentDetails
+activate CXFServlet
+CXFServlet -> EmployeeDependentDetails: << importData >>
+activate EmployeeDependentDetails
+EmployeeDependentDetails -> CXFServlet: << instance >>
+deactivate EmployeeDependentDetails
+CXFServlet -> EmployeeDependentDetailsControllerImpl: importData(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsControllerImpl
+EmployeeDependentDetailsControllerImpl -> EmployeeDependentDetailsService: importData(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsService
+activate EmployeeDependentDetailsServiceImpl
+EmployeeDependentDetailsService -> EmployeeDependentDetailsServiceImpl: importData(:EmployeeDependentDetails)
+EmployeeDependentDetailsServiceImpl -> EmployeeDependentDetailsJPARepository: saveAll(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsJPARepository
+EmployeeDependentDetailsJPARepository -> EntityManager: save(:EmployeeDependentDetails)
+activate EntityManager
+EntityManager -> EmployeeDependentDetailsJPARepository: << persisted EmployeeDependentDetails >>
+deactivate EntityManager
+EmployeeDependentDetailsJPARepository -> EmployeeDependentDetailsServiceImpl: << persisted EmployeeDependentDetails >>
+EmployeeDependentDetailsServiceImpl -> EmployeeDependentDetailsService: << persisted EmployeeDependentDetails >>
+deactivate EmployeeDependentDetailsJPARepository
+EmployeeDependentDetailsService -> EmployeeDependentDetailsControllerImpl: << persisted EmployeeDependentDetails >>
+deactivate EmployeeDependentDetailsServiceImpl
+deactivate EmployeeDependentDetailsService
+EmployeeDependentDetailsControllerImpl -> CXFServlet: << persisted EmployeeDependentDetails >>
+deactivate EmployeeDependentDetailsControllerImpl
+CXFServlet -> User: marshalled EmployeeDependentDetails XML
+deactivate CXFServlet
+@enduml

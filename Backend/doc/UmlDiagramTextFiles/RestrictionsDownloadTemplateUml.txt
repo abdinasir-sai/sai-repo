@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Restrictions Scenario
+participant User
+User -> CXFServlet: Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << downloadTemplate >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsController: downloadTemplate(:String fileName)
+activate RestrictionsController
+RestrictionsController -> RestrictionsControllerImpl: ResponseBuilder(workbook,fileName)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsController: response(:ResponseEntity)
+deactivate RestrictionsControllerImpl
+RestrictionsController -> CXFServlet: << Restrictions  >>
+deactivate RestrictionsController
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

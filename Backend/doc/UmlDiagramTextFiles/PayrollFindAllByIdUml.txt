@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Payroll Scenario
+participant User
+User -> CXFServlet: GET, Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << findAllById >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: findAllById(:List<Payroll> id)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: findAllById(:List<Payroll> id)
+activate PayrollService
+PayrollService -> PayrollJPARepository: findAllById(:List<Payroll> id)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: response(:List<Payroll>findAllById)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted List Payroll >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollService: << persisted List Payroll >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: << persisted List Payroll >>
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted List Payroll >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

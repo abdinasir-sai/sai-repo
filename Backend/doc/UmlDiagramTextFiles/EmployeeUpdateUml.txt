@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Employee Scenario
+participant User
+User -> CXFServlet: UPDATE, Employee
+activate CXFServlet
+CXFServlet -> Employee: << update >>
+activate Employee
+Employee -> CXFServlet: << instance >>
+deactivate Employee
+CXFServlet -> EmployeeControllerImpl: update(:Employee)
+activate EmployeeControllerImpl
+EmployeeControllerImpl -> EmployeeService: update(:Employee)
+activate EmployeeService
+EmployeeService -> EmployeeJPARepository: update(:Employee)
+activate EmployeeJPARepository
+EmployeeJPARepository -> EntityManager: update(:Employee)
+activate EntityManager
+EntityManager -> EmployeeJPARepository: << persisted Employee >>
+deactivate EntityManager
+EmployeeJPARepository -> EmployeeService: << persisted Employee >>
+deactivate EmployeeJPARepository
+EmployeeService -> EmployeeControllerImpl: << persisted Employee >>
+deactivate EmployeeService
+EmployeeControllerImpl -> CXFServlet: << persisted Employee >>
+deactivate EmployeeControllerImpl
+CXFServlet -> User: marshalled Employee XML
+deactivate CXFServlet
+@enduml

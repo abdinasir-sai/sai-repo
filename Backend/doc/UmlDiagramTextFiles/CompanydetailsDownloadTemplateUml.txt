@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template CompanyDetails Scenario
+participant User
+User -> CXFServlet: CompanyDetails
+activate CXFServlet
+CXFServlet -> CompanyDetails: << downloadTemplate >>
+activate CompanyDetails
+CompanyDetails -> CXFServlet: << instance >>
+deactivate CompanyDetails
+CXFServlet -> CompanyDetailsController: downloadTemplate(:String fileName)
+activate CompanyDetailsController
+CompanyDetailsController -> CompanyDetailsControllerImpl: ResponseBuilder(workbook,fileName)
+activate CompanyDetailsControllerImpl
+CompanyDetailsControllerImpl -> CompanyDetailsController: response(:ResponseEntity)
+deactivate CompanyDetailsControllerImpl
+CompanyDetailsController -> CXFServlet: << CompanyDetails  >>
+deactivate CompanyDetailsController
+CXFServlet -> User: marshalled CompanyDetails XML
+deactivate CXFServlet
+@enduml

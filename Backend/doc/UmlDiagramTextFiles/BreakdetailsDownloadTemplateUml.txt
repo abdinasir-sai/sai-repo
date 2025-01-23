@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Breakdetails Scenario
+participant User
+User -> CXFServlet: Breakdetails
+activate CXFServlet
+CXFServlet -> Breakdetails: << downloadTemplate >>
+activate Breakdetails
+Breakdetails -> CXFServlet: << instance >>
+deactivate Breakdetails
+CXFServlet -> BreakdetailsController: downloadTemplate(:String fileName)
+activate BreakdetailsController
+BreakdetailsController -> BreakdetailsControllerImpl: ResponseBuilder(workbook,fileName)
+activate BreakdetailsControllerImpl
+BreakdetailsControllerImpl -> BreakdetailsController: response(:ResponseEntity)
+deactivate BreakdetailsControllerImpl
+BreakdetailsController -> CXFServlet: << Breakdetails  >>
+deactivate BreakdetailsController
+CXFServlet -> User: marshalled Breakdetails XML
+deactivate CXFServlet
+@enduml

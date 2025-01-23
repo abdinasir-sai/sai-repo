@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count TravelRequest Scenario
+participant User
+User -> CXFServlet: GET, TravelRequest
+activate CXFServlet
+CXFServlet -> TravelRequest: << count >>
+activate TravelRequest
+TravelRequest -> CXFServlet: << instance >>
+deactivate TravelRequest
+CXFServlet -> TravelRequestControllerImpl: count(:TravelRequest)
+activate TravelRequestControllerImpl
+TravelRequestControllerImpl -> TravelRequestService: count(:TravelRequest)
+activate TravelRequestService
+TravelRequestService -> TravelRequestJPARepository: count(:TravelRequest)
+activate TravelRequestJPARepository
+TravelRequestJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> TravelRequestJPARepository: << persisted Count >>
+deactivate EntityManager
+TravelRequestJPARepository -> TravelRequestService: << persisted Count >>
+deactivate TravelRequestJPARepository
+TravelRequestService -> TravelRequestControllerImpl: << persisted Count >>
+deactivate TravelRequestService
+TravelRequestControllerImpl -> CXFServlet: << persisted Count >>
+deactivate TravelRequestControllerImpl
+CXFServlet -> User: marshalled TravelRequest XML
+deactivate CXFServlet
+@enduml

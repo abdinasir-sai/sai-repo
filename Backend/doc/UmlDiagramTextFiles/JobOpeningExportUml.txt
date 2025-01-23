@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data JobOpening Scenario
+participant User
+User -> CXFServlet: JobOpening
+activate CXFServlet
+CXFServlet -> JobOpening: << export >>
+activate JobOpening
+JobOpening -> CXFServlet: << instance >>
+deactivate JobOpening
+CXFServlet -> JobOpeningControllerImpl: export(:JobOpening)
+activate JobOpeningControllerImpl
+JobOpeningControllerImpl -> JobOpeningService: search(:JobOpening)
+activate JobOpeningService
+JobOpeningService -> JobOpeningJPARepository: search(:JobOpening)
+activate JobOpeningJPARepository
+JobOpeningJPARepository -> EntityManager: save(:JobOpening)
+activate EntityManager
+EntityManager -> JobOpeningJPARepository: << persisted JobOpening >>
+deactivate EntityManager
+JobOpeningJPARepository -> JobOpeningService: << persisted JobOpening >>
+deactivate JobOpeningJPARepository
+JobOpeningService -> JobOpeningControllerImpl: response(:List<JobOpening>)
+JobOpeningControllerImpl -> JobOpeningService: export(:JobOpening)
+JobOpeningService -> JobOpeningControllerImpl: << persisted JobOpening.xlsx >>
+deactivate JobOpeningService
+JobOpeningControllerImpl -> CXFServlet: << persisted JobOpening.xlsx >>
+deactivate JobOpeningControllerImpl
+CXFServlet -> User: marshalled JobOpening XML
+deactivate CXFServlet
+@enduml

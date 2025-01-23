@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Interview Scenario
+participant User
+User -> CXFServlet: GET, Interview
+activate CXFServlet
+CXFServlet -> Interview: << findAllById >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: findAllById(:List<Interview> id)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: findAllById(:List<Interview> id)
+activate InterviewService
+InterviewService -> InterviewJPARepository: findAllById(:List<Interview> id)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: response(:List<Interview>findAllById)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted List Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted List Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted List Interview >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted List Interview >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

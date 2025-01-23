@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template PayPeriodSetting Scenario
+participant User
+User -> CXFServlet: PayPeriodSetting
+activate CXFServlet
+CXFServlet -> PayPeriodSetting: << downloadTemplate >>
+activate PayPeriodSetting
+PayPeriodSetting -> CXFServlet: << instance >>
+deactivate PayPeriodSetting
+CXFServlet -> PayPeriodSettingController: downloadTemplate(:String fileName)
+activate PayPeriodSettingController
+PayPeriodSettingController -> PayPeriodSettingControllerImpl: ResponseBuilder(workbook,fileName)
+activate PayPeriodSettingControllerImpl
+PayPeriodSettingControllerImpl -> PayPeriodSettingController: response(:ResponseEntity)
+deactivate PayPeriodSettingControllerImpl
+PayPeriodSettingController -> CXFServlet: << PayPeriodSetting  >>
+deactivate PayPeriodSettingController
+CXFServlet -> User: marshalled PayPeriodSetting XML
+deactivate CXFServlet
+@enduml

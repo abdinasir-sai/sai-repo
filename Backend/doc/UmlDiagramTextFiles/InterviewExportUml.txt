@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Interview Scenario
+participant User
+User -> CXFServlet: Interview
+activate CXFServlet
+CXFServlet -> Interview: << export >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: export(:Interview)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: search(:Interview)
+activate InterviewService
+InterviewService -> InterviewJPARepository: search(:Interview)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: save(:Interview)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: response(:List<Interview>)
+InterviewControllerImpl -> InterviewService: export(:Interview)
+InterviewService -> InterviewControllerImpl: << persisted Interview.xlsx >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted Interview.xlsx >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

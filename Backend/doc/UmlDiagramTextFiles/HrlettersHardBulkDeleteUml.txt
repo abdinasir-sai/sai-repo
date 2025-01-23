@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete HrLetters Scenario
+participant User
+User -> CXFServlet: DELETE, HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << bulkdelete >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersControllerImpl: bulkdelete(:List<HrLetters>)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersService: bulkDelete(:List<HrLetters>)
+activate HrLettersService
+HrLettersService -> HrLettersJPARepository: deleteAll(:List<HrLetters>)
+activate HrLettersJPARepository
+HrLettersJPARepository -> EntityManager: delete(:List<HrLetters>)
+activate EntityManager
+EntityManager -> HrLettersJPARepository: << persisted HrLetters >>
+deactivate EntityManager
+HrLettersJPARepository -> HrLettersService: << persisted HrLetters >>
+deactivate HrLettersJPARepository
+HrLettersService -> HrLettersControllerImpl: << persisted HrLetters >>
+deactivate HrLettersService
+HrLettersControllerImpl -> CXFServlet: << persisted HrLetters >>
+deactivate HrLettersControllerImpl
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

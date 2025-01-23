@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Jobs Scenario
+participant User
+User -> CXFServlet: Jobs
+activate CXFServlet
+CXFServlet -> Jobs: << export >>
+activate Jobs
+Jobs -> CXFServlet: << instance >>
+deactivate Jobs
+CXFServlet -> JobsControllerImpl: export(:Jobs)
+activate JobsControllerImpl
+JobsControllerImpl -> JobsService: search(:Jobs)
+activate JobsService
+JobsService -> JobsJPARepository: search(:Jobs)
+activate JobsJPARepository
+JobsJPARepository -> EntityManager: save(:Jobs)
+activate EntityManager
+EntityManager -> JobsJPARepository: << persisted Jobs >>
+deactivate EntityManager
+JobsJPARepository -> JobsService: << persisted Jobs >>
+deactivate JobsJPARepository
+JobsService -> JobsControllerImpl: response(:List<Jobs>)
+JobsControllerImpl -> JobsService: export(:Jobs)
+JobsService -> JobsControllerImpl: << persisted Jobs.xlsx >>
+deactivate JobsService
+JobsControllerImpl -> CXFServlet: << persisted Jobs.xlsx >>
+deactivate JobsControllerImpl
+CXFServlet -> User: marshalled Jobs XML
+deactivate CXFServlet
+@enduml

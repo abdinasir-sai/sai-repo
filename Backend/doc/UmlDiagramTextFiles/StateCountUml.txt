@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count State Scenario
+participant User
+User -> CXFServlet: GET, State
+activate CXFServlet
+CXFServlet -> State: << count >>
+activate State
+State -> CXFServlet: << instance >>
+deactivate State
+CXFServlet -> StateControllerImpl: count(:State)
+activate StateControllerImpl
+StateControllerImpl -> StateService: count(:State)
+activate StateService
+StateService -> StateJPARepository: count(:State)
+activate StateJPARepository
+StateJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> StateJPARepository: << persisted Count >>
+deactivate EntityManager
+StateJPARepository -> StateService: << persisted Count >>
+deactivate StateJPARepository
+StateService -> StateControllerImpl: << persisted Count >>
+deactivate StateService
+StateControllerImpl -> CXFServlet: << persisted Count >>
+deactivate StateControllerImpl
+CXFServlet -> User: marshalled State XML
+deactivate CXFServlet
+@enduml

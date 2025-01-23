@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById HrLetters Scenario
+participant User
+User -> CXFServlet: GET, HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << findAllById >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersControllerImpl: findAllById(:List<HrLetters> id)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersService: findAllById(:List<HrLetters> id)
+activate HrLettersService
+HrLettersService -> HrLettersJPARepository: findAllById(:List<HrLetters> id)
+activate HrLettersJPARepository
+HrLettersJPARepository -> EntityManager: response(:List<HrLetters>findAllById)
+activate EntityManager
+EntityManager -> HrLettersJPARepository: << persisted List HrLetters >>
+deactivate EntityManager
+HrLettersJPARepository -> HrLettersService: << persisted List HrLetters >>
+deactivate HrLettersJPARepository
+HrLettersService -> HrLettersControllerImpl: << persisted List HrLetters >>
+deactivate HrLettersService
+HrLettersControllerImpl -> CXFServlet: << persisted List HrLetters >>
+deactivate HrLettersControllerImpl
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

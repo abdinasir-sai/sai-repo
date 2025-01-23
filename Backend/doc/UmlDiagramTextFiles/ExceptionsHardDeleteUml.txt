@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Exceptions Scenario
+participant User
+User -> CXFServlet: DELETE, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << delete >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: delete(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: deleteById(:Exceptions)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: deleteById(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: delete(:Exceptions)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted Exceptions >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted Exceptions >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted Exceptions >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted Exceptions >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

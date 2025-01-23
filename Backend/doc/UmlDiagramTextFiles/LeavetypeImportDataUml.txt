@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data LeaveType Scenario
+participant User
+User -> CXFServlet: POST, LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << importData >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: importData(:LeaveType)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: importData(:LeaveType)
+activate LeaveTypeService
+activate LeaveTypeServiceImpl
+LeaveTypeService -> LeaveTypeServiceImpl: importData(:LeaveType)
+LeaveTypeServiceImpl -> LeaveTypeJPARepository: saveAll(:LeaveType)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: save(:LeaveType)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted LeaveType >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeServiceImpl: << persisted LeaveType >>
+LeaveTypeServiceImpl -> LeaveTypeService: << persisted LeaveType >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted LeaveType >>
+deactivate LeaveTypeServiceImpl
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted LeaveType >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

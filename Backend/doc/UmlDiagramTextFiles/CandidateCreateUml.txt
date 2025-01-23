@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Candidate Scenario
+participant User
+User -> CXFServlet: POST, Candidate
+activate CXFServlet
+CXFServlet -> Candidate: << create >>
+activate Candidate
+Candidate -> CXFServlet: << instance >>
+deactivate Candidate
+CXFServlet -> CandidateControllerImpl: create(:Candidate)
+activate CandidateControllerImpl
+CandidateControllerImpl -> CandidateService: create(:Candidate)
+activate CandidateService
+CandidateService -> CandidateJPARepository: create(:Candidate)
+activate CandidateJPARepository
+CandidateJPARepository -> EntityManager: save(:Candidate)
+activate EntityManager
+EntityManager -> CandidateJPARepository: << persisted Candidate >>
+deactivate EntityManager
+CandidateJPARepository -> CandidateService: << persisted Candidate >>
+deactivate CandidateJPARepository
+CandidateService -> CandidateControllerImpl: << persisted Candidate >>
+deactivate CandidateService
+CandidateControllerImpl -> CXFServlet: << persisted Candidate >>
+deactivate CandidateControllerImpl
+CXFServlet -> User: marshalled Candidate XML
+deactivate CXFServlet
+@enduml

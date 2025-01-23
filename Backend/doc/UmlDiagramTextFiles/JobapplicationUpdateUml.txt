@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update JobApplication Scenario
+participant User
+User -> CXFServlet: UPDATE, JobApplication
+activate CXFServlet
+CXFServlet -> JobApplication: << update >>
+activate JobApplication
+JobApplication -> CXFServlet: << instance >>
+deactivate JobApplication
+CXFServlet -> JobApplicationControllerImpl: update(:JobApplication)
+activate JobApplicationControllerImpl
+JobApplicationControllerImpl -> JobApplicationService: update(:JobApplication)
+activate JobApplicationService
+JobApplicationService -> JobApplicationJPARepository: update(:JobApplication)
+activate JobApplicationJPARepository
+JobApplicationJPARepository -> EntityManager: update(:JobApplication)
+activate EntityManager
+EntityManager -> JobApplicationJPARepository: << persisted JobApplication >>
+deactivate EntityManager
+JobApplicationJPARepository -> JobApplicationService: << persisted JobApplication >>
+deactivate JobApplicationJPARepository
+JobApplicationService -> JobApplicationControllerImpl: << persisted JobApplication >>
+deactivate JobApplicationService
+JobApplicationControllerImpl -> CXFServlet: << persisted JobApplication >>
+deactivate JobApplicationControllerImpl
+CXFServlet -> User: marshalled JobApplication XML
+deactivate CXFServlet
+@enduml

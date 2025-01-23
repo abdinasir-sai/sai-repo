@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Holiday Scenario
+participant User
+User -> CXFServlet: GET, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << count >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: count(:Holiday)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: count(:Holiday)
+activate HolidayService
+HolidayService -> HolidayJPARepository: count(:Holiday)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted Count >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted Count >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted Count >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted Count >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

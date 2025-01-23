@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create TravelRequest Scenario
+participant User
+User -> CXFServlet: POST, TravelRequest
+activate CXFServlet
+CXFServlet -> TravelRequest: << create >>
+activate TravelRequest
+TravelRequest -> CXFServlet: << instance >>
+deactivate TravelRequest
+CXFServlet -> TravelRequestControllerImpl: create(:TravelRequest)
+activate TravelRequestControllerImpl
+TravelRequestControllerImpl -> TravelRequestService: create(:TravelRequest)
+activate TravelRequestService
+TravelRequestService -> TravelRequestJPARepository: create(:TravelRequest)
+activate TravelRequestJPARepository
+TravelRequestJPARepository -> EntityManager: save(:TravelRequest)
+activate EntityManager
+EntityManager -> TravelRequestJPARepository: << persisted TravelRequest >>
+deactivate EntityManager
+TravelRequestJPARepository -> TravelRequestService: << persisted TravelRequest >>
+deactivate TravelRequestJPARepository
+TravelRequestService -> TravelRequestControllerImpl: << persisted TravelRequest >>
+deactivate TravelRequestService
+TravelRequestControllerImpl -> CXFServlet: << persisted TravelRequest >>
+deactivate TravelRequestControllerImpl
+CXFServlet -> User: marshalled TravelRequest XML
+deactivate CXFServlet
+@enduml

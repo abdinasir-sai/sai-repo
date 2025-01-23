@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete CompanyDetails Scenario
+participant User
+User -> CXFServlet: DELETE, CompanyDetails
+activate CXFServlet
+CXFServlet -> CompanyDetails: << bulkdelete >>
+activate CompanyDetails
+CompanyDetails -> CXFServlet: << instance >>
+deactivate CompanyDetails
+CXFServlet -> CompanyDetailsControllerImpl: bulkdelete(:List<CompanyDetails>)
+activate CompanyDetailsControllerImpl
+CompanyDetailsControllerImpl -> CompanyDetailsService: bulkDelete(:List<CompanyDetails>)
+activate CompanyDetailsService
+CompanyDetailsService -> CompanyDetailsJPARepository: deleteAll(:List<CompanyDetails>)
+activate CompanyDetailsJPARepository
+CompanyDetailsJPARepository -> EntityManager: delete(:List<CompanyDetails>)
+activate EntityManager
+EntityManager -> CompanyDetailsJPARepository: << persisted CompanyDetails >>
+deactivate EntityManager
+CompanyDetailsJPARepository -> CompanyDetailsService: << persisted CompanyDetails >>
+deactivate CompanyDetailsJPARepository
+CompanyDetailsService -> CompanyDetailsControllerImpl: << persisted CompanyDetails >>
+deactivate CompanyDetailsService
+CompanyDetailsControllerImpl -> CXFServlet: << persisted CompanyDetails >>
+deactivate CompanyDetailsControllerImpl
+CXFServlet -> User: marshalled CompanyDetails XML
+deactivate CXFServlet
+@enduml

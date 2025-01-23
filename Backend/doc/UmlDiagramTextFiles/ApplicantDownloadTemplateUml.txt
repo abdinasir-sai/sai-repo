@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Applicant Scenario
+participant User
+User -> CXFServlet: Applicant
+activate CXFServlet
+CXFServlet -> Applicant: << downloadTemplate >>
+activate Applicant
+Applicant -> CXFServlet: << instance >>
+deactivate Applicant
+CXFServlet -> ApplicantController: downloadTemplate(:String fileName)
+activate ApplicantController
+ApplicantController -> ApplicantControllerImpl: ResponseBuilder(workbook,fileName)
+activate ApplicantControllerImpl
+ApplicantControllerImpl -> ApplicantController: response(:ResponseEntity)
+deactivate ApplicantControllerImpl
+ApplicantController -> CXFServlet: << Applicant  >>
+deactivate ApplicantController
+CXFServlet -> User: marshalled Applicant XML
+deactivate CXFServlet
+@enduml

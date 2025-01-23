@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Location Scenario
+participant User
+User -> CXFServlet: Location
+activate CXFServlet
+CXFServlet -> Location: << export >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: export(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: search(:Location)
+activate LocationService
+LocationService -> LocationJPARepository: search(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: save(:Location)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: response(:List<Location>)
+LocationControllerImpl -> LocationService: export(:Location)
+LocationService -> LocationControllerImpl: << persisted Location.xlsx >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Location.xlsx >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

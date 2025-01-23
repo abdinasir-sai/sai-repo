@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data TravelExpense Scenario
+participant User
+User -> CXFServlet: TravelExpense
+activate CXFServlet
+CXFServlet -> TravelExpense: << export >>
+activate TravelExpense
+TravelExpense -> CXFServlet: << instance >>
+deactivate TravelExpense
+CXFServlet -> TravelExpenseControllerImpl: export(:TravelExpense)
+activate TravelExpenseControllerImpl
+TravelExpenseControllerImpl -> TravelExpenseService: search(:TravelExpense)
+activate TravelExpenseService
+TravelExpenseService -> TravelExpenseJPARepository: search(:TravelExpense)
+activate TravelExpenseJPARepository
+TravelExpenseJPARepository -> EntityManager: save(:TravelExpense)
+activate EntityManager
+EntityManager -> TravelExpenseJPARepository: << persisted TravelExpense >>
+deactivate EntityManager
+TravelExpenseJPARepository -> TravelExpenseService: << persisted TravelExpense >>
+deactivate TravelExpenseJPARepository
+TravelExpenseService -> TravelExpenseControllerImpl: response(:List<TravelExpense>)
+TravelExpenseControllerImpl -> TravelExpenseService: export(:TravelExpense)
+TravelExpenseService -> TravelExpenseControllerImpl: << persisted TravelExpense.xlsx >>
+deactivate TravelExpenseService
+TravelExpenseControllerImpl -> CXFServlet: << persisted TravelExpense.xlsx >>
+deactivate TravelExpenseControllerImpl
+CXFServlet -> User: marshalled TravelExpense XML
+deactivate CXFServlet
+@enduml

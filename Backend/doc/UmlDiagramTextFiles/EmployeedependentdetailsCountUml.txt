@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count EmployeeDependentDetails Scenario
+participant User
+User -> CXFServlet: GET, EmployeeDependentDetails
+activate CXFServlet
+CXFServlet -> EmployeeDependentDetails: << count >>
+activate EmployeeDependentDetails
+EmployeeDependentDetails -> CXFServlet: << instance >>
+deactivate EmployeeDependentDetails
+CXFServlet -> EmployeeDependentDetailsControllerImpl: count(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsControllerImpl
+EmployeeDependentDetailsControllerImpl -> EmployeeDependentDetailsService: count(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsService
+EmployeeDependentDetailsService -> EmployeeDependentDetailsJPARepository: count(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsJPARepository
+EmployeeDependentDetailsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> EmployeeDependentDetailsJPARepository: << persisted Count >>
+deactivate EntityManager
+EmployeeDependentDetailsJPARepository -> EmployeeDependentDetailsService: << persisted Count >>
+deactivate EmployeeDependentDetailsJPARepository
+EmployeeDependentDetailsService -> EmployeeDependentDetailsControllerImpl: << persisted Count >>
+deactivate EmployeeDependentDetailsService
+EmployeeDependentDetailsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate EmployeeDependentDetailsControllerImpl
+CXFServlet -> User: marshalled EmployeeDependentDetails XML
+deactivate CXFServlet
+@enduml

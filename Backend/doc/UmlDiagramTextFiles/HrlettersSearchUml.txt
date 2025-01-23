@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search HrLetters Scenario
+participant User
+User -> CXFServlet: GET, HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << search >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersControllerImpl: search(:HrLetters)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersService: search(:HrLetters)
+activate HrLettersService
+HrLettersService -> HrLettersJPARepository: search(:HrLetters)
+activate HrLettersJPARepository
+HrLettersJPARepository -> EntityManager: response(:HrLetters)
+activate EntityManager
+EntityManager -> HrLettersJPARepository: << persisted HrLetters >>
+deactivate EntityManager
+HrLettersJPARepository -> HrLettersService: << persisted HrLetters >>
+deactivate HrLettersJPARepository
+HrLettersService -> HrLettersControllerImpl: << persisted HrLetters >>
+deactivate HrLettersService
+HrLettersControllerImpl -> CXFServlet: << persisted HrLetters >>
+deactivate HrLettersControllerImpl
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

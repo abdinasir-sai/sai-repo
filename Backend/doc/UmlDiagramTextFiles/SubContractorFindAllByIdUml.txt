@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById SubContractor Scenario
+participant User
+User -> CXFServlet: GET, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << findAllById >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: findAllById(:List<SubContractor> id)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: findAllById(:List<SubContractor> id)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: findAllById(:List<SubContractor> id)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: response(:List<SubContractor>findAllById)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted List SubContractor >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted List SubContractor >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted List SubContractor >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted List SubContractor >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,730 @@
+digraph "twoDegreesRelationshipsDiagram" {
+  graph [    rankdir="RL"    bgcolor="#ffffff"    label="\n"    labeljust="l"    nodesep="0.18"    ranksep="0.46"    fontname="Helvetica"    fontsize="11"    ration="compress"  ];  node [    fontname="Helvetica"    fontsize="11"    shape="plaintext"  ];  edge [    arrowsize="0.8"  ];
+  "ABSENT_SCHEDULE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ABSENT_SCHEDULE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICABLE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICABLE":"elipses":w -> "DEPARTMENT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICABLE":"elipses":w -> "DESIGNATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICABLE":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICABLE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICABLE":"elipses":w -> "LOCATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICANT":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "APPLICANT":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ASSET":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ASSET":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ASSET":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ATTENDANCE_REGULARIZATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ATTENDANCE_REGULARIZATION":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ATTENDANCE_REGULARIZATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "BREAKDETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "BREAKDETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CALENDAR_DEFINITION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CALENDAR_DEFINITION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE":"elipses":w -> "DEPARTMENT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE":"elipses":w -> "LOCATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE_EDUCATION":"elipses":w -> "CANDIDATE":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE_EDUCATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE_EDUCATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE_EXPERIENCE":"elipses":w -> "CANDIDATE":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE_EXPERIENCE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CANDIDATE_EXPERIENCE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CITY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CITY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CITY":"elipses":w -> "STATE":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CLIENTS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "CLIENTS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "COMPANY_DETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "COMPANY_DETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "COMPENSATORY_REQUEST_SCHEDULER":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "COMPENSATORY_REQUEST_SCHEDULER":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "COUNTRY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "COUNTRY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DELEGATIONS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DELEGATIONS":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DELEGATIONS":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DELEGATIONS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DEPARTMENT":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DEPARTMENT":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DESIGNATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "DESIGNATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE":"CREATOR":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE":"DEPARTMENT_ID":w -> "DEPARTMENT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE":"DESIGNATION_ID":w -> "DESIGNATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE":"LAST_MODIFIER":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE":"LOCATION_ID":w -> "LOCATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_DEPENDENT_DETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_DEPENDENT_DETAILS":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_DEPENDENT_DETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_MONTHLY_ATTENDANCE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_MONTHLY_ATTENDANCE":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_MONTHLY_ATTENDANCE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_WORK_EXPERIENCE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_WORK_EXPERIENCE":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEE_WORK_EXPERIENCE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEEEDUCATIONDETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEEEDUCATIONDETAILS":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EMPLOYEEEDUCATIONDETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXCEPTIONAL_WORKING_DAY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXCEPTIONAL_WORKING_DAY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXCEPTIONS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXCEPTIONS":"elipses":w -> "DEPARTMENT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXCEPTIONS":"elipses":w -> "DESIGNATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXCEPTIONS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXCEPTIONS":"elipses":w -> "LOCATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXIT_DETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "EXIT_DETAILS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "FAQ":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "FAQ":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "GENERAL_SETTINGS_LEAVE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "GENERAL_SETTINGS_LEAVE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "HOLIDAY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "HOLIDAY":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "HR_LETTERS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "HR_LETTERS":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "HR_LETTERS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "INTERVIEW":"elipses":w -> "APPLICANT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "INTERVIEW":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "INTERVIEW":"elipses":w -> "DEPARTMENT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "INTERVIEW":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "INTERVIEW":"elipses":w -> "JOB_OPENING":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "INTERVIEW":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOB_APPLICATION":"elipses":w -> "APPLICANT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOB_APPLICATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOB_APPLICATION":"elipses":w -> "JOB_OPENING":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOB_APPLICATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOB_OPENING":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOB_OPENING":"elipses":w -> "DEPARTMENT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOB_OPENING":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOBS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "JOBS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVE_ENTITLEMENT":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVE_ENTITLEMENT":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVE_TYPE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVE_TYPE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVES":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVES":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVES":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LEAVES":"elipses":w -> "LEAVE_TYPE":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LOCATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "LOCATION":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "OFFERS":"elipses":w -> "APPLICANT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "OFFERS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "OFFERS":"elipses":w -> "DEPARTMENT":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "OFFERS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "OFFERS":"elipses":w -> "JOB_OPENING":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "PAY_PERIOD_SETTING":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "PAY_PERIOD_SETTING":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "PAYROLL":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "PAYROLL":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "PAYROLL":"elipses":w -> "LOCATION":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "PROJECTS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "PROJECTS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "RESTRICTIONS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "RESTRICTIONS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "SKILL":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "SKILL":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "STATE":"elipses":w -> "COUNTRY":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "STATE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "STATE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "SUB_CONTRACTOR":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "SUB_CONTRACTOR":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TIME_LOGS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TIME_LOGS":"elipses":w -> "JOBS":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TIME_LOGS":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TIME_LOGS":"elipses":w -> "PROJECTS":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TIME_SHEET":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TIME_SHEET":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TRAVEL_EXPENSE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TRAVEL_EXPENSE":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TRAVEL_EXPENSE":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TRAVEL_REQUEST":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TRAVEL_REQUEST":"elipses":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "TRAVEL_REQUEST":"elipses":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "WORKING_HOURS":"CREATOR":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "WORKING_HOURS":"EMPLOYEE_ID":w -> "EMPLOYEE":"ID":e [arrowhead=none dir=back arrowtail=crowodot];
+  "WORKING_HOURS":"LAST_MODIFIER":w -> "User":"userid_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "ABSENT_SCHEDULE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="130" HEIGHT="16"><B>ABSENT_SCHEDULE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/ABSENT_SCHEDULE.html"
+    target="_top"
+    tooltip="ABSENT_SCHEDULE"
+  ];
+  "APPLICABLE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="82" HEIGHT="16"><B>APPLICABLE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 6</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/APPLICABLE.html"
+    target="_top"
+    tooltip="APPLICABLE"
+  ];
+  "APPLICANT" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="75" HEIGHT="16"><B>APPLICANT</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">3 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/APPLICANT.html"
+    target="_top"
+    tooltip="APPLICANT"
+  ];
+  "ASSET" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="42" HEIGHT="16"><B>ASSET</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/ASSET.html"
+    target="_top"
+    tooltip="ASSET"
+  ];
+  "ATTENDANCE_REGULARIZATION" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="214" HEIGHT="16"><B>ATTENDANCE_REGULARIZATION</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/ATTENDANCE_REGULARIZATION.html"
+    target="_top"
+    tooltip="ATTENDANCE_REGULARIZATION"
+  ];
+  "BREAKDETAILS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="101" HEIGHT="16"><B>BREAKDETAILS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/BREAKDETAILS.html"
+    target="_top"
+    tooltip="BREAKDETAILS"
+  ];
+  "CALENDAR_DEFINITION" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="156" HEIGHT="16"><B>CALENDAR_DEFINITION</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/CALENDAR_DEFINITION.html"
+    target="_top"
+    tooltip="CALENDAR_DEFINITION"
+  ];
+  "CANDIDATE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="78" HEIGHT="16"><B>CANDIDATE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 4</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">2 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/CANDIDATE.html"
+    target="_top"
+    tooltip="CANDIDATE"
+  ];
+  "CANDIDATE_EDUCATION" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="163" HEIGHT="16"><B>CANDIDATE_EDUCATION</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/CANDIDATE_EDUCATION.html"
+    target="_top"
+    tooltip="CANDIDATE_EDUCATION"
+  ];
+  "CANDIDATE_EXPERIENCE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="167" HEIGHT="16"><B>CANDIDATE_EXPERIENCE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/CANDIDATE_EXPERIENCE.html"
+    target="_top"
+    tooltip="CANDIDATE_EXPERIENCE"
+  ];
+  "CITY" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="30" HEIGHT="16"><B>CITY</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/CITY.html"
+    target="_top"
+    tooltip="CITY"
+  ];
+  "CLIENTS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="55" HEIGHT="16"><B>CLIENTS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/CLIENTS.html"
+    target="_top"
+    tooltip="CLIENTS"
+  ];
+  "COMPANY_DETAILS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="130" HEIGHT="16"><B>COMPANY_DETAILS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/COMPANY_DETAILS.html"
+    target="_top"
+    tooltip="COMPANY_DETAILS"
+  ];
+  "COMPENSATORY_REQUEST_SCHEDULER" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="267" HEIGHT="16"><B>COMPENSATORY_REQUEST_SCHEDULER</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/COMPENSATORY_REQUEST_SCHEDULER.html"
+    target="_top"
+    tooltip="COMPENSATORY_REQUEST_SCHEDULER"
+  ];
+  "COUNTRY" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="64" HEIGHT="16"><B>COUNTRY</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/COUNTRY.html"
+    target="_top"
+    tooltip="COUNTRY"
+  ];
+  "DELEGATIONS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="94" HEIGHT="16"><B>DELEGATIONS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 4</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/DELEGATIONS.html"
+    target="_top"
+    tooltip="DELEGATIONS"
+  ];
+  "DEPARTMENT" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="92" HEIGHT="16"><B>DEPARTMENT</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">7 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/DEPARTMENT.html"
+    target="_top"
+    tooltip="DEPARTMENT"
+  ];
+  "DESIGNATION" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="93" HEIGHT="16"><B>DESIGNATION</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">3 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/DESIGNATION.html"
+    target="_top"
+    tooltip="DESIGNATION"
+  ];
+  "EMPLOYEE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="71" HEIGHT="16"><B>EMPLOYEE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 5</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">15 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/EMPLOYEE.html"
+    target="_top"
+    tooltip="EMPLOYEE"
+  ];
+  "EMPLOYEE_DEPENDENT_DETAILS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="221" HEIGHT="16"><B>EMPLOYEE_DEPENDENT_DETAILS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/EMPLOYEE_DEPENDENT_DETAILS.html"
+    target="_top"
+    tooltip="EMPLOYEE_DEPENDENT_DETAILS"
+  ];
+  "EMPLOYEE_MONTHLY_ATTENDANCE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="240" HEIGHT="16"><B>EMPLOYEE_MONTHLY_ATTENDANCE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/EMPLOYEE_MONTHLY_ATTENDANCE.html"
+    target="_top"
+    tooltip="EMPLOYEE_MONTHLY_ATTENDANCE"
+  ];
+  "EMPLOYEE_WORK_EXPERIENCE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="209" HEIGHT="16"><B>EMPLOYEE_WORK_EXPERIENCE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/EMPLOYEE_WORK_EXPERIENCE.html"
+    target="_top"
+    tooltip="EMPLOYEE_WORK_EXPERIENCE"
+  ];
+  "EMPLOYEEEDUCATIONDETAILS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="207" HEIGHT="16"><B>EMPLOYEEEDUCATIONDETAILS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/EMPLOYEEEDUCATIONDETAILS.html"
+    target="_top"
+    tooltip="EMPLOYEEEDUCATIONDETAILS"
+  ];
+  "EXCEPTIONAL_WORKING_DAY" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="199" HEIGHT="16"><B>EXCEPTIONAL_WORKING_DAY</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/EXCEPTIONAL_WORKING_DAY.html"
+    target="_top"
+    tooltip="EXCEPTIONAL_WORKING_DAY"
+  ];
+  "EXCEPTIONS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="84" HEIGHT="16"><B>EXCEPTIONS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 5</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/EXCEPTIONS.html"
+    target="_top"
+    tooltip="EXCEPTIONS"
+  ];
+  "EXIT_DETAILS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="92" HEIGHT="16"><B>EXIT_DETAILS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/EXIT_DETAILS.html"
+    target="_top"
+    tooltip="EXIT_DETAILS"
+  ];
+  "FAQ" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="27" HEIGHT="16"><B>FAQ</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/FAQ.html"
+    target="_top"
+    tooltip="FAQ"
+  ];
+  "GENERAL_SETTINGS_LEAVE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="183" HEIGHT="16"><B>GENERAL_SETTINGS_LEAVE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/GENERAL_SETTINGS_LEAVE.html"
+    target="_top"
+    tooltip="GENERAL_SETTINGS_LEAVE"
+  ];
+  "HOLIDAY" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="60" HEIGHT="16"><B>HOLIDAY</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/HOLIDAY.html"
+    target="_top"
+    tooltip="HOLIDAY"
+  ];
+  "HR_LETTERS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="83" HEIGHT="16"><B>HR_LETTERS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/HR_LETTERS.html"
+    target="_top"
+    tooltip="HR_LETTERS"
+  ];
+  "INTERVIEW" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="75" HEIGHT="16"><B>INTERVIEW</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 6</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/INTERVIEW.html"
+    target="_top"
+    tooltip="INTERVIEW"
+  ];
+  "JOB_APPLICATION" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="119" HEIGHT="16"><B>JOB_APPLICATION</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 4</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/JOB_APPLICATION.html"
+    target="_top"
+    tooltip="JOB_APPLICATION"
+  ];
+  "JOB_OPENING" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="91" HEIGHT="16"><B>JOB_OPENING</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">3 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/JOB_OPENING.html"
+    target="_top"
+    tooltip="JOB_OPENING"
+  ];
+  "JOBS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="32" HEIGHT="16"><B>JOBS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/JOBS.html"
+    target="_top"
+    tooltip="JOBS"
+  ];
+  "LEAVE_ENTITLEMENT" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="141" HEIGHT="16"><B>LEAVE_ENTITLEMENT</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/LEAVE_ENTITLEMENT.html"
+    target="_top"
+    tooltip="LEAVE_ENTITLEMENT"
+  ];
+  "LEAVE_TYPE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="82" HEIGHT="16"><B>LEAVE_TYPE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/LEAVE_TYPE.html"
+    target="_top"
+    tooltip="LEAVE_TYPE"
+  ];
+  "LEAVES" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="51" HEIGHT="16"><B>LEAVES</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 4</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/LEAVES.html"
+    target="_top"
+    tooltip="LEAVES"
+  ];
+  "LOCATION" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="68" HEIGHT="16"><B>LOCATION</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">5 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/LOCATION.html"
+    target="_top"
+    tooltip="LOCATION"
+  ];
+  "OFFERS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="52" HEIGHT="16"><B>OFFERS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 5</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/OFFERS.html"
+    target="_top"
+    tooltip="OFFERS"
+  ];
+  "PAY_PERIOD_SETTING" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="147" HEIGHT="16"><B>PAY_PERIOD_SETTING</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/PAY_PERIOD_SETTING.html"
+    target="_top"
+    tooltip="PAY_PERIOD_SETTING"
+  ];
+  "PAYROLL" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="61" HEIGHT="16"><B>PAYROLL</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/PAYROLL.html"
+    target="_top"
+    tooltip="PAYROLL"
+  ];
+  "PROJECTS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="66" HEIGHT="16"><B>PROJECTS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/PROJECTS.html"
+    target="_top"
+    tooltip="PROJECTS"
+  ];
+  "RESTRICTIONS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="98" HEIGHT="16"><B>RESTRICTIONS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/RESTRICTIONS.html"
+    target="_top"
+    tooltip="RESTRICTIONS"
+  ];
+  "SKILL" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="37" HEIGHT="16"><B>SKILL</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/SKILL.html"
+    target="_top"
+    tooltip="SKILL"
+  ];
+  "STATE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="42" HEIGHT="16"><B>STATE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/STATE.html"
+    target="_top"
+    tooltip="STATE"
+  ];
+  "SUB_CONTRACTOR" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="125" HEIGHT="16"><B>SUB_CONTRACTOR</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/SUB_CONTRACTOR.html"
+    target="_top"
+    tooltip="SUB_CONTRACTOR"
+  ];
+  "TIME_LOGS" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="75" HEIGHT="16"><B>TIME_LOGS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 4</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/TIME_LOGS.html"
+    target="_top"
+    tooltip="TIME_LOGS"
+  ];
+  "TIME_SHEET" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="82" HEIGHT="16"><B>TIME_SHEET</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/TIME_SHEET.html"
+    target="_top"
+    tooltip="TIME_SHEET"
+  ];
+  "TRAVEL_EXPENSE" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="119" HEIGHT="16"><B>TRAVEL_EXPENSE</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/TRAVEL_EXPENSE.html"
+    target="_top"
+    tooltip="TRAVEL_EXPENSE"
+  ];
+  "TRAVEL_REQUEST" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="120" HEIGHT="16"><B>TRAVEL_REQUEST</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
+    </TABLE>>
+    URL="../../tables/TRAVEL_REQUEST.html"
+    target="_top"
+    tooltip="TRAVEL_REQUEST"
+  ];
+  "User" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="30" HEIGHT="16"><B>User</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">102 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/User.html"
+    target="_top"
+    tooltip="User"
+  ];
+  "WORKING_HOURS" [
+   label=<
+    <TABLE BORDER="2" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="4"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="120" HEIGHT="16"><B>WORKING_HOURS</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="ID" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">ID</TD></TR></TABLE></TD><TD PORT="ID.type" ALIGN="LEFT">int[10]</TD></TR>
+      <TR><TD PORT="WORKSPACE_ID" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">WORKSPACE_ID</TD></TR></TABLE></TD><TD PORT="WORKSPACE_ID.type" ALIGN="LEFT">int[10]</TD></TR>
+      <TR><TD PORT="FIRST_CHECKIN" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">FIRST_CHECKIN</TD></TR></TABLE></TD><TD PORT="FIRST_CHECKIN.type" ALIGN="LEFT">datetime[26]</TD></TR>
+      <TR><TD PORT="LAST_CHECKOUT" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">LAST_CHECKOUT</TD></TR></TABLE></TD><TD PORT="LAST_CHECKOUT.type" ALIGN="LEFT">datetime[26]</TD></TR>
+      <TR><TD PORT="MIN_CLOCKED_HOURS" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">MIN_CLOCKED_HOURS</TD></TR></TABLE></TD><TD PORT="MIN_CLOCKED_HOURS.type" ALIGN="LEFT">varchar[50]</TD></TR>
+      <TR><TD PORT="MAX_CLOCKED_HOURS" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">MAX_CLOCKED_HOURS</TD></TR></TABLE></TD><TD PORT="MAX_CLOCKED_HOURS.type" ALIGN="LEFT">varchar[50]</TD></TR>
+      <TR><TD PORT="EMPLOYEE_ID" COLSPAN="2" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">EMPLOYEE_ID</TD></TR></TABLE></TD><TD PORT="EMPLOYEE_ID.type" ALIGN="LEFT">int[10]</TD></TR>
+      <TR><TD PORT="CREATED_TIME" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">CREATED_TIME</TD></TR></TABLE></TD><TD PORT="CREATED_TIME.type" ALIGN="LEFT">datetime[26]</TD></TR>
+      <TR><TD PORT="MODIFIED_TIME" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">MODIFIED_TIME</TD></TR></TABLE></TD><TD PORT="MODIFIED_TIME.type" ALIGN="LEFT">datetime[26]</TD></TR>
+      <TR><TD PORT="CREATOR" COLSPAN="2" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">CREATOR</TD></TR></TABLE></TD><TD PORT="CREATOR.type" ALIGN="LEFT">int[10]</TD></TR>
+      <TR><TD PORT="LAST_MODIFIER" COLSPAN="2" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="153" HEIGHT="16">LAST_MODIFIER</TD></TR></TABLE></TD><TD PORT="LAST_MODIFIER.type" ALIGN="LEFT">int[10]</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 &gt;</TD></TR>
+    </TABLE>>
+    URL="../../tables/WORKING_HOURS.html"
+    target="_top"
+    tooltip="WORKING_HOURS"
+  ];
+}

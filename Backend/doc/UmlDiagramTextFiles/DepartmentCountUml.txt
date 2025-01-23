@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Department Scenario
+participant User
+User -> CXFServlet: GET, Department
+activate CXFServlet
+CXFServlet -> Department: << count >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: count(:Department)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: count(:Department)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: count(:Department)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted Count >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted Count >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted Count >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted Count >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

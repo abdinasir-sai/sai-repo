@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Exceptions Scenario
+participant User
+User -> CXFServlet: POST, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << create >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: create(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: create(:Exceptions)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: create(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: save(:Exceptions)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted Exceptions >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted Exceptions >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted Exceptions >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted Exceptions >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

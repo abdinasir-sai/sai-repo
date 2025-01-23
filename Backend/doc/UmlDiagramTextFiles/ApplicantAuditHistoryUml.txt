@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Applicant Scenario
+participant User
+User -> CXFServlet: GET, Applicant
+activate CXFServlet
+CXFServlet -> Applicant: << auditHistory >>
+activate Applicant
+Applicant -> CXFServlet: << instance >>
+deactivate Applicant
+CXFServlet -> ApplicantControllerImpl: auditHistory(:Applicant)
+activate ApplicantControllerImpl
+ApplicantControllerImpl -> ApplicantService: auditHistory(:Applicant)
+activate ApplicantService
+ApplicantService -> ApplicantJPARepository: auditHistory(:Applicant)
+activate ApplicantJPARepository
+ApplicantJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> ApplicantJPARepository: << persisted ApplicantAuditHistory >>
+deactivate EntityManager
+ApplicantJPARepository -> ApplicantService: << persisted ApplicantAuditHistory >>
+deactivate ApplicantJPARepository
+ApplicantService -> ApplicantControllerImpl: << persisted ApplicantAuditHistory >>
+deactivate ApplicantService
+ApplicantControllerImpl -> CXFServlet: << persisted ApplicantAuditHistory >>
+deactivate ApplicantControllerImpl
+CXFServlet -> User: marshalled Applicant XML
+deactivate CXFServlet
+@enduml

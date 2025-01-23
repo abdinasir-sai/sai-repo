@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Location Scenario
+participant User
+User -> CXFServlet: GET, Location
+activate CXFServlet
+CXFServlet -> Location: << findAllById >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: findAllById(:List<Location> id)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: findAllById(:List<Location> id)
+activate LocationService
+LocationService -> LocationJPARepository: findAllById(:List<Location> id)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: response(:List<Location>findAllById)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted List Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted List Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted List Location >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted List Location >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

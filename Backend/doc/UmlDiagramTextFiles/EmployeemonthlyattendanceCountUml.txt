@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count EmployeeMonthlyAttendance Scenario
+participant User
+User -> CXFServlet: GET, EmployeeMonthlyAttendance
+activate CXFServlet
+CXFServlet -> EmployeeMonthlyAttendance: << count >>
+activate EmployeeMonthlyAttendance
+EmployeeMonthlyAttendance -> CXFServlet: << instance >>
+deactivate EmployeeMonthlyAttendance
+CXFServlet -> EmployeeMonthlyAttendanceControllerImpl: count(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceControllerImpl
+EmployeeMonthlyAttendanceControllerImpl -> EmployeeMonthlyAttendanceService: count(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceService
+EmployeeMonthlyAttendanceService -> EmployeeMonthlyAttendanceJPARepository: count(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceJPARepository
+EmployeeMonthlyAttendanceJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> EmployeeMonthlyAttendanceJPARepository: << persisted Count >>
+deactivate EntityManager
+EmployeeMonthlyAttendanceJPARepository -> EmployeeMonthlyAttendanceService: << persisted Count >>
+deactivate EmployeeMonthlyAttendanceJPARepository
+EmployeeMonthlyAttendanceService -> EmployeeMonthlyAttendanceControllerImpl: << persisted Count >>
+deactivate EmployeeMonthlyAttendanceService
+EmployeeMonthlyAttendanceControllerImpl -> CXFServlet: << persisted Count >>
+deactivate EmployeeMonthlyAttendanceControllerImpl
+CXFServlet -> User: marshalled EmployeeMonthlyAttendance XML
+deactivate CXFServlet
+@enduml

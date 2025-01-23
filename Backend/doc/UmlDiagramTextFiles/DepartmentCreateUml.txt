@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Department Scenario
+participant User
+User -> CXFServlet: POST, Department
+activate CXFServlet
+CXFServlet -> Department: << create >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: create(:Department)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: create(:Department)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: create(:Department)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: save(:Department)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted Department >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted Department >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted Department >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted Department >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

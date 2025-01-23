@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete City Scenario
+participant User
+User -> CXFServlet: DELETE, City
+activate CXFServlet
+CXFServlet -> City: << bulkdelete >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: bulkdelete(:List<City>)
+activate CityControllerImpl
+CityControllerImpl -> CityService: bulkDelete(:List<City>)
+activate CityService
+CityService -> CityJPARepository: deleteAll(:List<City>)
+activate CityJPARepository
+CityJPARepository -> EntityManager: delete(:List<City>)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted City >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted City >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted City >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted City >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

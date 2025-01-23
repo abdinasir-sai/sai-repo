@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Breakdetails Scenario
+participant User
+User -> CXFServlet: GET, Breakdetails
+activate CXFServlet
+CXFServlet -> Breakdetails: << count >>
+activate Breakdetails
+Breakdetails -> CXFServlet: << instance >>
+deactivate Breakdetails
+CXFServlet -> BreakdetailsControllerImpl: count(:Breakdetails)
+activate BreakdetailsControllerImpl
+BreakdetailsControllerImpl -> BreakdetailsService: count(:Breakdetails)
+activate BreakdetailsService
+BreakdetailsService -> BreakdetailsJPARepository: count(:Breakdetails)
+activate BreakdetailsJPARepository
+BreakdetailsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> BreakdetailsJPARepository: << persisted Count >>
+deactivate EntityManager
+BreakdetailsJPARepository -> BreakdetailsService: << persisted Count >>
+deactivate BreakdetailsJPARepository
+BreakdetailsService -> BreakdetailsControllerImpl: << persisted Count >>
+deactivate BreakdetailsService
+BreakdetailsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate BreakdetailsControllerImpl
+CXFServlet -> User: marshalled Breakdetails XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById City Scenario
+participant User
+User -> CXFServlet: GET, City
+activate CXFServlet
+CXFServlet -> City: << findById >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: findById(:int)
+activate CityControllerImpl
+CityControllerImpl -> CityService: findById(:int)
+activate CityService
+CityService -> CityJPARepository: findById(:int)
+activate CityJPARepository
+CityJPARepository -> EntityManager: response(:City)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted City >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted City >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted City >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted City >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

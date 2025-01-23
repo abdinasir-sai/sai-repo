@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data EmployeeMonthlyAttendance Scenario
+participant User
+User -> CXFServlet: EmployeeMonthlyAttendance
+activate CXFServlet
+CXFServlet -> EmployeeMonthlyAttendance: << export >>
+activate EmployeeMonthlyAttendance
+EmployeeMonthlyAttendance -> CXFServlet: << instance >>
+deactivate EmployeeMonthlyAttendance
+CXFServlet -> EmployeeMonthlyAttendanceControllerImpl: export(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceControllerImpl
+EmployeeMonthlyAttendanceControllerImpl -> EmployeeMonthlyAttendanceService: search(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceService
+EmployeeMonthlyAttendanceService -> EmployeeMonthlyAttendanceJPARepository: search(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceJPARepository
+EmployeeMonthlyAttendanceJPARepository -> EntityManager: save(:EmployeeMonthlyAttendance)
+activate EntityManager
+EntityManager -> EmployeeMonthlyAttendanceJPARepository: << persisted EmployeeMonthlyAttendance >>
+deactivate EntityManager
+EmployeeMonthlyAttendanceJPARepository -> EmployeeMonthlyAttendanceService: << persisted EmployeeMonthlyAttendance >>
+deactivate EmployeeMonthlyAttendanceJPARepository
+EmployeeMonthlyAttendanceService -> EmployeeMonthlyAttendanceControllerImpl: response(:List<EmployeeMonthlyAttendance>)
+EmployeeMonthlyAttendanceControllerImpl -> EmployeeMonthlyAttendanceService: export(:EmployeeMonthlyAttendance)
+EmployeeMonthlyAttendanceService -> EmployeeMonthlyAttendanceControllerImpl: << persisted EmployeeMonthlyAttendance.xlsx >>
+deactivate EmployeeMonthlyAttendanceService
+EmployeeMonthlyAttendanceControllerImpl -> CXFServlet: << persisted EmployeeMonthlyAttendance.xlsx >>
+deactivate EmployeeMonthlyAttendanceControllerImpl
+CXFServlet -> User: marshalled EmployeeMonthlyAttendance XML
+deactivate CXFServlet
+@enduml

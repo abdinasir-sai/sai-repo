@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search TravelRequest Scenario
+participant User
+User -> CXFServlet: GET, TravelRequest
+activate CXFServlet
+CXFServlet -> TravelRequest: << search >>
+activate TravelRequest
+TravelRequest -> CXFServlet: << instance >>
+deactivate TravelRequest
+CXFServlet -> TravelRequestControllerImpl: search(:TravelRequest)
+activate TravelRequestControllerImpl
+TravelRequestControllerImpl -> TravelRequestService: search(:TravelRequest)
+activate TravelRequestService
+TravelRequestService -> TravelRequestJPARepository: search(:TravelRequest)
+activate TravelRequestJPARepository
+TravelRequestJPARepository -> EntityManager: response(:TravelRequest)
+activate EntityManager
+EntityManager -> TravelRequestJPARepository: << persisted TravelRequest >>
+deactivate EntityManager
+TravelRequestJPARepository -> TravelRequestService: << persisted TravelRequest >>
+deactivate TravelRequestJPARepository
+TravelRequestService -> TravelRequestControllerImpl: << persisted TravelRequest >>
+deactivate TravelRequestService
+TravelRequestControllerImpl -> CXFServlet: << persisted TravelRequest >>
+deactivate TravelRequestControllerImpl
+CXFServlet -> User: marshalled TravelRequest XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Faq Scenario
+participant User
+User -> CXFServlet: POST, Faq
+activate CXFServlet
+CXFServlet -> Faq: << importData >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: importData(:Faq)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: importData(:Faq)
+activate FaqService
+activate FaqServiceImpl
+FaqService -> FaqServiceImpl: importData(:Faq)
+FaqServiceImpl -> FaqJPARepository: saveAll(:Faq)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: save(:Faq)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted Faq >>
+deactivate EntityManager
+FaqJPARepository -> FaqServiceImpl: << persisted Faq >>
+FaqServiceImpl -> FaqService: << persisted Faq >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted Faq >>
+deactivate FaqServiceImpl
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted Faq >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template City Scenario
+participant User
+User -> CXFServlet: City
+activate CXFServlet
+CXFServlet -> City: << downloadTemplate >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityController: downloadTemplate(:String fileName)
+activate CityController
+CityController -> CityControllerImpl: ResponseBuilder(workbook,fileName)
+activate CityControllerImpl
+CityControllerImpl -> CityController: response(:ResponseEntity)
+deactivate CityControllerImpl
+CityController -> CXFServlet: << City  >>
+deactivate CityController
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

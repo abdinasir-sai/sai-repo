@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History PayPeriodSetting Scenario
+participant User
+User -> CXFServlet: GET, PayPeriodSetting
+activate CXFServlet
+CXFServlet -> PayPeriodSetting: << auditHistory >>
+activate PayPeriodSetting
+PayPeriodSetting -> CXFServlet: << instance >>
+deactivate PayPeriodSetting
+CXFServlet -> PayPeriodSettingControllerImpl: auditHistory(:PayPeriodSetting)
+activate PayPeriodSettingControllerImpl
+PayPeriodSettingControllerImpl -> PayPeriodSettingService: auditHistory(:PayPeriodSetting)
+activate PayPeriodSettingService
+PayPeriodSettingService -> PayPeriodSettingJPARepository: auditHistory(:PayPeriodSetting)
+activate PayPeriodSettingJPARepository
+PayPeriodSettingJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> PayPeriodSettingJPARepository: << persisted PayPeriodSettingAuditHistory >>
+deactivate EntityManager
+PayPeriodSettingJPARepository -> PayPeriodSettingService: << persisted PayPeriodSettingAuditHistory >>
+deactivate PayPeriodSettingJPARepository
+PayPeriodSettingService -> PayPeriodSettingControllerImpl: << persisted PayPeriodSettingAuditHistory >>
+deactivate PayPeriodSettingService
+PayPeriodSettingControllerImpl -> CXFServlet: << persisted PayPeriodSettingAuditHistory >>
+deactivate PayPeriodSettingControllerImpl
+CXFServlet -> User: marshalled PayPeriodSetting XML
+deactivate CXFServlet
+@enduml

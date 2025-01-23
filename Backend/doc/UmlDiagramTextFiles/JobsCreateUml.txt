@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Jobs Scenario
+participant User
+User -> CXFServlet: POST, Jobs
+activate CXFServlet
+CXFServlet -> Jobs: << create >>
+activate Jobs
+Jobs -> CXFServlet: << instance >>
+deactivate Jobs
+CXFServlet -> JobsControllerImpl: create(:Jobs)
+activate JobsControllerImpl
+JobsControllerImpl -> JobsService: create(:Jobs)
+activate JobsService
+JobsService -> JobsJPARepository: create(:Jobs)
+activate JobsJPARepository
+JobsJPARepository -> EntityManager: save(:Jobs)
+activate EntityManager
+EntityManager -> JobsJPARepository: << persisted Jobs >>
+deactivate EntityManager
+JobsJPARepository -> JobsService: << persisted Jobs >>
+deactivate JobsJPARepository
+JobsService -> JobsControllerImpl: << persisted Jobs >>
+deactivate JobsService
+JobsControllerImpl -> CXFServlet: << persisted Jobs >>
+deactivate JobsControllerImpl
+CXFServlet -> User: marshalled Jobs XML
+deactivate CXFServlet
+@enduml

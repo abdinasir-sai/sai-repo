@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Delegations Scenario
+participant User
+User -> CXFServlet: POST, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << create >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: create(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: create(:Delegations)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: create(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: save(:Delegations)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted Delegations >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted Delegations >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted Delegations >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted Delegations >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

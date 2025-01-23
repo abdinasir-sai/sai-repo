@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById TravelRequest Scenario
+participant User
+User -> CXFServlet: DELETE, TravelRequest
+activate CXFServlet
+CXFServlet -> TravelRequest: << delete >>
+activate TravelRequest
+TravelRequest -> CXFServlet: << instance >>
+deactivate TravelRequest
+CXFServlet -> TravelRequestControllerImpl: delete(:TravelRequest)
+activate TravelRequestControllerImpl
+TravelRequestControllerImpl -> TravelRequestService: deleteById(:TravelRequest)
+activate TravelRequestService
+TravelRequestService -> TravelRequestJPARepository: deleteById(:TravelRequest)
+activate TravelRequestJPARepository
+TravelRequestJPARepository -> EntityManager: delete(:TravelRequest)
+activate EntityManager
+EntityManager -> TravelRequestJPARepository: << persisted TravelRequest >>
+deactivate EntityManager
+TravelRequestJPARepository -> TravelRequestService: << persisted TravelRequest >>
+deactivate TravelRequestJPARepository
+TravelRequestService -> TravelRequestControllerImpl: << persisted TravelRequest >>
+deactivate TravelRequestService
+TravelRequestControllerImpl -> CXFServlet: << persisted TravelRequest >>
+deactivate TravelRequestControllerImpl
+CXFServlet -> User: marshalled TravelRequest XML
+deactivate CXFServlet
+@enduml

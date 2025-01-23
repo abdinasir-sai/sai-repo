@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById TimeSheet Scenario
+participant User
+User -> CXFServlet: DELETE, TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << delete >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: delete(:TimeSheet)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: deleteById(:TimeSheet)
+activate TimeSheetService
+TimeSheetService -> TimeSheetJPARepository: deleteById(:TimeSheet)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: delete(:TimeSheet)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted TimeSheet >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetService: << persisted TimeSheet >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: << persisted TimeSheet >>
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted TimeSheet >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Payroll Scenario
+participant User
+User -> CXFServlet: DELETE, Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << bulkdelete >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: bulkdelete(:List<Payroll>)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: bulkDelete(:List<Payroll>)
+activate PayrollService
+PayrollService -> PayrollJPARepository: deleteAll(:List<Payroll>)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: delete(:List<Payroll>)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted Payroll >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollService: << persisted Payroll >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: << persisted Payroll >>
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted Payroll >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById CandidateExperience Scenario
+participant User
+User -> CXFServlet: GET, CandidateExperience
+activate CXFServlet
+CXFServlet -> CandidateExperience: << findById >>
+activate CandidateExperience
+CandidateExperience -> CXFServlet: << instance >>
+deactivate CandidateExperience
+CXFServlet -> CandidateExperienceControllerImpl: findById(:int)
+activate CandidateExperienceControllerImpl
+CandidateExperienceControllerImpl -> CandidateExperienceService: findById(:int)
+activate CandidateExperienceService
+CandidateExperienceService -> CandidateExperienceJPARepository: findById(:int)
+activate CandidateExperienceJPARepository
+CandidateExperienceJPARepository -> EntityManager: response(:CandidateExperience)
+activate EntityManager
+EntityManager -> CandidateExperienceJPARepository: << persisted CandidateExperience >>
+deactivate EntityManager
+CandidateExperienceJPARepository -> CandidateExperienceService: << persisted CandidateExperience >>
+deactivate CandidateExperienceJPARepository
+CandidateExperienceService -> CandidateExperienceControllerImpl: << persisted CandidateExperience >>
+deactivate CandidateExperienceService
+CandidateExperienceControllerImpl -> CXFServlet: << persisted CandidateExperience >>
+deactivate CandidateExperienceControllerImpl
+CXFServlet -> User: marshalled CandidateExperience XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Holiday Scenario
+participant User
+User -> CXFServlet: POST, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << create >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: create(:Holiday)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: create(:Holiday)
+activate HolidayService
+HolidayService -> HolidayJPARepository: create(:Holiday)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: save(:Holiday)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted Holiday >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted Holiday >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted Holiday >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted Holiday >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

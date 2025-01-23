@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History CandidateEducation Scenario
+participant User
+User -> CXFServlet: GET, CandidateEducation
+activate CXFServlet
+CXFServlet -> CandidateEducation: << auditHistory >>
+activate CandidateEducation
+CandidateEducation -> CXFServlet: << instance >>
+deactivate CandidateEducation
+CXFServlet -> CandidateEducationControllerImpl: auditHistory(:CandidateEducation)
+activate CandidateEducationControllerImpl
+CandidateEducationControllerImpl -> CandidateEducationService: auditHistory(:CandidateEducation)
+activate CandidateEducationService
+CandidateEducationService -> CandidateEducationJPARepository: auditHistory(:CandidateEducation)
+activate CandidateEducationJPARepository
+CandidateEducationJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> CandidateEducationJPARepository: << persisted CandidateEducationAuditHistory >>
+deactivate EntityManager
+CandidateEducationJPARepository -> CandidateEducationService: << persisted CandidateEducationAuditHistory >>
+deactivate CandidateEducationJPARepository
+CandidateEducationService -> CandidateEducationControllerImpl: << persisted CandidateEducationAuditHistory >>
+deactivate CandidateEducationService
+CandidateEducationControllerImpl -> CXFServlet: << persisted CandidateEducationAuditHistory >>
+deactivate CandidateEducationControllerImpl
+CXFServlet -> User: marshalled CandidateEducation XML
+deactivate CXFServlet
+@enduml

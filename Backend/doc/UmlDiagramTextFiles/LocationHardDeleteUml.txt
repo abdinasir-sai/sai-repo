@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Location Scenario
+participant User
+User -> CXFServlet: DELETE, Location
+activate CXFServlet
+CXFServlet -> Location: << delete >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: delete(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: deleteById(:Location)
+activate LocationService
+LocationService -> LocationJPARepository: deleteById(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: delete(:Location)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted Location >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Location >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Employee Scenario
+participant User
+User -> CXFServlet: GET, Employee
+activate CXFServlet
+CXFServlet -> Employee: << search >>
+activate Employee
+Employee -> CXFServlet: << instance >>
+deactivate Employee
+CXFServlet -> EmployeeControllerImpl: search(:Employee)
+activate EmployeeControllerImpl
+EmployeeControllerImpl -> EmployeeService: search(:Employee)
+activate EmployeeService
+EmployeeService -> EmployeeJPARepository: search(:Employee)
+activate EmployeeJPARepository
+EmployeeJPARepository -> EntityManager: response(:Employee)
+activate EntityManager
+EntityManager -> EmployeeJPARepository: << persisted Employee >>
+deactivate EntityManager
+EmployeeJPARepository -> EmployeeService: << persisted Employee >>
+deactivate EmployeeJPARepository
+EmployeeService -> EmployeeControllerImpl: << persisted Employee >>
+deactivate EmployeeService
+EmployeeControllerImpl -> CXFServlet: << persisted Employee >>
+deactivate EmployeeControllerImpl
+CXFServlet -> User: marshalled Employee XML
+deactivate CXFServlet
+@enduml

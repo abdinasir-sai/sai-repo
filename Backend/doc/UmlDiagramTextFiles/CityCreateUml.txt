@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create City Scenario
+participant User
+User -> CXFServlet: POST, City
+activate CXFServlet
+CXFServlet -> City: << create >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: create(:City)
+activate CityControllerImpl
+CityControllerImpl -> CityService: create(:City)
+activate CityService
+CityService -> CityJPARepository: create(:City)
+activate CityJPARepository
+CityJPARepository -> EntityManager: save(:City)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted City >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted City >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted City >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted City >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

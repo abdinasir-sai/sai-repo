@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Clients Scenario
+participant User
+User -> CXFServlet: GET, Clients
+activate CXFServlet
+CXFServlet -> Clients: << auditHistory >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: auditHistory(:Clients)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: auditHistory(:Clients)
+activate ClientsService
+ClientsService -> ClientsJPARepository: auditHistory(:Clients)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted ClientsAuditHistory >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted ClientsAuditHistory >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted ClientsAuditHistory >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted ClientsAuditHistory >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

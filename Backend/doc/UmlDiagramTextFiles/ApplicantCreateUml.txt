@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Applicant Scenario
+participant User
+User -> CXFServlet: POST, Applicant
+activate CXFServlet
+CXFServlet -> Applicant: << create >>
+activate Applicant
+Applicant -> CXFServlet: << instance >>
+deactivate Applicant
+CXFServlet -> ApplicantControllerImpl: create(:Applicant)
+activate ApplicantControllerImpl
+ApplicantControllerImpl -> ApplicantService: create(:Applicant)
+activate ApplicantService
+ApplicantService -> ApplicantJPARepository: create(:Applicant)
+activate ApplicantJPARepository
+ApplicantJPARepository -> EntityManager: save(:Applicant)
+activate EntityManager
+EntityManager -> ApplicantJPARepository: << persisted Applicant >>
+deactivate EntityManager
+ApplicantJPARepository -> ApplicantService: << persisted Applicant >>
+deactivate ApplicantJPARepository
+ApplicantService -> ApplicantControllerImpl: << persisted Applicant >>
+deactivate ApplicantService
+ApplicantControllerImpl -> CXFServlet: << persisted Applicant >>
+deactivate ApplicantControllerImpl
+CXFServlet -> User: marshalled Applicant XML
+deactivate CXFServlet
+@enduml

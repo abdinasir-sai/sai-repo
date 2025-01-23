@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Designation Scenario
+participant User
+User -> CXFServlet: GET, Designation
+activate CXFServlet
+CXFServlet -> Designation: << findAllById >>
+activate Designation
+Designation -> CXFServlet: << instance >>
+deactivate Designation
+CXFServlet -> DesignationControllerImpl: findAllById(:List<Designation> id)
+activate DesignationControllerImpl
+DesignationControllerImpl -> DesignationService: findAllById(:List<Designation> id)
+activate DesignationService
+DesignationService -> DesignationJPARepository: findAllById(:List<Designation> id)
+activate DesignationJPARepository
+DesignationJPARepository -> EntityManager: response(:List<Designation>findAllById)
+activate EntityManager
+EntityManager -> DesignationJPARepository: << persisted List Designation >>
+deactivate EntityManager
+DesignationJPARepository -> DesignationService: << persisted List Designation >>
+deactivate DesignationJPARepository
+DesignationService -> DesignationControllerImpl: << persisted List Designation >>
+deactivate DesignationService
+DesignationControllerImpl -> CXFServlet: << persisted List Designation >>
+deactivate DesignationControllerImpl
+CXFServlet -> User: marshalled Designation XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data TimeSheet Scenario
+participant User
+User -> CXFServlet: TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << export >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: export(:TimeSheet)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: search(:TimeSheet)
+activate TimeSheetService
+TimeSheetService -> TimeSheetJPARepository: search(:TimeSheet)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: save(:TimeSheet)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted TimeSheet >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetService: << persisted TimeSheet >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: response(:List<TimeSheet>)
+TimeSheetControllerImpl -> TimeSheetService: export(:TimeSheet)
+TimeSheetService -> TimeSheetControllerImpl: << persisted TimeSheet.xlsx >>
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted TimeSheet.xlsx >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

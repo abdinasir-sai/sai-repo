@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Faq Scenario
+participant User
+User -> CXFServlet: GET, Faq
+activate CXFServlet
+CXFServlet -> Faq: << search >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: search(:Faq)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: search(:Faq)
+activate FaqService
+FaqService -> FaqJPARepository: search(:Faq)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: response(:Faq)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted Faq >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted Faq >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted Faq >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted Faq >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

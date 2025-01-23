@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete CalendarDefinition Scenario
+participant User
+User -> CXFServlet: DELETE, CalendarDefinition
+activate CXFServlet
+CXFServlet -> CalendarDefinition: << bulkdelete >>
+activate CalendarDefinition
+CalendarDefinition -> CXFServlet: << instance >>
+deactivate CalendarDefinition
+CXFServlet -> CalendarDefinitionControllerImpl: bulkdelete(:List<CalendarDefinition>)
+activate CalendarDefinitionControllerImpl
+CalendarDefinitionControllerImpl -> CalendarDefinitionService: bulkDelete(:List<CalendarDefinition>)
+activate CalendarDefinitionService
+CalendarDefinitionService -> CalendarDefinitionJPARepository: deleteAll(:List<CalendarDefinition>)
+activate CalendarDefinitionJPARepository
+CalendarDefinitionJPARepository -> EntityManager: delete(:List<CalendarDefinition>)
+activate EntityManager
+EntityManager -> CalendarDefinitionJPARepository: << persisted CalendarDefinition >>
+deactivate EntityManager
+CalendarDefinitionJPARepository -> CalendarDefinitionService: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionJPARepository
+CalendarDefinitionService -> CalendarDefinitionControllerImpl: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionService
+CalendarDefinitionControllerImpl -> CXFServlet: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionControllerImpl
+CXFServlet -> User: marshalled CalendarDefinition XML
+deactivate CXFServlet
+@enduml

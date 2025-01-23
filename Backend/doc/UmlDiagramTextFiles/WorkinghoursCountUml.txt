@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count WorkingHours Scenario
+participant User
+User -> CXFServlet: GET, WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << count >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursControllerImpl: count(:WorkingHours)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursService: count(:WorkingHours)
+activate WorkingHoursService
+WorkingHoursService -> WorkingHoursJPARepository: count(:WorkingHours)
+activate WorkingHoursJPARepository
+WorkingHoursJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> WorkingHoursJPARepository: << persisted Count >>
+deactivate EntityManager
+WorkingHoursJPARepository -> WorkingHoursService: << persisted Count >>
+deactivate WorkingHoursJPARepository
+WorkingHoursService -> WorkingHoursControllerImpl: << persisted Count >>
+deactivate WorkingHoursService
+WorkingHoursControllerImpl -> CXFServlet: << persisted Count >>
+deactivate WorkingHoursControllerImpl
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml

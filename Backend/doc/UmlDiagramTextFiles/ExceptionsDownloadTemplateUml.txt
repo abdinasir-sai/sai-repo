@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Exceptions Scenario
+participant User
+User -> CXFServlet: Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << downloadTemplate >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsController: downloadTemplate(:String fileName)
+activate ExceptionsController
+ExceptionsController -> ExceptionsControllerImpl: ResponseBuilder(workbook,fileName)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsController: response(:ResponseEntity)
+deactivate ExceptionsControllerImpl
+ExceptionsController -> CXFServlet: << Exceptions  >>
+deactivate ExceptionsController
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

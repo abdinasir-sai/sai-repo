@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count LeaveEntitlement Scenario
+participant User
+User -> CXFServlet: GET, LeaveEntitlement
+activate CXFServlet
+CXFServlet -> LeaveEntitlement: << count >>
+activate LeaveEntitlement
+LeaveEntitlement -> CXFServlet: << instance >>
+deactivate LeaveEntitlement
+CXFServlet -> LeaveEntitlementControllerImpl: count(:LeaveEntitlement)
+activate LeaveEntitlementControllerImpl
+LeaveEntitlementControllerImpl -> LeaveEntitlementService: count(:LeaveEntitlement)
+activate LeaveEntitlementService
+LeaveEntitlementService -> LeaveEntitlementJPARepository: count(:LeaveEntitlement)
+activate LeaveEntitlementJPARepository
+LeaveEntitlementJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> LeaveEntitlementJPARepository: << persisted Count >>
+deactivate EntityManager
+LeaveEntitlementJPARepository -> LeaveEntitlementService: << persisted Count >>
+deactivate LeaveEntitlementJPARepository
+LeaveEntitlementService -> LeaveEntitlementControllerImpl: << persisted Count >>
+deactivate LeaveEntitlementService
+LeaveEntitlementControllerImpl -> CXFServlet: << persisted Count >>
+deactivate LeaveEntitlementControllerImpl
+CXFServlet -> User: marshalled LeaveEntitlement XML
+deactivate CXFServlet
+@enduml

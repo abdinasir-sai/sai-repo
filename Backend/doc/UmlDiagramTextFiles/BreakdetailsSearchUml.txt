@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Breakdetails Scenario
+participant User
+User -> CXFServlet: GET, Breakdetails
+activate CXFServlet
+CXFServlet -> Breakdetails: << search >>
+activate Breakdetails
+Breakdetails -> CXFServlet: << instance >>
+deactivate Breakdetails
+CXFServlet -> BreakdetailsControllerImpl: search(:Breakdetails)
+activate BreakdetailsControllerImpl
+BreakdetailsControllerImpl -> BreakdetailsService: search(:Breakdetails)
+activate BreakdetailsService
+BreakdetailsService -> BreakdetailsJPARepository: search(:Breakdetails)
+activate BreakdetailsJPARepository
+BreakdetailsJPARepository -> EntityManager: response(:Breakdetails)
+activate EntityManager
+EntityManager -> BreakdetailsJPARepository: << persisted Breakdetails >>
+deactivate EntityManager
+BreakdetailsJPARepository -> BreakdetailsService: << persisted Breakdetails >>
+deactivate BreakdetailsJPARepository
+BreakdetailsService -> BreakdetailsControllerImpl: << persisted Breakdetails >>
+deactivate BreakdetailsService
+BreakdetailsControllerImpl -> CXFServlet: << persisted Breakdetails >>
+deactivate BreakdetailsControllerImpl
+CXFServlet -> User: marshalled Breakdetails XML
+deactivate CXFServlet
+@enduml

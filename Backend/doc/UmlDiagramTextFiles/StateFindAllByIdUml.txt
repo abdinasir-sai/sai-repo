@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById State Scenario
+participant User
+User -> CXFServlet: GET, State
+activate CXFServlet
+CXFServlet -> State: << findAllById >>
+activate State
+State -> CXFServlet: << instance >>
+deactivate State
+CXFServlet -> StateControllerImpl: findAllById(:List<State> id)
+activate StateControllerImpl
+StateControllerImpl -> StateService: findAllById(:List<State> id)
+activate StateService
+StateService -> StateJPARepository: findAllById(:List<State> id)
+activate StateJPARepository
+StateJPARepository -> EntityManager: response(:List<State>findAllById)
+activate EntityManager
+EntityManager -> StateJPARepository: << persisted List State >>
+deactivate EntityManager
+StateJPARepository -> StateService: << persisted List State >>
+deactivate StateJPARepository
+StateService -> StateControllerImpl: << persisted List State >>
+deactivate StateService
+StateControllerImpl -> CXFServlet: << persisted List State >>
+deactivate StateControllerImpl
+CXFServlet -> User: marshalled State XML
+deactivate CXFServlet
+@enduml

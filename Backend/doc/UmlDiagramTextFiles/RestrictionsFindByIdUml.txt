@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById Restrictions Scenario
+participant User
+User -> CXFServlet: GET, Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << findById >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsControllerImpl: findById(:int)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsService: findById(:int)
+activate RestrictionsService
+RestrictionsService -> RestrictionsJPARepository: findById(:int)
+activate RestrictionsJPARepository
+RestrictionsJPARepository -> EntityManager: response(:Restrictions)
+activate EntityManager
+EntityManager -> RestrictionsJPARepository: << persisted Restrictions >>
+deactivate EntityManager
+RestrictionsJPARepository -> RestrictionsService: << persisted Restrictions >>
+deactivate RestrictionsJPARepository
+RestrictionsService -> RestrictionsControllerImpl: << persisted Restrictions >>
+deactivate RestrictionsService
+RestrictionsControllerImpl -> CXFServlet: << persisted Restrictions >>
+deactivate RestrictionsControllerImpl
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

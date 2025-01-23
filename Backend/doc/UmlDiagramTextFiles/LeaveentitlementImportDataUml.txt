@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data LeaveEntitlement Scenario
+participant User
+User -> CXFServlet: POST, LeaveEntitlement
+activate CXFServlet
+CXFServlet -> LeaveEntitlement: << importData >>
+activate LeaveEntitlement
+LeaveEntitlement -> CXFServlet: << instance >>
+deactivate LeaveEntitlement
+CXFServlet -> LeaveEntitlementControllerImpl: importData(:LeaveEntitlement)
+activate LeaveEntitlementControllerImpl
+LeaveEntitlementControllerImpl -> LeaveEntitlementService: importData(:LeaveEntitlement)
+activate LeaveEntitlementService
+activate LeaveEntitlementServiceImpl
+LeaveEntitlementService -> LeaveEntitlementServiceImpl: importData(:LeaveEntitlement)
+LeaveEntitlementServiceImpl -> LeaveEntitlementJPARepository: saveAll(:LeaveEntitlement)
+activate LeaveEntitlementJPARepository
+LeaveEntitlementJPARepository -> EntityManager: save(:LeaveEntitlement)
+activate EntityManager
+EntityManager -> LeaveEntitlementJPARepository: << persisted LeaveEntitlement >>
+deactivate EntityManager
+LeaveEntitlementJPARepository -> LeaveEntitlementServiceImpl: << persisted LeaveEntitlement >>
+LeaveEntitlementServiceImpl -> LeaveEntitlementService: << persisted LeaveEntitlement >>
+deactivate LeaveEntitlementJPARepository
+LeaveEntitlementService -> LeaveEntitlementControllerImpl: << persisted LeaveEntitlement >>
+deactivate LeaveEntitlementServiceImpl
+deactivate LeaveEntitlementService
+LeaveEntitlementControllerImpl -> CXFServlet: << persisted LeaveEntitlement >>
+deactivate LeaveEntitlementControllerImpl
+CXFServlet -> User: marshalled LeaveEntitlement XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Applicant Scenario
+participant User
+User -> CXFServlet: UPDATE, Applicant
+activate CXFServlet
+CXFServlet -> Applicant: << update >>
+activate Applicant
+Applicant -> CXFServlet: << instance >>
+deactivate Applicant
+CXFServlet -> ApplicantControllerImpl: update(:Applicant)
+activate ApplicantControllerImpl
+ApplicantControllerImpl -> ApplicantService: update(:Applicant)
+activate ApplicantService
+ApplicantService -> ApplicantJPARepository: update(:Applicant)
+activate ApplicantJPARepository
+ApplicantJPARepository -> EntityManager: update(:Applicant)
+activate EntityManager
+EntityManager -> ApplicantJPARepository: << persisted Applicant >>
+deactivate EntityManager
+ApplicantJPARepository -> ApplicantService: << persisted Applicant >>
+deactivate ApplicantJPARepository
+ApplicantService -> ApplicantControllerImpl: << persisted Applicant >>
+deactivate ApplicantService
+ApplicantControllerImpl -> CXFServlet: << persisted Applicant >>
+deactivate ApplicantControllerImpl
+CXFServlet -> User: marshalled Applicant XML
+deactivate CXFServlet
+@enduml

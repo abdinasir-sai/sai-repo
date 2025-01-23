@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update TimeSheet Scenario
+participant User
+User -> CXFServlet: UPDATE, TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << update >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: update(:TimeSheet)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: update(:TimeSheet)
+activate TimeSheetService
+TimeSheetService -> TimeSheetJPARepository: update(:TimeSheet)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: update(:TimeSheet)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted TimeSheet >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetService: << persisted TimeSheet >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: << persisted TimeSheet >>
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted TimeSheet >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Payroll Scenario
+participant User
+User -> CXFServlet: GET, Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << search >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: search(:Payroll)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: search(:Payroll)
+activate PayrollService
+PayrollService -> PayrollJPARepository: search(:Payroll)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: response(:Payroll)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted Payroll >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollService: << persisted Payroll >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: << persisted Payroll >>
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted Payroll >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

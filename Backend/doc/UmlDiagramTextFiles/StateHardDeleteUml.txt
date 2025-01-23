@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById State Scenario
+participant User
+User -> CXFServlet: DELETE, State
+activate CXFServlet
+CXFServlet -> State: << delete >>
+activate State
+State -> CXFServlet: << instance >>
+deactivate State
+CXFServlet -> StateControllerImpl: delete(:State)
+activate StateControllerImpl
+StateControllerImpl -> StateService: deleteById(:State)
+activate StateService
+StateService -> StateJPARepository: deleteById(:State)
+activate StateJPARepository
+StateJPARepository -> EntityManager: delete(:State)
+activate EntityManager
+EntityManager -> StateJPARepository: << persisted State >>
+deactivate EntityManager
+StateJPARepository -> StateService: << persisted State >>
+deactivate StateJPARepository
+StateService -> StateControllerImpl: << persisted State >>
+deactivate StateService
+StateControllerImpl -> CXFServlet: << persisted State >>
+deactivate StateControllerImpl
+CXFServlet -> User: marshalled State XML
+deactivate CXFServlet
+@enduml

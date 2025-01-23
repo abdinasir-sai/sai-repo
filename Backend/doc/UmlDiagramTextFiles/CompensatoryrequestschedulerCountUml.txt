@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count CompensatoryRequestScheduler Scenario
+participant User
+User -> CXFServlet: GET, CompensatoryRequestScheduler
+activate CXFServlet
+CXFServlet -> CompensatoryRequestScheduler: << count >>
+activate CompensatoryRequestScheduler
+CompensatoryRequestScheduler -> CXFServlet: << instance >>
+deactivate CompensatoryRequestScheduler
+CXFServlet -> CompensatoryRequestSchedulerControllerImpl: count(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerControllerImpl
+CompensatoryRequestSchedulerControllerImpl -> CompensatoryRequestSchedulerService: count(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerJPARepository: count(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> CompensatoryRequestSchedulerJPARepository: << persisted Count >>
+deactivate EntityManager
+CompensatoryRequestSchedulerJPARepository -> CompensatoryRequestSchedulerService: << persisted Count >>
+deactivate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerControllerImpl: << persisted Count >>
+deactivate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerControllerImpl -> CXFServlet: << persisted Count >>
+deactivate CompensatoryRequestSchedulerControllerImpl
+CXFServlet -> User: marshalled CompensatoryRequestScheduler XML
+deactivate CXFServlet
+@enduml

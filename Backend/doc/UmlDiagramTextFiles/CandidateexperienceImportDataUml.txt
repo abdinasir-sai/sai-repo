@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data CandidateExperience Scenario
+participant User
+User -> CXFServlet: POST, CandidateExperience
+activate CXFServlet
+CXFServlet -> CandidateExperience: << importData >>
+activate CandidateExperience
+CandidateExperience -> CXFServlet: << instance >>
+deactivate CandidateExperience
+CXFServlet -> CandidateExperienceControllerImpl: importData(:CandidateExperience)
+activate CandidateExperienceControllerImpl
+CandidateExperienceControllerImpl -> CandidateExperienceService: importData(:CandidateExperience)
+activate CandidateExperienceService
+activate CandidateExperienceServiceImpl
+CandidateExperienceService -> CandidateExperienceServiceImpl: importData(:CandidateExperience)
+CandidateExperienceServiceImpl -> CandidateExperienceJPARepository: saveAll(:CandidateExperience)
+activate CandidateExperienceJPARepository
+CandidateExperienceJPARepository -> EntityManager: save(:CandidateExperience)
+activate EntityManager
+EntityManager -> CandidateExperienceJPARepository: << persisted CandidateExperience >>
+deactivate EntityManager
+CandidateExperienceJPARepository -> CandidateExperienceServiceImpl: << persisted CandidateExperience >>
+CandidateExperienceServiceImpl -> CandidateExperienceService: << persisted CandidateExperience >>
+deactivate CandidateExperienceJPARepository
+CandidateExperienceService -> CandidateExperienceControllerImpl: << persisted CandidateExperience >>
+deactivate CandidateExperienceServiceImpl
+deactivate CandidateExperienceService
+CandidateExperienceControllerImpl -> CXFServlet: << persisted CandidateExperience >>
+deactivate CandidateExperienceControllerImpl
+CXFServlet -> User: marshalled CandidateExperience XML
+deactivate CXFServlet
+@enduml

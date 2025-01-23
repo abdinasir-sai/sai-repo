@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Country Scenario
+participant User
+User -> CXFServlet: GET, Country
+activate CXFServlet
+CXFServlet -> Country: << auditHistory >>
+activate Country
+Country -> CXFServlet: << instance >>
+deactivate Country
+CXFServlet -> CountryControllerImpl: auditHistory(:Country)
+activate CountryControllerImpl
+CountryControllerImpl -> CountryService: auditHistory(:Country)
+activate CountryService
+CountryService -> CountryJPARepository: auditHistory(:Country)
+activate CountryJPARepository
+CountryJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> CountryJPARepository: << persisted CountryAuditHistory >>
+deactivate EntityManager
+CountryJPARepository -> CountryService: << persisted CountryAuditHistory >>
+deactivate CountryJPARepository
+CountryService -> CountryControllerImpl: << persisted CountryAuditHistory >>
+deactivate CountryService
+CountryControllerImpl -> CXFServlet: << persisted CountryAuditHistory >>
+deactivate CountryControllerImpl
+CXFServlet -> User: marshalled Country XML
+deactivate CXFServlet
+@enduml

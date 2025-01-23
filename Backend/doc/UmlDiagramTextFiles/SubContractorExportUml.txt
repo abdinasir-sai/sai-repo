@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data SubContractor Scenario
+participant User
+User -> CXFServlet: SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << export >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: export(:SubContractor)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: search(:SubContractor)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: search(:SubContractor)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: save(:SubContractor)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted SubContractor >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted SubContractor >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: response(:List<SubContractor>)
+SubContractorControllerImpl -> SubContractorService: export(:SubContractor)
+SubContractorService -> SubContractorControllerImpl: << persisted SubContractor.xlsx >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted SubContractor.xlsx >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

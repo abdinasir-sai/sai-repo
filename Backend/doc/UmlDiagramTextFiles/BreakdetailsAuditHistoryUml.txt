@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Breakdetails Scenario
+participant User
+User -> CXFServlet: GET, Breakdetails
+activate CXFServlet
+CXFServlet -> Breakdetails: << auditHistory >>
+activate Breakdetails
+Breakdetails -> CXFServlet: << instance >>
+deactivate Breakdetails
+CXFServlet -> BreakdetailsControllerImpl: auditHistory(:Breakdetails)
+activate BreakdetailsControllerImpl
+BreakdetailsControllerImpl -> BreakdetailsService: auditHistory(:Breakdetails)
+activate BreakdetailsService
+BreakdetailsService -> BreakdetailsJPARepository: auditHistory(:Breakdetails)
+activate BreakdetailsJPARepository
+BreakdetailsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> BreakdetailsJPARepository: << persisted BreakdetailsAuditHistory >>
+deactivate EntityManager
+BreakdetailsJPARepository -> BreakdetailsService: << persisted BreakdetailsAuditHistory >>
+deactivate BreakdetailsJPARepository
+BreakdetailsService -> BreakdetailsControllerImpl: << persisted BreakdetailsAuditHistory >>
+deactivate BreakdetailsService
+BreakdetailsControllerImpl -> CXFServlet: << persisted BreakdetailsAuditHistory >>
+deactivate BreakdetailsControllerImpl
+CXFServlet -> User: marshalled Breakdetails XML
+deactivate CXFServlet
+@enduml

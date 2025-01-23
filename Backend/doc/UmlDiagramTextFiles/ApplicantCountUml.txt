@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Applicant Scenario
+participant User
+User -> CXFServlet: GET, Applicant
+activate CXFServlet
+CXFServlet -> Applicant: << count >>
+activate Applicant
+Applicant -> CXFServlet: << instance >>
+deactivate Applicant
+CXFServlet -> ApplicantControllerImpl: count(:Applicant)
+activate ApplicantControllerImpl
+ApplicantControllerImpl -> ApplicantService: count(:Applicant)
+activate ApplicantService
+ApplicantService -> ApplicantJPARepository: count(:Applicant)
+activate ApplicantJPARepository
+ApplicantJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> ApplicantJPARepository: << persisted Count >>
+deactivate EntityManager
+ApplicantJPARepository -> ApplicantService: << persisted Count >>
+deactivate ApplicantJPARepository
+ApplicantService -> ApplicantControllerImpl: << persisted Count >>
+deactivate ApplicantService
+ApplicantControllerImpl -> CXFServlet: << persisted Count >>
+deactivate ApplicantControllerImpl
+CXFServlet -> User: marshalled Applicant XML
+deactivate CXFServlet
+@enduml

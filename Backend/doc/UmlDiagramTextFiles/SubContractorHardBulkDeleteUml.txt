@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete SubContractor Scenario
+participant User
+User -> CXFServlet: DELETE, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << bulkdelete >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: bulkdelete(:List<SubContractor>)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: bulkDelete(:List<SubContractor>)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: deleteAll(:List<SubContractor>)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: delete(:List<SubContractor>)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted SubContractor >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted SubContractor >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted SubContractor >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted SubContractor >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

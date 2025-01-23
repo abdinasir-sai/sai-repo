@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create TimeSheet Scenario
+participant User
+User -> CXFServlet: POST, TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << create >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: create(:TimeSheet)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: create(:TimeSheet)
+activate TimeSheetService
+TimeSheetService -> TimeSheetJPARepository: create(:TimeSheet)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: save(:TimeSheet)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted TimeSheet >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetService: << persisted TimeSheet >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: << persisted TimeSheet >>
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted TimeSheet >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

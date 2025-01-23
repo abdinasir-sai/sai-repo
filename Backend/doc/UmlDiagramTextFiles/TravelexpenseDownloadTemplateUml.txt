@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template TravelExpense Scenario
+participant User
+User -> CXFServlet: TravelExpense
+activate CXFServlet
+CXFServlet -> TravelExpense: << downloadTemplate >>
+activate TravelExpense
+TravelExpense -> CXFServlet: << instance >>
+deactivate TravelExpense
+CXFServlet -> TravelExpenseController: downloadTemplate(:String fileName)
+activate TravelExpenseController
+TravelExpenseController -> TravelExpenseControllerImpl: ResponseBuilder(workbook,fileName)
+activate TravelExpenseControllerImpl
+TravelExpenseControllerImpl -> TravelExpenseController: response(:ResponseEntity)
+deactivate TravelExpenseControllerImpl
+TravelExpenseController -> CXFServlet: << TravelExpense  >>
+deactivate TravelExpenseController
+CXFServlet -> User: marshalled TravelExpense XML
+deactivate CXFServlet
+@enduml

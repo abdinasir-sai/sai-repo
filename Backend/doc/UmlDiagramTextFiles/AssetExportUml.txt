@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Asset Scenario
+participant User
+User -> CXFServlet: Asset
+activate CXFServlet
+CXFServlet -> Asset: << export >>
+activate Asset
+Asset -> CXFServlet: << instance >>
+deactivate Asset
+CXFServlet -> AssetControllerImpl: export(:Asset)
+activate AssetControllerImpl
+AssetControllerImpl -> AssetService: search(:Asset)
+activate AssetService
+AssetService -> AssetJPARepository: search(:Asset)
+activate AssetJPARepository
+AssetJPARepository -> EntityManager: save(:Asset)
+activate EntityManager
+EntityManager -> AssetJPARepository: << persisted Asset >>
+deactivate EntityManager
+AssetJPARepository -> AssetService: << persisted Asset >>
+deactivate AssetJPARepository
+AssetService -> AssetControllerImpl: response(:List<Asset>)
+AssetControllerImpl -> AssetService: export(:Asset)
+AssetService -> AssetControllerImpl: << persisted Asset.xlsx >>
+deactivate AssetService
+AssetControllerImpl -> CXFServlet: << persisted Asset.xlsx >>
+deactivate AssetControllerImpl
+CXFServlet -> User: marshalled Asset XML
+deactivate CXFServlet
+@enduml

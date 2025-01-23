@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data JobApplication Scenario
+participant User
+User -> CXFServlet: POST, JobApplication
+activate CXFServlet
+CXFServlet -> JobApplication: << importData >>
+activate JobApplication
+JobApplication -> CXFServlet: << instance >>
+deactivate JobApplication
+CXFServlet -> JobApplicationControllerImpl: importData(:JobApplication)
+activate JobApplicationControllerImpl
+JobApplicationControllerImpl -> JobApplicationService: importData(:JobApplication)
+activate JobApplicationService
+activate JobApplicationServiceImpl
+JobApplicationService -> JobApplicationServiceImpl: importData(:JobApplication)
+JobApplicationServiceImpl -> JobApplicationJPARepository: saveAll(:JobApplication)
+activate JobApplicationJPARepository
+JobApplicationJPARepository -> EntityManager: save(:JobApplication)
+activate EntityManager
+EntityManager -> JobApplicationJPARepository: << persisted JobApplication >>
+deactivate EntityManager
+JobApplicationJPARepository -> JobApplicationServiceImpl: << persisted JobApplication >>
+JobApplicationServiceImpl -> JobApplicationService: << persisted JobApplication >>
+deactivate JobApplicationJPARepository
+JobApplicationService -> JobApplicationControllerImpl: << persisted JobApplication >>
+deactivate JobApplicationServiceImpl
+deactivate JobApplicationService
+JobApplicationControllerImpl -> CXFServlet: << persisted JobApplication >>
+deactivate JobApplicationControllerImpl
+CXFServlet -> User: marshalled JobApplication XML
+deactivate CXFServlet
+@enduml

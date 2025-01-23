@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Country Scenario
+participant User
+User -> CXFServlet: GET, Country
+activate CXFServlet
+CXFServlet -> Country: << findAllById >>
+activate Country
+Country -> CXFServlet: << instance >>
+deactivate Country
+CXFServlet -> CountryControllerImpl: findAllById(:List<Country> id)
+activate CountryControllerImpl
+CountryControllerImpl -> CountryService: findAllById(:List<Country> id)
+activate CountryService
+CountryService -> CountryJPARepository: findAllById(:List<Country> id)
+activate CountryJPARepository
+CountryJPARepository -> EntityManager: response(:List<Country>findAllById)
+activate EntityManager
+EntityManager -> CountryJPARepository: << persisted List Country >>
+deactivate EntityManager
+CountryJPARepository -> CountryService: << persisted List Country >>
+deactivate CountryJPARepository
+CountryService -> CountryControllerImpl: << persisted List Country >>
+deactivate CountryService
+CountryControllerImpl -> CXFServlet: << persisted List Country >>
+deactivate CountryControllerImpl
+CXFServlet -> User: marshalled Country XML
+deactivate CXFServlet
+@enduml

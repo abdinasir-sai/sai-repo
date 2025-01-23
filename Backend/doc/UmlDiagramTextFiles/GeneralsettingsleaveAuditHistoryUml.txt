@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History GeneralSettingsLeave Scenario
+participant User
+User -> CXFServlet: GET, GeneralSettingsLeave
+activate CXFServlet
+CXFServlet -> GeneralSettingsLeave: << auditHistory >>
+activate GeneralSettingsLeave
+GeneralSettingsLeave -> CXFServlet: << instance >>
+deactivate GeneralSettingsLeave
+CXFServlet -> GeneralSettingsLeaveControllerImpl: auditHistory(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveControllerImpl
+GeneralSettingsLeaveControllerImpl -> GeneralSettingsLeaveService: auditHistory(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveService
+GeneralSettingsLeaveService -> GeneralSettingsLeaveJPARepository: auditHistory(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> GeneralSettingsLeaveJPARepository: << persisted GeneralSettingsLeaveAuditHistory >>
+deactivate EntityManager
+GeneralSettingsLeaveJPARepository -> GeneralSettingsLeaveService: << persisted GeneralSettingsLeaveAuditHistory >>
+deactivate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveService -> GeneralSettingsLeaveControllerImpl: << persisted GeneralSettingsLeaveAuditHistory >>
+deactivate GeneralSettingsLeaveService
+GeneralSettingsLeaveControllerImpl -> CXFServlet: << persisted GeneralSettingsLeaveAuditHistory >>
+deactivate GeneralSettingsLeaveControllerImpl
+CXFServlet -> User: marshalled GeneralSettingsLeave XML
+deactivate CXFServlet
+@enduml

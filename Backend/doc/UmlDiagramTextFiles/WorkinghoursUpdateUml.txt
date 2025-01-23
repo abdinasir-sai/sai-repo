@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update WorkingHours Scenario
+participant User
+User -> CXFServlet: UPDATE, WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << update >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursControllerImpl: update(:WorkingHours)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursService: update(:WorkingHours)
+activate WorkingHoursService
+WorkingHoursService -> WorkingHoursJPARepository: update(:WorkingHours)
+activate WorkingHoursJPARepository
+WorkingHoursJPARepository -> EntityManager: update(:WorkingHours)
+activate EntityManager
+EntityManager -> WorkingHoursJPARepository: << persisted WorkingHours >>
+deactivate EntityManager
+WorkingHoursJPARepository -> WorkingHoursService: << persisted WorkingHours >>
+deactivate WorkingHoursJPARepository
+WorkingHoursService -> WorkingHoursControllerImpl: << persisted WorkingHours >>
+deactivate WorkingHoursService
+WorkingHoursControllerImpl -> CXFServlet: << persisted WorkingHours >>
+deactivate WorkingHoursControllerImpl
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml

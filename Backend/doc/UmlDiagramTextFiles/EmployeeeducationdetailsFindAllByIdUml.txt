@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Employeeeducationdetails Scenario
+participant User
+User -> CXFServlet: GET, Employeeeducationdetails
+activate CXFServlet
+CXFServlet -> Employeeeducationdetails: << findAllById >>
+activate Employeeeducationdetails
+Employeeeducationdetails -> CXFServlet: << instance >>
+deactivate Employeeeducationdetails
+CXFServlet -> EmployeeeducationdetailsControllerImpl: findAllById(:List<Employeeeducationdetails> id)
+activate EmployeeeducationdetailsControllerImpl
+EmployeeeducationdetailsControllerImpl -> EmployeeeducationdetailsService: findAllById(:List<Employeeeducationdetails> id)
+activate EmployeeeducationdetailsService
+EmployeeeducationdetailsService -> EmployeeeducationdetailsJPARepository: findAllById(:List<Employeeeducationdetails> id)
+activate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsJPARepository -> EntityManager: response(:List<Employeeeducationdetails>findAllById)
+activate EntityManager
+EntityManager -> EmployeeeducationdetailsJPARepository: << persisted List Employeeeducationdetails >>
+deactivate EntityManager
+EmployeeeducationdetailsJPARepository -> EmployeeeducationdetailsService: << persisted List Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsService -> EmployeeeducationdetailsControllerImpl: << persisted List Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsService
+EmployeeeducationdetailsControllerImpl -> CXFServlet: << persisted List Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsControllerImpl
+CXFServlet -> User: marshalled Employeeeducationdetails XML
+deactivate CXFServlet
+@enduml

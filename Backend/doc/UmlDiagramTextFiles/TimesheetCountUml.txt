@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count TimeSheet Scenario
+participant User
+User -> CXFServlet: GET, TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << count >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: count(:TimeSheet)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: count(:TimeSheet)
+activate TimeSheetService
+TimeSheetService -> TimeSheetJPARepository: count(:TimeSheet)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted Count >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetService: << persisted Count >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: << persisted Count >>
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted Count >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

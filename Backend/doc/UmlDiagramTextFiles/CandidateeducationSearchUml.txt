@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search CandidateEducation Scenario
+participant User
+User -> CXFServlet: GET, CandidateEducation
+activate CXFServlet
+CXFServlet -> CandidateEducation: << search >>
+activate CandidateEducation
+CandidateEducation -> CXFServlet: << instance >>
+deactivate CandidateEducation
+CXFServlet -> CandidateEducationControllerImpl: search(:CandidateEducation)
+activate CandidateEducationControllerImpl
+CandidateEducationControllerImpl -> CandidateEducationService: search(:CandidateEducation)
+activate CandidateEducationService
+CandidateEducationService -> CandidateEducationJPARepository: search(:CandidateEducation)
+activate CandidateEducationJPARepository
+CandidateEducationJPARepository -> EntityManager: response(:CandidateEducation)
+activate EntityManager
+EntityManager -> CandidateEducationJPARepository: << persisted CandidateEducation >>
+deactivate EntityManager
+CandidateEducationJPARepository -> CandidateEducationService: << persisted CandidateEducation >>
+deactivate CandidateEducationJPARepository
+CandidateEducationService -> CandidateEducationControllerImpl: << persisted CandidateEducation >>
+deactivate CandidateEducationService
+CandidateEducationControllerImpl -> CXFServlet: << persisted CandidateEducation >>
+deactivate CandidateEducationControllerImpl
+CXFServlet -> User: marshalled CandidateEducation XML
+deactivate CXFServlet
+@enduml

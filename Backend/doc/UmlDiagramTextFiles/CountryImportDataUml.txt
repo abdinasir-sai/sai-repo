@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Country Scenario
+participant User
+User -> CXFServlet: POST, Country
+activate CXFServlet
+CXFServlet -> Country: << importData >>
+activate Country
+Country -> CXFServlet: << instance >>
+deactivate Country
+CXFServlet -> CountryControllerImpl: importData(:Country)
+activate CountryControllerImpl
+CountryControllerImpl -> CountryService: importData(:Country)
+activate CountryService
+activate CountryServiceImpl
+CountryService -> CountryServiceImpl: importData(:Country)
+CountryServiceImpl -> CountryJPARepository: saveAll(:Country)
+activate CountryJPARepository
+CountryJPARepository -> EntityManager: save(:Country)
+activate EntityManager
+EntityManager -> CountryJPARepository: << persisted Country >>
+deactivate EntityManager
+CountryJPARepository -> CountryServiceImpl: << persisted Country >>
+CountryServiceImpl -> CountryService: << persisted Country >>
+deactivate CountryJPARepository
+CountryService -> CountryControllerImpl: << persisted Country >>
+deactivate CountryServiceImpl
+deactivate CountryService
+CountryControllerImpl -> CXFServlet: << persisted Country >>
+deactivate CountryControllerImpl
+CXFServlet -> User: marshalled Country XML
+deactivate CXFServlet
+@enduml

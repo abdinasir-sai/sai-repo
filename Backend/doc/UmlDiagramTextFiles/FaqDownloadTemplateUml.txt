@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Faq Scenario
+participant User
+User -> CXFServlet: Faq
+activate CXFServlet
+CXFServlet -> Faq: << downloadTemplate >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqController: downloadTemplate(:String fileName)
+activate FaqController
+FaqController -> FaqControllerImpl: ResponseBuilder(workbook,fileName)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqController: response(:ResponseEntity)
+deactivate FaqControllerImpl
+FaqController -> CXFServlet: << Faq  >>
+deactivate FaqController
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

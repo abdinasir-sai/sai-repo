@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById Clients Scenario
+participant User
+User -> CXFServlet: GET, Clients
+activate CXFServlet
+CXFServlet -> Clients: << findById >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: findById(:int)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: findById(:int)
+activate ClientsService
+ClientsService -> ClientsJPARepository: findById(:int)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: response(:Clients)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted Clients >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Clients >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

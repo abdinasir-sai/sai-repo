@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Payroll Scenario
+participant User
+User -> CXFServlet: POST, Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << importData >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: importData(:Payroll)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: importData(:Payroll)
+activate PayrollService
+activate PayrollServiceImpl
+PayrollService -> PayrollServiceImpl: importData(:Payroll)
+PayrollServiceImpl -> PayrollJPARepository: saveAll(:Payroll)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: save(:Payroll)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted Payroll >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollServiceImpl: << persisted Payroll >>
+PayrollServiceImpl -> PayrollService: << persisted Payroll >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: << persisted Payroll >>
+deactivate PayrollServiceImpl
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted Payroll >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

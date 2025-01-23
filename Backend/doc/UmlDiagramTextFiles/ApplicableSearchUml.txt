@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Applicable Scenario
+participant User
+User -> CXFServlet: GET, Applicable
+activate CXFServlet
+CXFServlet -> Applicable: << search >>
+activate Applicable
+Applicable -> CXFServlet: << instance >>
+deactivate Applicable
+CXFServlet -> ApplicableControllerImpl: search(:Applicable)
+activate ApplicableControllerImpl
+ApplicableControllerImpl -> ApplicableService: search(:Applicable)
+activate ApplicableService
+ApplicableService -> ApplicableJPARepository: search(:Applicable)
+activate ApplicableJPARepository
+ApplicableJPARepository -> EntityManager: response(:Applicable)
+activate EntityManager
+EntityManager -> ApplicableJPARepository: << persisted Applicable >>
+deactivate EntityManager
+ApplicableJPARepository -> ApplicableService: << persisted Applicable >>
+deactivate ApplicableJPARepository
+ApplicableService -> ApplicableControllerImpl: << persisted Applicable >>
+deactivate ApplicableService
+ApplicableControllerImpl -> CXFServlet: << persisted Applicable >>
+deactivate ApplicableControllerImpl
+CXFServlet -> User: marshalled Applicable XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById SubContractor Scenario
+participant User
+User -> CXFServlet: DELETE, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << delete >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: delete(:SubContractor)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: deleteById(:SubContractor)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: deleteById(:SubContractor)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: delete(:SubContractor)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted SubContractor >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted SubContractor >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted SubContractor >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted SubContractor >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

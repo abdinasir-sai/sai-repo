@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Jobs Scenario
+participant User
+User -> CXFServlet: GET, Jobs
+activate CXFServlet
+CXFServlet -> Jobs: << count >>
+activate Jobs
+Jobs -> CXFServlet: << instance >>
+deactivate Jobs
+CXFServlet -> JobsControllerImpl: count(:Jobs)
+activate JobsControllerImpl
+JobsControllerImpl -> JobsService: count(:Jobs)
+activate JobsService
+JobsService -> JobsJPARepository: count(:Jobs)
+activate JobsJPARepository
+JobsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> JobsJPARepository: << persisted Count >>
+deactivate EntityManager
+JobsJPARepository -> JobsService: << persisted Count >>
+deactivate JobsJPARepository
+JobsService -> JobsControllerImpl: << persisted Count >>
+deactivate JobsService
+JobsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate JobsControllerImpl
+CXFServlet -> User: marshalled Jobs XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Skill Scenario
+participant User
+User -> CXFServlet: GET, Skill
+activate CXFServlet
+CXFServlet -> Skill: << findAllById >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: findAllById(:List<Skill> id)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: findAllById(:List<Skill> id)
+activate SkillService
+SkillService -> SkillJPARepository: findAllById(:List<Skill> id)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: response(:List<Skill>findAllById)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted List Skill >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted List Skill >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted List Skill >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted List Skill >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

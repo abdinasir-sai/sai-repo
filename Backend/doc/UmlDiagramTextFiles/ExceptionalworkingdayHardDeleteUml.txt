@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById ExceptionalWorkingDay Scenario
+participant User
+User -> CXFServlet: DELETE, ExceptionalWorkingDay
+activate CXFServlet
+CXFServlet -> ExceptionalWorkingDay: << delete >>
+activate ExceptionalWorkingDay
+ExceptionalWorkingDay -> CXFServlet: << instance >>
+deactivate ExceptionalWorkingDay
+CXFServlet -> ExceptionalWorkingDayControllerImpl: delete(:ExceptionalWorkingDay)
+activate ExceptionalWorkingDayControllerImpl
+ExceptionalWorkingDayControllerImpl -> ExceptionalWorkingDayService: deleteById(:ExceptionalWorkingDay)
+activate ExceptionalWorkingDayService
+ExceptionalWorkingDayService -> ExceptionalWorkingDayJPARepository: deleteById(:ExceptionalWorkingDay)
+activate ExceptionalWorkingDayJPARepository
+ExceptionalWorkingDayJPARepository -> EntityManager: delete(:ExceptionalWorkingDay)
+activate EntityManager
+EntityManager -> ExceptionalWorkingDayJPARepository: << persisted ExceptionalWorkingDay >>
+deactivate EntityManager
+ExceptionalWorkingDayJPARepository -> ExceptionalWorkingDayService: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayJPARepository
+ExceptionalWorkingDayService -> ExceptionalWorkingDayControllerImpl: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayService
+ExceptionalWorkingDayControllerImpl -> CXFServlet: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayControllerImpl
+CXFServlet -> User: marshalled ExceptionalWorkingDay XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Designation Scenario
+participant User
+User -> CXFServlet: Designation
+activate CXFServlet
+CXFServlet -> Designation: << downloadTemplate >>
+activate Designation
+Designation -> CXFServlet: << instance >>
+deactivate Designation
+CXFServlet -> DesignationController: downloadTemplate(:String fileName)
+activate DesignationController
+DesignationController -> DesignationControllerImpl: ResponseBuilder(workbook,fileName)
+activate DesignationControllerImpl
+DesignationControllerImpl -> DesignationController: response(:ResponseEntity)
+deactivate DesignationControllerImpl
+DesignationController -> CXFServlet: << Designation  >>
+deactivate DesignationController
+CXFServlet -> User: marshalled Designation XML
+deactivate CXFServlet
+@enduml

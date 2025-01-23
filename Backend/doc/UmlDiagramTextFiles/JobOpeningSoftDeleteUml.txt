@@ -1,0 +1,30 @@
+@startuml
+!theme cyborg-outline
+title DeleteById JobOpening Scenario
+participant User
+User -> CXFServlet: DELETE, JobOpening
+activate CXFServlet
+CXFServlet -> JobOpening: << delete >>
+activate JobOpening
+JobOpening -> CXFServlet: << instance >>
+deactivate JobOpening
+CXFServlet -> JobOpeningControllerImpl: deleteById(:JobOpening)
+activate JobOpeningControllerImpl
+JobOpeningControllerImpl -> JobOpeningService: softDelete(:JobOpening)
+activate JobOpeningService
+JobOpeningService -> JobOpeningServiceImpl: softDelete(:JobOpening)
+JobOpeningServiceImpl -> JobOpeningJPARepository: deleteById(:JobOpening)
+activate JobOpeningJPARepository
+JobOpeningJPARepository -> EntityManager: delete(:JobOpening)
+activate EntityManager
+EntityManager -> JobOpeningJPARepository: << persisted JobOpening >>
+deactivate EntityManager
+JobOpeningJPARepository -> JobOpeningService: << persisted JobOpening >>
+deactivate JobOpeningJPARepository
+JobOpeningService -> JobOpeningControllerImpl: << persisted JobOpening >>
+deactivate JobOpeningService
+JobOpeningControllerImpl -> CXFServlet: << persisted JobOpening >>
+deactivate JobOpeningControllerImpl
+CXFServlet -> User: marshalled JobOpening XML
+deactivate CXFServlet
+@enduml

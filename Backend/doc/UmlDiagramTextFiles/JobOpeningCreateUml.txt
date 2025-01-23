@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create JobOpening Scenario
+participant User
+User -> CXFServlet: POST, JobOpening
+activate CXFServlet
+CXFServlet -> JobOpening: << create >>
+activate JobOpening
+JobOpening -> CXFServlet: << instance >>
+deactivate JobOpening
+CXFServlet -> JobOpeningControllerImpl: create(:JobOpening)
+activate JobOpeningControllerImpl
+JobOpeningControllerImpl -> JobOpeningService: create(:JobOpening)
+activate JobOpeningService
+JobOpeningService -> JobOpeningJPARepository: create(:JobOpening)
+activate JobOpeningJPARepository
+JobOpeningJPARepository -> EntityManager: save(:JobOpening)
+activate EntityManager
+EntityManager -> JobOpeningJPARepository: << persisted JobOpening >>
+deactivate EntityManager
+JobOpeningJPARepository -> JobOpeningService: << persisted JobOpening >>
+deactivate JobOpeningJPARepository
+JobOpeningService -> JobOpeningControllerImpl: << persisted JobOpening >>
+deactivate JobOpeningService
+JobOpeningControllerImpl -> CXFServlet: << persisted JobOpening >>
+deactivate JobOpeningControllerImpl
+CXFServlet -> User: marshalled JobOpening XML
+deactivate CXFServlet
+@enduml

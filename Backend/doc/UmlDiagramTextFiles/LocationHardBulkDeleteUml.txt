@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Location Scenario
+participant User
+User -> CXFServlet: DELETE, Location
+activate CXFServlet
+CXFServlet -> Location: << bulkdelete >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: bulkdelete(:List<Location>)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: bulkDelete(:List<Location>)
+activate LocationService
+LocationService -> LocationJPARepository: deleteAll(:List<Location>)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: delete(:List<Location>)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted Location >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Location >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

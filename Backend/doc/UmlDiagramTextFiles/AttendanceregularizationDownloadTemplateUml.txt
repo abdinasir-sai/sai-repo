@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template AttendanceRegularization Scenario
+participant User
+User -> CXFServlet: AttendanceRegularization
+activate CXFServlet
+CXFServlet -> AttendanceRegularization: << downloadTemplate >>
+activate AttendanceRegularization
+AttendanceRegularization -> CXFServlet: << instance >>
+deactivate AttendanceRegularization
+CXFServlet -> AttendanceRegularizationController: downloadTemplate(:String fileName)
+activate AttendanceRegularizationController
+AttendanceRegularizationController -> AttendanceRegularizationControllerImpl: ResponseBuilder(workbook,fileName)
+activate AttendanceRegularizationControllerImpl
+AttendanceRegularizationControllerImpl -> AttendanceRegularizationController: response(:ResponseEntity)
+deactivate AttendanceRegularizationControllerImpl
+AttendanceRegularizationController -> CXFServlet: << AttendanceRegularization  >>
+deactivate AttendanceRegularizationController
+CXFServlet -> User: marshalled AttendanceRegularization XML
+deactivate CXFServlet
+@enduml

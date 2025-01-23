@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Leaves Scenario
+participant User
+User -> CXFServlet: GET, Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << count >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesControllerImpl: count(:Leaves)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesService: count(:Leaves)
+activate LeavesService
+LeavesService -> LeavesJPARepository: count(:Leaves)
+activate LeavesJPARepository
+LeavesJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> LeavesJPARepository: << persisted Count >>
+deactivate EntityManager
+LeavesJPARepository -> LeavesService: << persisted Count >>
+deactivate LeavesJPARepository
+LeavesService -> LeavesControllerImpl: << persisted Count >>
+deactivate LeavesService
+LeavesControllerImpl -> CXFServlet: << persisted Count >>
+deactivate LeavesControllerImpl
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

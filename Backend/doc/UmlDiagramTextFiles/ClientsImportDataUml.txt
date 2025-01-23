@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Clients Scenario
+participant User
+User -> CXFServlet: POST, Clients
+activate CXFServlet
+CXFServlet -> Clients: << importData >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: importData(:Clients)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: importData(:Clients)
+activate ClientsService
+activate ClientsServiceImpl
+ClientsService -> ClientsServiceImpl: importData(:Clients)
+ClientsServiceImpl -> ClientsJPARepository: saveAll(:Clients)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: save(:Clients)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsServiceImpl: << persisted Clients >>
+ClientsServiceImpl -> ClientsService: << persisted Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted Clients >>
+deactivate ClientsServiceImpl
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Clients >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

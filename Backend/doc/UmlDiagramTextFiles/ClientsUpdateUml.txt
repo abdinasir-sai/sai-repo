@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Clients Scenario
+participant User
+User -> CXFServlet: UPDATE, Clients
+activate CXFServlet
+CXFServlet -> Clients: << update >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: update(:Clients)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: update(:Clients)
+activate ClientsService
+ClientsService -> ClientsJPARepository: update(:Clients)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: update(:Clients)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted Clients >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Clients >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

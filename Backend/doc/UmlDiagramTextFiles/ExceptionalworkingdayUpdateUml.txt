@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update ExceptionalWorkingDay Scenario
+participant User
+User -> CXFServlet: UPDATE, ExceptionalWorkingDay
+activate CXFServlet
+CXFServlet -> ExceptionalWorkingDay: << update >>
+activate ExceptionalWorkingDay
+ExceptionalWorkingDay -> CXFServlet: << instance >>
+deactivate ExceptionalWorkingDay
+CXFServlet -> ExceptionalWorkingDayControllerImpl: update(:ExceptionalWorkingDay)
+activate ExceptionalWorkingDayControllerImpl
+ExceptionalWorkingDayControllerImpl -> ExceptionalWorkingDayService: update(:ExceptionalWorkingDay)
+activate ExceptionalWorkingDayService
+ExceptionalWorkingDayService -> ExceptionalWorkingDayJPARepository: update(:ExceptionalWorkingDay)
+activate ExceptionalWorkingDayJPARepository
+ExceptionalWorkingDayJPARepository -> EntityManager: update(:ExceptionalWorkingDay)
+activate EntityManager
+EntityManager -> ExceptionalWorkingDayJPARepository: << persisted ExceptionalWorkingDay >>
+deactivate EntityManager
+ExceptionalWorkingDayJPARepository -> ExceptionalWorkingDayService: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayJPARepository
+ExceptionalWorkingDayService -> ExceptionalWorkingDayControllerImpl: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayService
+ExceptionalWorkingDayControllerImpl -> CXFServlet: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayControllerImpl
+CXFServlet -> User: marshalled ExceptionalWorkingDay XML
+deactivate CXFServlet
+@enduml

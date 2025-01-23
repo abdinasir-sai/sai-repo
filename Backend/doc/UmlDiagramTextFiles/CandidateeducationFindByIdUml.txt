@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById CandidateEducation Scenario
+participant User
+User -> CXFServlet: GET, CandidateEducation
+activate CXFServlet
+CXFServlet -> CandidateEducation: << findById >>
+activate CandidateEducation
+CandidateEducation -> CXFServlet: << instance >>
+deactivate CandidateEducation
+CXFServlet -> CandidateEducationControllerImpl: findById(:int)
+activate CandidateEducationControllerImpl
+CandidateEducationControllerImpl -> CandidateEducationService: findById(:int)
+activate CandidateEducationService
+CandidateEducationService -> CandidateEducationJPARepository: findById(:int)
+activate CandidateEducationJPARepository
+CandidateEducationJPARepository -> EntityManager: response(:CandidateEducation)
+activate EntityManager
+EntityManager -> CandidateEducationJPARepository: << persisted CandidateEducation >>
+deactivate EntityManager
+CandidateEducationJPARepository -> CandidateEducationService: << persisted CandidateEducation >>
+deactivate CandidateEducationJPARepository
+CandidateEducationService -> CandidateEducationControllerImpl: << persisted CandidateEducation >>
+deactivate CandidateEducationService
+CandidateEducationControllerImpl -> CXFServlet: << persisted CandidateEducation >>
+deactivate CandidateEducationControllerImpl
+CXFServlet -> User: marshalled CandidateEducation XML
+deactivate CXFServlet
+@enduml

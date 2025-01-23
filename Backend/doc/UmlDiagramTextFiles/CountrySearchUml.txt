@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Country Scenario
+participant User
+User -> CXFServlet: GET, Country
+activate CXFServlet
+CXFServlet -> Country: << search >>
+activate Country
+Country -> CXFServlet: << instance >>
+deactivate Country
+CXFServlet -> CountryControllerImpl: search(:Country)
+activate CountryControllerImpl
+CountryControllerImpl -> CountryService: search(:Country)
+activate CountryService
+CountryService -> CountryJPARepository: search(:Country)
+activate CountryJPARepository
+CountryJPARepository -> EntityManager: response(:Country)
+activate EntityManager
+EntityManager -> CountryJPARepository: << persisted Country >>
+deactivate EntityManager
+CountryJPARepository -> CountryService: << persisted Country >>
+deactivate CountryJPARepository
+CountryService -> CountryControllerImpl: << persisted Country >>
+deactivate CountryService
+CountryControllerImpl -> CXFServlet: << persisted Country >>
+deactivate CountryControllerImpl
+CXFServlet -> User: marshalled Country XML
+deactivate CXFServlet
+@enduml

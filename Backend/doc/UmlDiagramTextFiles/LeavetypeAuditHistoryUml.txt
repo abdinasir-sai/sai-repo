@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History LeaveType Scenario
+participant User
+User -> CXFServlet: GET, LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << auditHistory >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: auditHistory(:LeaveType)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: auditHistory(:LeaveType)
+activate LeaveTypeService
+LeaveTypeService -> LeaveTypeJPARepository: auditHistory(:LeaveType)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted LeaveTypeAuditHistory >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeService: << persisted LeaveTypeAuditHistory >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted LeaveTypeAuditHistory >>
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted LeaveTypeAuditHistory >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

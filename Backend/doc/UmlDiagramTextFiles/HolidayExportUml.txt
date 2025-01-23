@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Holiday Scenario
+participant User
+User -> CXFServlet: Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << export >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: export(:Holiday)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: search(:Holiday)
+activate HolidayService
+HolidayService -> HolidayJPARepository: search(:Holiday)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: save(:Holiday)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted Holiday >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted Holiday >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: response(:List<Holiday>)
+HolidayControllerImpl -> HolidayService: export(:Holiday)
+HolidayService -> HolidayControllerImpl: << persisted Holiday.xlsx >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted Holiday.xlsx >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

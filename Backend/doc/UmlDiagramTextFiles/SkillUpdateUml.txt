@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Skill Scenario
+participant User
+User -> CXFServlet: UPDATE, Skill
+activate CXFServlet
+CXFServlet -> Skill: << update >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: update(:Skill)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: update(:Skill)
+activate SkillService
+SkillService -> SkillJPARepository: update(:Skill)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: update(:Skill)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted Skill >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted Skill >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted Skill >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted Skill >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

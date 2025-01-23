@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Delegations Scenario
+participant User
+User -> CXFServlet: DELETE, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << delete >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: delete(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: deleteById(:Delegations)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: deleteById(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: delete(:Delegations)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted Delegations >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted Delegations >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted Delegations >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted Delegations >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

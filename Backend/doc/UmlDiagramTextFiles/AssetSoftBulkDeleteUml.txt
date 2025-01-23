@@ -1,0 +1,30 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Asset Scenario
+participant User
+User -> CXFServlet: DELETE, Asset
+activate CXFServlet
+CXFServlet -> Asset: << bulkdelete >>
+activate Asset
+Asset -> CXFServlet: << instance >>
+deactivate Asset
+CXFServlet -> AssetControllerImpl: bulkDelete(:List<Asset>)
+activate AssetControllerImpl
+AssetControllerImpl -> AssetService: softBulkDelete(:List<Asset>)
+activate AssetService
+AssetService -> AssetServiceImpl: softBulkDelete(:List<Asset>)
+AssetServiceImpl -> AssetJPARepository: deleteAll(:List<Asset>)
+activate AssetJPARepository
+AssetJPARepository -> EntityManager: delete(:List<Asset>)
+activate EntityManager
+EntityManager -> AssetJPARepository: << persisted Asset >>
+deactivate EntityManager
+AssetJPARepository -> AssetService: << persisted Asset >>
+deactivate AssetJPARepository
+AssetService -> AssetControllerImpl: << persisted Asset >>
+deactivate AssetService
+AssetControllerImpl -> CXFServlet: << persisted Asset >>
+deactivate AssetControllerImpl
+CXFServlet -> User: marshalled Asset XML
+deactivate CXFServlet
+@enduml

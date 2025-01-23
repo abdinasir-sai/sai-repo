@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Clients Scenario
+participant User
+User -> CXFServlet: DELETE, Clients
+activate CXFServlet
+CXFServlet -> Clients: << delete >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: delete(:Clients)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: deleteById(:Clients)
+activate ClientsService
+ClientsService -> ClientsJPARepository: deleteById(:Clients)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: delete(:Clients)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted Clients >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Clients >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

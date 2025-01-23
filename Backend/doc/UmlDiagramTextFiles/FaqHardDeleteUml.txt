@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Faq Scenario
+participant User
+User -> CXFServlet: DELETE, Faq
+activate CXFServlet
+CXFServlet -> Faq: << delete >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: delete(:Faq)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: deleteById(:Faq)
+activate FaqService
+FaqService -> FaqJPARepository: deleteById(:Faq)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: delete(:Faq)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted Faq >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted Faq >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted Faq >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted Faq >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

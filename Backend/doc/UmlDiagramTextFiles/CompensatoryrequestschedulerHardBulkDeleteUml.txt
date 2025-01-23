@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete CompensatoryRequestScheduler Scenario
+participant User
+User -> CXFServlet: DELETE, CompensatoryRequestScheduler
+activate CXFServlet
+CXFServlet -> CompensatoryRequestScheduler: << bulkdelete >>
+activate CompensatoryRequestScheduler
+CompensatoryRequestScheduler -> CXFServlet: << instance >>
+deactivate CompensatoryRequestScheduler
+CXFServlet -> CompensatoryRequestSchedulerControllerImpl: bulkdelete(:List<CompensatoryRequestScheduler>)
+activate CompensatoryRequestSchedulerControllerImpl
+CompensatoryRequestSchedulerControllerImpl -> CompensatoryRequestSchedulerService: bulkDelete(:List<CompensatoryRequestScheduler>)
+activate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerJPARepository: deleteAll(:List<CompensatoryRequestScheduler>)
+activate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerJPARepository -> EntityManager: delete(:List<CompensatoryRequestScheduler>)
+activate EntityManager
+EntityManager -> CompensatoryRequestSchedulerJPARepository: << persisted CompensatoryRequestScheduler >>
+deactivate EntityManager
+CompensatoryRequestSchedulerJPARepository -> CompensatoryRequestSchedulerService: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerControllerImpl: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerControllerImpl -> CXFServlet: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerControllerImpl
+CXFServlet -> User: marshalled CompensatoryRequestScheduler XML
+deactivate CXFServlet
+@enduml

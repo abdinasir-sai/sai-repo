@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count TravelExpense Scenario
+participant User
+User -> CXFServlet: GET, TravelExpense
+activate CXFServlet
+CXFServlet -> TravelExpense: << count >>
+activate TravelExpense
+TravelExpense -> CXFServlet: << instance >>
+deactivate TravelExpense
+CXFServlet -> TravelExpenseControllerImpl: count(:TravelExpense)
+activate TravelExpenseControllerImpl
+TravelExpenseControllerImpl -> TravelExpenseService: count(:TravelExpense)
+activate TravelExpenseService
+TravelExpenseService -> TravelExpenseJPARepository: count(:TravelExpense)
+activate TravelExpenseJPARepository
+TravelExpenseJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> TravelExpenseJPARepository: << persisted Count >>
+deactivate EntityManager
+TravelExpenseJPARepository -> TravelExpenseService: << persisted Count >>
+deactivate TravelExpenseJPARepository
+TravelExpenseService -> TravelExpenseControllerImpl: << persisted Count >>
+deactivate TravelExpenseService
+TravelExpenseControllerImpl -> CXFServlet: << persisted Count >>
+deactivate TravelExpenseControllerImpl
+CXFServlet -> User: marshalled TravelExpense XML
+deactivate CXFServlet
+@enduml

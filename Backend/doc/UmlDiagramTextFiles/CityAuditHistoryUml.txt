@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History City Scenario
+participant User
+User -> CXFServlet: GET, City
+activate CXFServlet
+CXFServlet -> City: << auditHistory >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: auditHistory(:City)
+activate CityControllerImpl
+CityControllerImpl -> CityService: auditHistory(:City)
+activate CityService
+CityService -> CityJPARepository: auditHistory(:City)
+activate CityJPARepository
+CityJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted CityAuditHistory >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted CityAuditHistory >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted CityAuditHistory >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted CityAuditHistory >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

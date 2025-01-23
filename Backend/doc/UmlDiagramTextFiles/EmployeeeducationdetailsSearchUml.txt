@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Employeeeducationdetails Scenario
+participant User
+User -> CXFServlet: GET, Employeeeducationdetails
+activate CXFServlet
+CXFServlet -> Employeeeducationdetails: << search >>
+activate Employeeeducationdetails
+Employeeeducationdetails -> CXFServlet: << instance >>
+deactivate Employeeeducationdetails
+CXFServlet -> EmployeeeducationdetailsControllerImpl: search(:Employeeeducationdetails)
+activate EmployeeeducationdetailsControllerImpl
+EmployeeeducationdetailsControllerImpl -> EmployeeeducationdetailsService: search(:Employeeeducationdetails)
+activate EmployeeeducationdetailsService
+EmployeeeducationdetailsService -> EmployeeeducationdetailsJPARepository: search(:Employeeeducationdetails)
+activate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsJPARepository -> EntityManager: response(:Employeeeducationdetails)
+activate EntityManager
+EntityManager -> EmployeeeducationdetailsJPARepository: << persisted Employeeeducationdetails >>
+deactivate EntityManager
+EmployeeeducationdetailsJPARepository -> EmployeeeducationdetailsService: << persisted Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsService -> EmployeeeducationdetailsControllerImpl: << persisted Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsService
+EmployeeeducationdetailsControllerImpl -> CXFServlet: << persisted Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsControllerImpl
+CXFServlet -> User: marshalled Employeeeducationdetails XML
+deactivate CXFServlet
+@enduml

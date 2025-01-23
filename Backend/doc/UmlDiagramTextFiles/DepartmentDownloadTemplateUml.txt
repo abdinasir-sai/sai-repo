@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Department Scenario
+participant User
+User -> CXFServlet: Department
+activate CXFServlet
+CXFServlet -> Department: << downloadTemplate >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentController: downloadTemplate(:String fileName)
+activate DepartmentController
+DepartmentController -> DepartmentControllerImpl: ResponseBuilder(workbook,fileName)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentController: response(:ResponseEntity)
+deactivate DepartmentControllerImpl
+DepartmentController -> CXFServlet: << Department  >>
+deactivate DepartmentController
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

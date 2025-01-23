@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Applicable Scenario
+participant User
+User -> CXFServlet: Applicable
+activate CXFServlet
+CXFServlet -> Applicable: << export >>
+activate Applicable
+Applicable -> CXFServlet: << instance >>
+deactivate Applicable
+CXFServlet -> ApplicableControllerImpl: export(:Applicable)
+activate ApplicableControllerImpl
+ApplicableControllerImpl -> ApplicableService: search(:Applicable)
+activate ApplicableService
+ApplicableService -> ApplicableJPARepository: search(:Applicable)
+activate ApplicableJPARepository
+ApplicableJPARepository -> EntityManager: save(:Applicable)
+activate EntityManager
+EntityManager -> ApplicableJPARepository: << persisted Applicable >>
+deactivate EntityManager
+ApplicableJPARepository -> ApplicableService: << persisted Applicable >>
+deactivate ApplicableJPARepository
+ApplicableService -> ApplicableControllerImpl: response(:List<Applicable>)
+ApplicableControllerImpl -> ApplicableService: export(:Applicable)
+ApplicableService -> ApplicableControllerImpl: << persisted Applicable.xlsx >>
+deactivate ApplicableService
+ApplicableControllerImpl -> CXFServlet: << persisted Applicable.xlsx >>
+deactivate ApplicableControllerImpl
+CXFServlet -> User: marshalled Applicable XML
+deactivate CXFServlet
+@enduml

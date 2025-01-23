@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data CandidateEducation Scenario
+participant User
+User -> CXFServlet: POST, CandidateEducation
+activate CXFServlet
+CXFServlet -> CandidateEducation: << importData >>
+activate CandidateEducation
+CandidateEducation -> CXFServlet: << instance >>
+deactivate CandidateEducation
+CXFServlet -> CandidateEducationControllerImpl: importData(:CandidateEducation)
+activate CandidateEducationControllerImpl
+CandidateEducationControllerImpl -> CandidateEducationService: importData(:CandidateEducation)
+activate CandidateEducationService
+activate CandidateEducationServiceImpl
+CandidateEducationService -> CandidateEducationServiceImpl: importData(:CandidateEducation)
+CandidateEducationServiceImpl -> CandidateEducationJPARepository: saveAll(:CandidateEducation)
+activate CandidateEducationJPARepository
+CandidateEducationJPARepository -> EntityManager: save(:CandidateEducation)
+activate EntityManager
+EntityManager -> CandidateEducationJPARepository: << persisted CandidateEducation >>
+deactivate EntityManager
+CandidateEducationJPARepository -> CandidateEducationServiceImpl: << persisted CandidateEducation >>
+CandidateEducationServiceImpl -> CandidateEducationService: << persisted CandidateEducation >>
+deactivate CandidateEducationJPARepository
+CandidateEducationService -> CandidateEducationControllerImpl: << persisted CandidateEducation >>
+deactivate CandidateEducationServiceImpl
+deactivate CandidateEducationService
+CandidateEducationControllerImpl -> CXFServlet: << persisted CandidateEducation >>
+deactivate CandidateEducationControllerImpl
+CXFServlet -> User: marshalled CandidateEducation XML
+deactivate CXFServlet
+@enduml

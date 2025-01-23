@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History State Scenario
+participant User
+User -> CXFServlet: GET, State
+activate CXFServlet
+CXFServlet -> State: << auditHistory >>
+activate State
+State -> CXFServlet: << instance >>
+deactivate State
+CXFServlet -> StateControllerImpl: auditHistory(:State)
+activate StateControllerImpl
+StateControllerImpl -> StateService: auditHistory(:State)
+activate StateService
+StateService -> StateJPARepository: auditHistory(:State)
+activate StateJPARepository
+StateJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> StateJPARepository: << persisted StateAuditHistory >>
+deactivate EntityManager
+StateJPARepository -> StateService: << persisted StateAuditHistory >>
+deactivate StateJPARepository
+StateService -> StateControllerImpl: << persisted StateAuditHistory >>
+deactivate StateService
+StateControllerImpl -> CXFServlet: << persisted StateAuditHistory >>
+deactivate StateControllerImpl
+CXFServlet -> User: marshalled State XML
+deactivate CXFServlet
+@enduml

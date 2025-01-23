@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Exceptions Scenario
+participant User
+User -> CXFServlet: POST, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << importData >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: importData(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: importData(:Exceptions)
+activate ExceptionsService
+activate ExceptionsServiceImpl
+ExceptionsService -> ExceptionsServiceImpl: importData(:Exceptions)
+ExceptionsServiceImpl -> ExceptionsJPARepository: saveAll(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: save(:Exceptions)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted Exceptions >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsServiceImpl: << persisted Exceptions >>
+ExceptionsServiceImpl -> ExceptionsService: << persisted Exceptions >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted Exceptions >>
+deactivate ExceptionsServiceImpl
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted Exceptions >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data WorkingHours Scenario
+participant User
+User -> CXFServlet: POST, WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << importData >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursControllerImpl: importData(:WorkingHours)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursService: importData(:WorkingHours)
+activate WorkingHoursService
+activate WorkingHoursServiceImpl
+WorkingHoursService -> WorkingHoursServiceImpl: importData(:WorkingHours)
+WorkingHoursServiceImpl -> WorkingHoursJPARepository: saveAll(:WorkingHours)
+activate WorkingHoursJPARepository
+WorkingHoursJPARepository -> EntityManager: save(:WorkingHours)
+activate EntityManager
+EntityManager -> WorkingHoursJPARepository: << persisted WorkingHours >>
+deactivate EntityManager
+WorkingHoursJPARepository -> WorkingHoursServiceImpl: << persisted WorkingHours >>
+WorkingHoursServiceImpl -> WorkingHoursService: << persisted WorkingHours >>
+deactivate WorkingHoursJPARepository
+WorkingHoursService -> WorkingHoursControllerImpl: << persisted WorkingHours >>
+deactivate WorkingHoursServiceImpl
+deactivate WorkingHoursService
+WorkingHoursControllerImpl -> CXFServlet: << persisted WorkingHours >>
+deactivate WorkingHoursControllerImpl
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml

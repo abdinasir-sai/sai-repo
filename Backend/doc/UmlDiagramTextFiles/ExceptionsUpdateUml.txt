@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Exceptions Scenario
+participant User
+User -> CXFServlet: UPDATE, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << update >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: update(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: update(:Exceptions)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: update(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: update(:Exceptions)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted Exceptions >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted Exceptions >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted Exceptions >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted Exceptions >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

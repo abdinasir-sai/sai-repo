@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById TravelRequest Scenario
+participant User
+User -> CXFServlet: GET, TravelRequest
+activate CXFServlet
+CXFServlet -> TravelRequest: << findAllById >>
+activate TravelRequest
+TravelRequest -> CXFServlet: << instance >>
+deactivate TravelRequest
+CXFServlet -> TravelRequestControllerImpl: findAllById(:List<TravelRequest> id)
+activate TravelRequestControllerImpl
+TravelRequestControllerImpl -> TravelRequestService: findAllById(:List<TravelRequest> id)
+activate TravelRequestService
+TravelRequestService -> TravelRequestJPARepository: findAllById(:List<TravelRequest> id)
+activate TravelRequestJPARepository
+TravelRequestJPARepository -> EntityManager: response(:List<TravelRequest>findAllById)
+activate EntityManager
+EntityManager -> TravelRequestJPARepository: << persisted List TravelRequest >>
+deactivate EntityManager
+TravelRequestJPARepository -> TravelRequestService: << persisted List TravelRequest >>
+deactivate TravelRequestJPARepository
+TravelRequestService -> TravelRequestControllerImpl: << persisted List TravelRequest >>
+deactivate TravelRequestService
+TravelRequestControllerImpl -> CXFServlet: << persisted List TravelRequest >>
+deactivate TravelRequestControllerImpl
+CXFServlet -> User: marshalled TravelRequest XML
+deactivate CXFServlet
+@enduml

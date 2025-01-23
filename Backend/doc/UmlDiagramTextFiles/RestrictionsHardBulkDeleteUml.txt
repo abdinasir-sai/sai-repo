@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Restrictions Scenario
+participant User
+User -> CXFServlet: DELETE, Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << bulkdelete >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsControllerImpl: bulkdelete(:List<Restrictions>)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsService: bulkDelete(:List<Restrictions>)
+activate RestrictionsService
+RestrictionsService -> RestrictionsJPARepository: deleteAll(:List<Restrictions>)
+activate RestrictionsJPARepository
+RestrictionsJPARepository -> EntityManager: delete(:List<Restrictions>)
+activate EntityManager
+EntityManager -> RestrictionsJPARepository: << persisted Restrictions >>
+deactivate EntityManager
+RestrictionsJPARepository -> RestrictionsService: << persisted Restrictions >>
+deactivate RestrictionsJPARepository
+RestrictionsService -> RestrictionsControllerImpl: << persisted Restrictions >>
+deactivate RestrictionsService
+RestrictionsControllerImpl -> CXFServlet: << persisted Restrictions >>
+deactivate RestrictionsControllerImpl
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

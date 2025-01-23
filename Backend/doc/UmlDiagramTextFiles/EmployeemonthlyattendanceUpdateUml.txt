@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update EmployeeMonthlyAttendance Scenario
+participant User
+User -> CXFServlet: UPDATE, EmployeeMonthlyAttendance
+activate CXFServlet
+CXFServlet -> EmployeeMonthlyAttendance: << update >>
+activate EmployeeMonthlyAttendance
+EmployeeMonthlyAttendance -> CXFServlet: << instance >>
+deactivate EmployeeMonthlyAttendance
+CXFServlet -> EmployeeMonthlyAttendanceControllerImpl: update(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceControllerImpl
+EmployeeMonthlyAttendanceControllerImpl -> EmployeeMonthlyAttendanceService: update(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceService
+EmployeeMonthlyAttendanceService -> EmployeeMonthlyAttendanceJPARepository: update(:EmployeeMonthlyAttendance)
+activate EmployeeMonthlyAttendanceJPARepository
+EmployeeMonthlyAttendanceJPARepository -> EntityManager: update(:EmployeeMonthlyAttendance)
+activate EntityManager
+EntityManager -> EmployeeMonthlyAttendanceJPARepository: << persisted EmployeeMonthlyAttendance >>
+deactivate EntityManager
+EmployeeMonthlyAttendanceJPARepository -> EmployeeMonthlyAttendanceService: << persisted EmployeeMonthlyAttendance >>
+deactivate EmployeeMonthlyAttendanceJPARepository
+EmployeeMonthlyAttendanceService -> EmployeeMonthlyAttendanceControllerImpl: << persisted EmployeeMonthlyAttendance >>
+deactivate EmployeeMonthlyAttendanceService
+EmployeeMonthlyAttendanceControllerImpl -> CXFServlet: << persisted EmployeeMonthlyAttendance >>
+deactivate EmployeeMonthlyAttendanceControllerImpl
+CXFServlet -> User: marshalled EmployeeMonthlyAttendance XML
+deactivate CXFServlet
+@enduml

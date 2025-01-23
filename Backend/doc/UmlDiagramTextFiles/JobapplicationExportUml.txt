@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data JobApplication Scenario
+participant User
+User -> CXFServlet: JobApplication
+activate CXFServlet
+CXFServlet -> JobApplication: << export >>
+activate JobApplication
+JobApplication -> CXFServlet: << instance >>
+deactivate JobApplication
+CXFServlet -> JobApplicationControllerImpl: export(:JobApplication)
+activate JobApplicationControllerImpl
+JobApplicationControllerImpl -> JobApplicationService: search(:JobApplication)
+activate JobApplicationService
+JobApplicationService -> JobApplicationJPARepository: search(:JobApplication)
+activate JobApplicationJPARepository
+JobApplicationJPARepository -> EntityManager: save(:JobApplication)
+activate EntityManager
+EntityManager -> JobApplicationJPARepository: << persisted JobApplication >>
+deactivate EntityManager
+JobApplicationJPARepository -> JobApplicationService: << persisted JobApplication >>
+deactivate JobApplicationJPARepository
+JobApplicationService -> JobApplicationControllerImpl: response(:List<JobApplication>)
+JobApplicationControllerImpl -> JobApplicationService: export(:JobApplication)
+JobApplicationService -> JobApplicationControllerImpl: << persisted JobApplication.xlsx >>
+deactivate JobApplicationService
+JobApplicationControllerImpl -> CXFServlet: << persisted JobApplication.xlsx >>
+deactivate JobApplicationControllerImpl
+CXFServlet -> User: marshalled JobApplication XML
+deactivate CXFServlet
+@enduml

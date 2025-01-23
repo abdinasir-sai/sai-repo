@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data AbsentSchedule Scenario
+participant User
+User -> CXFServlet: POST, AbsentSchedule
+activate CXFServlet
+CXFServlet -> AbsentSchedule: << importData >>
+activate AbsentSchedule
+AbsentSchedule -> CXFServlet: << instance >>
+deactivate AbsentSchedule
+CXFServlet -> AbsentScheduleControllerImpl: importData(:AbsentSchedule)
+activate AbsentScheduleControllerImpl
+AbsentScheduleControllerImpl -> AbsentScheduleService: importData(:AbsentSchedule)
+activate AbsentScheduleService
+activate AbsentScheduleServiceImpl
+AbsentScheduleService -> AbsentScheduleServiceImpl: importData(:AbsentSchedule)
+AbsentScheduleServiceImpl -> AbsentScheduleJPARepository: saveAll(:AbsentSchedule)
+activate AbsentScheduleJPARepository
+AbsentScheduleJPARepository -> EntityManager: save(:AbsentSchedule)
+activate EntityManager
+EntityManager -> AbsentScheduleJPARepository: << persisted AbsentSchedule >>
+deactivate EntityManager
+AbsentScheduleJPARepository -> AbsentScheduleServiceImpl: << persisted AbsentSchedule >>
+AbsentScheduleServiceImpl -> AbsentScheduleService: << persisted AbsentSchedule >>
+deactivate AbsentScheduleJPARepository
+AbsentScheduleService -> AbsentScheduleControllerImpl: << persisted AbsentSchedule >>
+deactivate AbsentScheduleServiceImpl
+deactivate AbsentScheduleService
+AbsentScheduleControllerImpl -> CXFServlet: << persisted AbsentSchedule >>
+deactivate AbsentScheduleControllerImpl
+CXFServlet -> User: marshalled AbsentSchedule XML
+deactivate CXFServlet
+@enduml

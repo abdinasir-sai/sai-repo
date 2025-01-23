@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search LeaveType Scenario
+participant User
+User -> CXFServlet: GET, LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << search >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: search(:LeaveType)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: search(:LeaveType)
+activate LeaveTypeService
+LeaveTypeService -> LeaveTypeJPARepository: search(:LeaveType)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: response(:LeaveType)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted LeaveType >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeService: << persisted LeaveType >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted LeaveType >>
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted LeaveType >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

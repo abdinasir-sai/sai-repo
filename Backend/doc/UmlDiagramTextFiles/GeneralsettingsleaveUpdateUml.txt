@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update GeneralSettingsLeave Scenario
+participant User
+User -> CXFServlet: UPDATE, GeneralSettingsLeave
+activate CXFServlet
+CXFServlet -> GeneralSettingsLeave: << update >>
+activate GeneralSettingsLeave
+GeneralSettingsLeave -> CXFServlet: << instance >>
+deactivate GeneralSettingsLeave
+CXFServlet -> GeneralSettingsLeaveControllerImpl: update(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveControllerImpl
+GeneralSettingsLeaveControllerImpl -> GeneralSettingsLeaveService: update(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveService
+GeneralSettingsLeaveService -> GeneralSettingsLeaveJPARepository: update(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveJPARepository -> EntityManager: update(:GeneralSettingsLeave)
+activate EntityManager
+EntityManager -> GeneralSettingsLeaveJPARepository: << persisted GeneralSettingsLeave >>
+deactivate EntityManager
+GeneralSettingsLeaveJPARepository -> GeneralSettingsLeaveService: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveService -> GeneralSettingsLeaveControllerImpl: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveService
+GeneralSettingsLeaveControllerImpl -> CXFServlet: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveControllerImpl
+CXFServlet -> User: marshalled GeneralSettingsLeave XML
+deactivate CXFServlet
+@enduml

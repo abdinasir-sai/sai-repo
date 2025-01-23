@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Holiday Scenario
+participant User
+User -> CXFServlet: GET, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << auditHistory >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: auditHistory(:Holiday)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: auditHistory(:Holiday)
+activate HolidayService
+HolidayService -> HolidayJPARepository: auditHistory(:Holiday)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted HolidayAuditHistory >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted HolidayAuditHistory >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted HolidayAuditHistory >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted HolidayAuditHistory >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

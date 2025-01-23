@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById LeaveType Scenario
+participant User
+User -> CXFServlet: GET, LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << findById >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: findById(:int)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: findById(:int)
+activate LeaveTypeService
+LeaveTypeService -> LeaveTypeJPARepository: findById(:int)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: response(:LeaveType)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted LeaveType >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeService: << persisted LeaveType >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted LeaveType >>
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted LeaveType >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History EmployeeDependentDetails Scenario
+participant User
+User -> CXFServlet: GET, EmployeeDependentDetails
+activate CXFServlet
+CXFServlet -> EmployeeDependentDetails: << auditHistory >>
+activate EmployeeDependentDetails
+EmployeeDependentDetails -> CXFServlet: << instance >>
+deactivate EmployeeDependentDetails
+CXFServlet -> EmployeeDependentDetailsControllerImpl: auditHistory(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsControllerImpl
+EmployeeDependentDetailsControllerImpl -> EmployeeDependentDetailsService: auditHistory(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsService
+EmployeeDependentDetailsService -> EmployeeDependentDetailsJPARepository: auditHistory(:EmployeeDependentDetails)
+activate EmployeeDependentDetailsJPARepository
+EmployeeDependentDetailsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> EmployeeDependentDetailsJPARepository: << persisted EmployeeDependentDetailsAuditHistory >>
+deactivate EntityManager
+EmployeeDependentDetailsJPARepository -> EmployeeDependentDetailsService: << persisted EmployeeDependentDetailsAuditHistory >>
+deactivate EmployeeDependentDetailsJPARepository
+EmployeeDependentDetailsService -> EmployeeDependentDetailsControllerImpl: << persisted EmployeeDependentDetailsAuditHistory >>
+deactivate EmployeeDependentDetailsService
+EmployeeDependentDetailsControllerImpl -> CXFServlet: << persisted EmployeeDependentDetailsAuditHistory >>
+deactivate EmployeeDependentDetailsControllerImpl
+CXFServlet -> User: marshalled EmployeeDependentDetails XML
+deactivate CXFServlet
+@enduml

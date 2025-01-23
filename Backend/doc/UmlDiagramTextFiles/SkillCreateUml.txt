@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Skill Scenario
+participant User
+User -> CXFServlet: POST, Skill
+activate CXFServlet
+CXFServlet -> Skill: << create >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: create(:Skill)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: create(:Skill)
+activate SkillService
+SkillService -> SkillJPARepository: create(:Skill)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: save(:Skill)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted Skill >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted Skill >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted Skill >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted Skill >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

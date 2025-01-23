@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById AbsentSchedule Scenario
+participant User
+User -> CXFServlet: DELETE, AbsentSchedule
+activate CXFServlet
+CXFServlet -> AbsentSchedule: << delete >>
+activate AbsentSchedule
+AbsentSchedule -> CXFServlet: << instance >>
+deactivate AbsentSchedule
+CXFServlet -> AbsentScheduleControllerImpl: delete(:AbsentSchedule)
+activate AbsentScheduleControllerImpl
+AbsentScheduleControllerImpl -> AbsentScheduleService: deleteById(:AbsentSchedule)
+activate AbsentScheduleService
+AbsentScheduleService -> AbsentScheduleJPARepository: deleteById(:AbsentSchedule)
+activate AbsentScheduleJPARepository
+AbsentScheduleJPARepository -> EntityManager: delete(:AbsentSchedule)
+activate EntityManager
+EntityManager -> AbsentScheduleJPARepository: << persisted AbsentSchedule >>
+deactivate EntityManager
+AbsentScheduleJPARepository -> AbsentScheduleService: << persisted AbsentSchedule >>
+deactivate AbsentScheduleJPARepository
+AbsentScheduleService -> AbsentScheduleControllerImpl: << persisted AbsentSchedule >>
+deactivate AbsentScheduleService
+AbsentScheduleControllerImpl -> CXFServlet: << persisted AbsentSchedule >>
+deactivate AbsentScheduleControllerImpl
+CXFServlet -> User: marshalled AbsentSchedule XML
+deactivate CXFServlet
+@enduml

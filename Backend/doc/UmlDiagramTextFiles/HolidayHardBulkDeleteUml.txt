@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Holiday Scenario
+participant User
+User -> CXFServlet: DELETE, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << bulkdelete >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: bulkdelete(:List<Holiday>)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: bulkDelete(:List<Holiday>)
+activate HolidayService
+HolidayService -> HolidayJPARepository: deleteAll(:List<Holiday>)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: delete(:List<Holiday>)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted Holiday >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted Holiday >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted Holiday >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted Holiday >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

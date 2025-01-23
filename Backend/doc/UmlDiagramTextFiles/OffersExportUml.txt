@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Offers Scenario
+participant User
+User -> CXFServlet: Offers
+activate CXFServlet
+CXFServlet -> Offers: << export >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: export(:Offers)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: search(:Offers)
+activate OffersService
+OffersService -> OffersJPARepository: search(:Offers)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: save(:Offers)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted Offers >>
+deactivate EntityManager
+OffersJPARepository -> OffersService: << persisted Offers >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: response(:List<Offers>)
+OffersControllerImpl -> OffersService: export(:Offers)
+OffersService -> OffersControllerImpl: << persisted Offers.xlsx >>
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted Offers.xlsx >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

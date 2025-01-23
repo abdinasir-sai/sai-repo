@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Employee Scenario
+participant User
+User -> CXFServlet: Employee
+activate CXFServlet
+CXFServlet -> Employee: << export >>
+activate Employee
+Employee -> CXFServlet: << instance >>
+deactivate Employee
+CXFServlet -> EmployeeControllerImpl: export(:Employee)
+activate EmployeeControllerImpl
+EmployeeControllerImpl -> EmployeeService: search(:Employee)
+activate EmployeeService
+EmployeeService -> EmployeeJPARepository: search(:Employee)
+activate EmployeeJPARepository
+EmployeeJPARepository -> EntityManager: save(:Employee)
+activate EntityManager
+EntityManager -> EmployeeJPARepository: << persisted Employee >>
+deactivate EntityManager
+EmployeeJPARepository -> EmployeeService: << persisted Employee >>
+deactivate EmployeeJPARepository
+EmployeeService -> EmployeeControllerImpl: response(:List<Employee>)
+EmployeeControllerImpl -> EmployeeService: export(:Employee)
+EmployeeService -> EmployeeControllerImpl: << persisted Employee.xlsx >>
+deactivate EmployeeService
+EmployeeControllerImpl -> CXFServlet: << persisted Employee.xlsx >>
+deactivate EmployeeControllerImpl
+CXFServlet -> User: marshalled Employee XML
+deactivate CXFServlet
+@enduml

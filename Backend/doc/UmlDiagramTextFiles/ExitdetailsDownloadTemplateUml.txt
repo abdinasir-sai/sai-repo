@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template ExitDetails Scenario
+participant User
+User -> CXFServlet: ExitDetails
+activate CXFServlet
+CXFServlet -> ExitDetails: << downloadTemplate >>
+activate ExitDetails
+ExitDetails -> CXFServlet: << instance >>
+deactivate ExitDetails
+CXFServlet -> ExitDetailsController: downloadTemplate(:String fileName)
+activate ExitDetailsController
+ExitDetailsController -> ExitDetailsControllerImpl: ResponseBuilder(workbook,fileName)
+activate ExitDetailsControllerImpl
+ExitDetailsControllerImpl -> ExitDetailsController: response(:ResponseEntity)
+deactivate ExitDetailsControllerImpl
+ExitDetailsController -> CXFServlet: << ExitDetails  >>
+deactivate ExitDetailsController
+CXFServlet -> User: marshalled ExitDetails XML
+deactivate CXFServlet
+@enduml

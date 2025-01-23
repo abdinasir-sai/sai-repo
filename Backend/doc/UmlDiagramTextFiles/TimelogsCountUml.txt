@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count TimeLogs Scenario
+participant User
+User -> CXFServlet: GET, TimeLogs
+activate CXFServlet
+CXFServlet -> TimeLogs: << count >>
+activate TimeLogs
+TimeLogs -> CXFServlet: << instance >>
+deactivate TimeLogs
+CXFServlet -> TimeLogsControllerImpl: count(:TimeLogs)
+activate TimeLogsControllerImpl
+TimeLogsControllerImpl -> TimeLogsService: count(:TimeLogs)
+activate TimeLogsService
+TimeLogsService -> TimeLogsJPARepository: count(:TimeLogs)
+activate TimeLogsJPARepository
+TimeLogsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> TimeLogsJPARepository: << persisted Count >>
+deactivate EntityManager
+TimeLogsJPARepository -> TimeLogsService: << persisted Count >>
+deactivate TimeLogsJPARepository
+TimeLogsService -> TimeLogsControllerImpl: << persisted Count >>
+deactivate TimeLogsService
+TimeLogsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate TimeLogsControllerImpl
+CXFServlet -> User: marshalled TimeLogs XML
+deactivate CXFServlet
+@enduml

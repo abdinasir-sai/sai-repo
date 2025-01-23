@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById ExitDetails Scenario
+participant User
+User -> CXFServlet: GET, ExitDetails
+activate CXFServlet
+CXFServlet -> ExitDetails: << findAllById >>
+activate ExitDetails
+ExitDetails -> CXFServlet: << instance >>
+deactivate ExitDetails
+CXFServlet -> ExitDetailsControllerImpl: findAllById(:List<ExitDetails> id)
+activate ExitDetailsControllerImpl
+ExitDetailsControllerImpl -> ExitDetailsService: findAllById(:List<ExitDetails> id)
+activate ExitDetailsService
+ExitDetailsService -> ExitDetailsJPARepository: findAllById(:List<ExitDetails> id)
+activate ExitDetailsJPARepository
+ExitDetailsJPARepository -> EntityManager: response(:List<ExitDetails>findAllById)
+activate EntityManager
+EntityManager -> ExitDetailsJPARepository: << persisted List ExitDetails >>
+deactivate EntityManager
+ExitDetailsJPARepository -> ExitDetailsService: << persisted List ExitDetails >>
+deactivate ExitDetailsJPARepository
+ExitDetailsService -> ExitDetailsControllerImpl: << persisted List ExitDetails >>
+deactivate ExitDetailsService
+ExitDetailsControllerImpl -> CXFServlet: << persisted List ExitDetails >>
+deactivate ExitDetailsControllerImpl
+CXFServlet -> User: marshalled ExitDetails XML
+deactivate CXFServlet
+@enduml

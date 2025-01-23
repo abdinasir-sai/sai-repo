@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History CalendarDefinition Scenario
+participant User
+User -> CXFServlet: GET, CalendarDefinition
+activate CXFServlet
+CXFServlet -> CalendarDefinition: << auditHistory >>
+activate CalendarDefinition
+CalendarDefinition -> CXFServlet: << instance >>
+deactivate CalendarDefinition
+CXFServlet -> CalendarDefinitionControllerImpl: auditHistory(:CalendarDefinition)
+activate CalendarDefinitionControllerImpl
+CalendarDefinitionControllerImpl -> CalendarDefinitionService: auditHistory(:CalendarDefinition)
+activate CalendarDefinitionService
+CalendarDefinitionService -> CalendarDefinitionJPARepository: auditHistory(:CalendarDefinition)
+activate CalendarDefinitionJPARepository
+CalendarDefinitionJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> CalendarDefinitionJPARepository: << persisted CalendarDefinitionAuditHistory >>
+deactivate EntityManager
+CalendarDefinitionJPARepository -> CalendarDefinitionService: << persisted CalendarDefinitionAuditHistory >>
+deactivate CalendarDefinitionJPARepository
+CalendarDefinitionService -> CalendarDefinitionControllerImpl: << persisted CalendarDefinitionAuditHistory >>
+deactivate CalendarDefinitionService
+CalendarDefinitionControllerImpl -> CXFServlet: << persisted CalendarDefinitionAuditHistory >>
+deactivate CalendarDefinitionControllerImpl
+CXFServlet -> User: marshalled CalendarDefinition XML
+deactivate CXFServlet
+@enduml

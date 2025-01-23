@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Designation Scenario
+participant User
+User -> CXFServlet: POST, Designation
+activate CXFServlet
+CXFServlet -> Designation: << importData >>
+activate Designation
+Designation -> CXFServlet: << instance >>
+deactivate Designation
+CXFServlet -> DesignationControllerImpl: importData(:Designation)
+activate DesignationControllerImpl
+DesignationControllerImpl -> DesignationService: importData(:Designation)
+activate DesignationService
+activate DesignationServiceImpl
+DesignationService -> DesignationServiceImpl: importData(:Designation)
+DesignationServiceImpl -> DesignationJPARepository: saveAll(:Designation)
+activate DesignationJPARepository
+DesignationJPARepository -> EntityManager: save(:Designation)
+activate EntityManager
+EntityManager -> DesignationJPARepository: << persisted Designation >>
+deactivate EntityManager
+DesignationJPARepository -> DesignationServiceImpl: << persisted Designation >>
+DesignationServiceImpl -> DesignationService: << persisted Designation >>
+deactivate DesignationJPARepository
+DesignationService -> DesignationControllerImpl: << persisted Designation >>
+deactivate DesignationServiceImpl
+deactivate DesignationService
+DesignationControllerImpl -> CXFServlet: << persisted Designation >>
+deactivate DesignationControllerImpl
+CXFServlet -> User: marshalled Designation XML
+deactivate CXFServlet
+@enduml

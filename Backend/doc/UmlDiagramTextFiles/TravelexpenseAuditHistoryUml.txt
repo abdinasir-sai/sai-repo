@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History TravelExpense Scenario
+participant User
+User -> CXFServlet: GET, TravelExpense
+activate CXFServlet
+CXFServlet -> TravelExpense: << auditHistory >>
+activate TravelExpense
+TravelExpense -> CXFServlet: << instance >>
+deactivate TravelExpense
+CXFServlet -> TravelExpenseControllerImpl: auditHistory(:TravelExpense)
+activate TravelExpenseControllerImpl
+TravelExpenseControllerImpl -> TravelExpenseService: auditHistory(:TravelExpense)
+activate TravelExpenseService
+TravelExpenseService -> TravelExpenseJPARepository: auditHistory(:TravelExpense)
+activate TravelExpenseJPARepository
+TravelExpenseJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> TravelExpenseJPARepository: << persisted TravelExpenseAuditHistory >>
+deactivate EntityManager
+TravelExpenseJPARepository -> TravelExpenseService: << persisted TravelExpenseAuditHistory >>
+deactivate TravelExpenseJPARepository
+TravelExpenseService -> TravelExpenseControllerImpl: << persisted TravelExpenseAuditHistory >>
+deactivate TravelExpenseService
+TravelExpenseControllerImpl -> CXFServlet: << persisted TravelExpenseAuditHistory >>
+deactivate TravelExpenseControllerImpl
+CXFServlet -> User: marshalled TravelExpense XML
+deactivate CXFServlet
+@enduml

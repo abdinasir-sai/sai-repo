@@ -1,0 +1,30 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Candidate Scenario
+participant User
+User -> CXFServlet: DELETE, Candidate
+activate CXFServlet
+CXFServlet -> Candidate: << bulkdelete >>
+activate Candidate
+Candidate -> CXFServlet: << instance >>
+deactivate Candidate
+CXFServlet -> CandidateControllerImpl: bulkDelete(:List<Candidate>)
+activate CandidateControllerImpl
+CandidateControllerImpl -> CandidateService: softBulkDelete(:List<Candidate>)
+activate CandidateService
+CandidateService -> CandidateServiceImpl: softBulkDelete(:List<Candidate>)
+CandidateServiceImpl -> CandidateJPARepository: deleteAll(:List<Candidate>)
+activate CandidateJPARepository
+CandidateJPARepository -> EntityManager: delete(:List<Candidate>)
+activate EntityManager
+EntityManager -> CandidateJPARepository: << persisted Candidate >>
+deactivate EntityManager
+CandidateJPARepository -> CandidateService: << persisted Candidate >>
+deactivate CandidateJPARepository
+CandidateService -> CandidateControllerImpl: << persisted Candidate >>
+deactivate CandidateService
+CandidateControllerImpl -> CXFServlet: << persisted Candidate >>
+deactivate CandidateControllerImpl
+CXFServlet -> User: marshalled Candidate XML
+deactivate CXFServlet
+@enduml

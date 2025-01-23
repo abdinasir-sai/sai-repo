@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data TimeLogs Scenario
+participant User
+User -> CXFServlet: TimeLogs
+activate CXFServlet
+CXFServlet -> TimeLogs: << export >>
+activate TimeLogs
+TimeLogs -> CXFServlet: << instance >>
+deactivate TimeLogs
+CXFServlet -> TimeLogsControllerImpl: export(:TimeLogs)
+activate TimeLogsControllerImpl
+TimeLogsControllerImpl -> TimeLogsService: search(:TimeLogs)
+activate TimeLogsService
+TimeLogsService -> TimeLogsJPARepository: search(:TimeLogs)
+activate TimeLogsJPARepository
+TimeLogsJPARepository -> EntityManager: save(:TimeLogs)
+activate EntityManager
+EntityManager -> TimeLogsJPARepository: << persisted TimeLogs >>
+deactivate EntityManager
+TimeLogsJPARepository -> TimeLogsService: << persisted TimeLogs >>
+deactivate TimeLogsJPARepository
+TimeLogsService -> TimeLogsControllerImpl: response(:List<TimeLogs>)
+TimeLogsControllerImpl -> TimeLogsService: export(:TimeLogs)
+TimeLogsService -> TimeLogsControllerImpl: << persisted TimeLogs.xlsx >>
+deactivate TimeLogsService
+TimeLogsControllerImpl -> CXFServlet: << persisted TimeLogs.xlsx >>
+deactivate TimeLogsControllerImpl
+CXFServlet -> User: marshalled TimeLogs XML
+deactivate CXFServlet
+@enduml

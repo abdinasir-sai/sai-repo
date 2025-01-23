@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Asset Scenario
+participant User
+User -> CXFServlet: Asset
+activate CXFServlet
+CXFServlet -> Asset: << downloadTemplate >>
+activate Asset
+Asset -> CXFServlet: << instance >>
+deactivate Asset
+CXFServlet -> AssetController: downloadTemplate(:String fileName)
+activate AssetController
+AssetController -> AssetControllerImpl: ResponseBuilder(workbook,fileName)
+activate AssetControllerImpl
+AssetControllerImpl -> AssetController: response(:ResponseEntity)
+deactivate AssetControllerImpl
+AssetController -> CXFServlet: << Asset  >>
+deactivate AssetController
+CXFServlet -> User: marshalled Asset XML
+deactivate CXFServlet
+@enduml

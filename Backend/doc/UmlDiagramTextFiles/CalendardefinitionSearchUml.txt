@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search CalendarDefinition Scenario
+participant User
+User -> CXFServlet: GET, CalendarDefinition
+activate CXFServlet
+CXFServlet -> CalendarDefinition: << search >>
+activate CalendarDefinition
+CalendarDefinition -> CXFServlet: << instance >>
+deactivate CalendarDefinition
+CXFServlet -> CalendarDefinitionControllerImpl: search(:CalendarDefinition)
+activate CalendarDefinitionControllerImpl
+CalendarDefinitionControllerImpl -> CalendarDefinitionService: search(:CalendarDefinition)
+activate CalendarDefinitionService
+CalendarDefinitionService -> CalendarDefinitionJPARepository: search(:CalendarDefinition)
+activate CalendarDefinitionJPARepository
+CalendarDefinitionJPARepository -> EntityManager: response(:CalendarDefinition)
+activate EntityManager
+EntityManager -> CalendarDefinitionJPARepository: << persisted CalendarDefinition >>
+deactivate EntityManager
+CalendarDefinitionJPARepository -> CalendarDefinitionService: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionJPARepository
+CalendarDefinitionService -> CalendarDefinitionControllerImpl: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionService
+CalendarDefinitionControllerImpl -> CXFServlet: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionControllerImpl
+CXFServlet -> User: marshalled CalendarDefinition XML
+deactivate CXFServlet
+@enduml

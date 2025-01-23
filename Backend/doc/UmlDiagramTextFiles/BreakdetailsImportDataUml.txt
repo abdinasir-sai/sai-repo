@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Breakdetails Scenario
+participant User
+User -> CXFServlet: POST, Breakdetails
+activate CXFServlet
+CXFServlet -> Breakdetails: << importData >>
+activate Breakdetails
+Breakdetails -> CXFServlet: << instance >>
+deactivate Breakdetails
+CXFServlet -> BreakdetailsControllerImpl: importData(:Breakdetails)
+activate BreakdetailsControllerImpl
+BreakdetailsControllerImpl -> BreakdetailsService: importData(:Breakdetails)
+activate BreakdetailsService
+activate BreakdetailsServiceImpl
+BreakdetailsService -> BreakdetailsServiceImpl: importData(:Breakdetails)
+BreakdetailsServiceImpl -> BreakdetailsJPARepository: saveAll(:Breakdetails)
+activate BreakdetailsJPARepository
+BreakdetailsJPARepository -> EntityManager: save(:Breakdetails)
+activate EntityManager
+EntityManager -> BreakdetailsJPARepository: << persisted Breakdetails >>
+deactivate EntityManager
+BreakdetailsJPARepository -> BreakdetailsServiceImpl: << persisted Breakdetails >>
+BreakdetailsServiceImpl -> BreakdetailsService: << persisted Breakdetails >>
+deactivate BreakdetailsJPARepository
+BreakdetailsService -> BreakdetailsControllerImpl: << persisted Breakdetails >>
+deactivate BreakdetailsServiceImpl
+deactivate BreakdetailsService
+BreakdetailsControllerImpl -> CXFServlet: << persisted Breakdetails >>
+deactivate BreakdetailsControllerImpl
+CXFServlet -> User: marshalled Breakdetails XML
+deactivate CXFServlet
+@enduml

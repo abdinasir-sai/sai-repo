@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById Department Scenario
+participant User
+User -> CXFServlet: GET, Department
+activate CXFServlet
+CXFServlet -> Department: << findById >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: findById(:int)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: findById(:int)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: findById(:int)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: response(:Department)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted Department >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted Department >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted Department >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted Department >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

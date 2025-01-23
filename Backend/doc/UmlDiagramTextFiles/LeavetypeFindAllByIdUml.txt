@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById LeaveType Scenario
+participant User
+User -> CXFServlet: GET, LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << findAllById >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: findAllById(:List<LeaveType> id)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: findAllById(:List<LeaveType> id)
+activate LeaveTypeService
+LeaveTypeService -> LeaveTypeJPARepository: findAllById(:List<LeaveType> id)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: response(:List<LeaveType>findAllById)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted List LeaveType >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeService: << persisted List LeaveType >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted List LeaveType >>
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted List LeaveType >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,17 @@
+com.enttribe.hrms.camunda.external.task
+com.enttribe.hrms.controller.impl
+com.enttribe.hrms.integration.service
+com.enttribe.hrms.integration.service.impl
+com.enttribe.hrms.repository
+com.enttribe.hrms.repository.generic
+com.enttribe.hrms.service
+com.enttribe.hrms.service.generic
+com.enttribe.hrms.service.impl
+com.enttribe.hrms.util.report
+com.enttribe.payrollmanagement.controller.impl
+com.enttribe.payrollmanagement.repository
+com.enttribe.payrollmanagement.repository.generic
+com.enttribe.payrollmanagement.service
+com.enttribe.payrollmanagement.service.generic
+com.enttribe.payrollmanagement.service.impl
+com.enttribe.payrollmanagement.utils

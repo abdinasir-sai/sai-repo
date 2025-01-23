@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById WorkingHours Scenario
+participant User
+User -> CXFServlet: GET, WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << findById >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursControllerImpl: findById(:int)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursService: findById(:int)
+activate WorkingHoursService
+WorkingHoursService -> WorkingHoursJPARepository: findById(:int)
+activate WorkingHoursJPARepository
+WorkingHoursJPARepository -> EntityManager: response(:WorkingHours)
+activate EntityManager
+EntityManager -> WorkingHoursJPARepository: << persisted WorkingHours >>
+deactivate EntityManager
+WorkingHoursJPARepository -> WorkingHoursService: << persisted WorkingHours >>
+deactivate WorkingHoursJPARepository
+WorkingHoursService -> WorkingHoursControllerImpl: << persisted WorkingHours >>
+deactivate WorkingHoursService
+WorkingHoursControllerImpl -> CXFServlet: << persisted WorkingHours >>
+deactivate WorkingHoursControllerImpl
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml

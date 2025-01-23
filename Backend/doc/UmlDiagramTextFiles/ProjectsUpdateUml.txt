@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Projects Scenario
+participant User
+User -> CXFServlet: UPDATE, Projects
+activate CXFServlet
+CXFServlet -> Projects: << update >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: update(:Projects)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: update(:Projects)
+activate ProjectsService
+ProjectsService -> ProjectsJPARepository: update(:Projects)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: update(:Projects)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: << persisted Projects >>
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

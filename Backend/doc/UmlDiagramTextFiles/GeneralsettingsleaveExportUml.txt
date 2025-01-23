@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data GeneralSettingsLeave Scenario
+participant User
+User -> CXFServlet: GeneralSettingsLeave
+activate CXFServlet
+CXFServlet -> GeneralSettingsLeave: << export >>
+activate GeneralSettingsLeave
+GeneralSettingsLeave -> CXFServlet: << instance >>
+deactivate GeneralSettingsLeave
+CXFServlet -> GeneralSettingsLeaveControllerImpl: export(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveControllerImpl
+GeneralSettingsLeaveControllerImpl -> GeneralSettingsLeaveService: search(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveService
+GeneralSettingsLeaveService -> GeneralSettingsLeaveJPARepository: search(:GeneralSettingsLeave)
+activate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveJPARepository -> EntityManager: save(:GeneralSettingsLeave)
+activate EntityManager
+EntityManager -> GeneralSettingsLeaveJPARepository: << persisted GeneralSettingsLeave >>
+deactivate EntityManager
+GeneralSettingsLeaveJPARepository -> GeneralSettingsLeaveService: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveService -> GeneralSettingsLeaveControllerImpl: response(:List<GeneralSettingsLeave>)
+GeneralSettingsLeaveControllerImpl -> GeneralSettingsLeaveService: export(:GeneralSettingsLeave)
+GeneralSettingsLeaveService -> GeneralSettingsLeaveControllerImpl: << persisted GeneralSettingsLeave.xlsx >>
+deactivate GeneralSettingsLeaveService
+GeneralSettingsLeaveControllerImpl -> CXFServlet: << persisted GeneralSettingsLeave.xlsx >>
+deactivate GeneralSettingsLeaveControllerImpl
+CXFServlet -> User: marshalled GeneralSettingsLeave XML
+deactivate CXFServlet
+@enduml

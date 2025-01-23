@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Projects Scenario
+participant User
+User -> CXFServlet: GET, Projects
+activate CXFServlet
+CXFServlet -> Projects: << search >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: search(:Projects)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: search(:Projects)
+activate ProjectsService
+ProjectsService -> ProjectsJPARepository: search(:Projects)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: response(:Projects)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: << persisted Projects >>
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

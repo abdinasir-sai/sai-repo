@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Employee Scenario
+participant User
+User -> CXFServlet: GET, Employee
+activate CXFServlet
+CXFServlet -> Employee: << findAllById >>
+activate Employee
+Employee -> CXFServlet: << instance >>
+deactivate Employee
+CXFServlet -> EmployeeControllerImpl: findAllById(:List<Employee> id)
+activate EmployeeControllerImpl
+EmployeeControllerImpl -> EmployeeService: findAllById(:List<Employee> id)
+activate EmployeeService
+EmployeeService -> EmployeeJPARepository: findAllById(:List<Employee> id)
+activate EmployeeJPARepository
+EmployeeJPARepository -> EntityManager: response(:List<Employee>findAllById)
+activate EntityManager
+EntityManager -> EmployeeJPARepository: << persisted List Employee >>
+deactivate EntityManager
+EmployeeJPARepository -> EmployeeService: << persisted List Employee >>
+deactivate EmployeeJPARepository
+EmployeeService -> EmployeeControllerImpl: << persisted List Employee >>
+deactivate EmployeeService
+EmployeeControllerImpl -> CXFServlet: << persisted List Employee >>
+deactivate EmployeeControllerImpl
+CXFServlet -> User: marshalled Employee XML
+deactivate CXFServlet
+@enduml

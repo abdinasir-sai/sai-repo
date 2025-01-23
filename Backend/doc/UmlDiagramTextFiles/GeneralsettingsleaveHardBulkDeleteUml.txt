@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete GeneralSettingsLeave Scenario
+participant User
+User -> CXFServlet: DELETE, GeneralSettingsLeave
+activate CXFServlet
+CXFServlet -> GeneralSettingsLeave: << bulkdelete >>
+activate GeneralSettingsLeave
+GeneralSettingsLeave -> CXFServlet: << instance >>
+deactivate GeneralSettingsLeave
+CXFServlet -> GeneralSettingsLeaveControllerImpl: bulkdelete(:List<GeneralSettingsLeave>)
+activate GeneralSettingsLeaveControllerImpl
+GeneralSettingsLeaveControllerImpl -> GeneralSettingsLeaveService: bulkDelete(:List<GeneralSettingsLeave>)
+activate GeneralSettingsLeaveService
+GeneralSettingsLeaveService -> GeneralSettingsLeaveJPARepository: deleteAll(:List<GeneralSettingsLeave>)
+activate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveJPARepository -> EntityManager: delete(:List<GeneralSettingsLeave>)
+activate EntityManager
+EntityManager -> GeneralSettingsLeaveJPARepository: << persisted GeneralSettingsLeave >>
+deactivate EntityManager
+GeneralSettingsLeaveJPARepository -> GeneralSettingsLeaveService: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveService -> GeneralSettingsLeaveControllerImpl: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveService
+GeneralSettingsLeaveControllerImpl -> CXFServlet: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveControllerImpl
+CXFServlet -> User: marshalled GeneralSettingsLeave XML
+deactivate CXFServlet
+@enduml

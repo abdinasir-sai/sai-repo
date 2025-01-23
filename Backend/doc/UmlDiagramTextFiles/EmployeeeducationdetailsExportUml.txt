@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Employeeeducationdetails Scenario
+participant User
+User -> CXFServlet: Employeeeducationdetails
+activate CXFServlet
+CXFServlet -> Employeeeducationdetails: << export >>
+activate Employeeeducationdetails
+Employeeeducationdetails -> CXFServlet: << instance >>
+deactivate Employeeeducationdetails
+CXFServlet -> EmployeeeducationdetailsControllerImpl: export(:Employeeeducationdetails)
+activate EmployeeeducationdetailsControllerImpl
+EmployeeeducationdetailsControllerImpl -> EmployeeeducationdetailsService: search(:Employeeeducationdetails)
+activate EmployeeeducationdetailsService
+EmployeeeducationdetailsService -> EmployeeeducationdetailsJPARepository: search(:Employeeeducationdetails)
+activate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsJPARepository -> EntityManager: save(:Employeeeducationdetails)
+activate EntityManager
+EntityManager -> EmployeeeducationdetailsJPARepository: << persisted Employeeeducationdetails >>
+deactivate EntityManager
+EmployeeeducationdetailsJPARepository -> EmployeeeducationdetailsService: << persisted Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsService -> EmployeeeducationdetailsControllerImpl: response(:List<Employeeeducationdetails>)
+EmployeeeducationdetailsControllerImpl -> EmployeeeducationdetailsService: export(:Employeeeducationdetails)
+EmployeeeducationdetailsService -> EmployeeeducationdetailsControllerImpl: << persisted Employeeeducationdetails.xlsx >>
+deactivate EmployeeeducationdetailsService
+EmployeeeducationdetailsControllerImpl -> CXFServlet: << persisted Employeeeducationdetails.xlsx >>
+deactivate EmployeeeducationdetailsControllerImpl
+CXFServlet -> User: marshalled Employeeeducationdetails XML
+deactivate CXFServlet
+@enduml

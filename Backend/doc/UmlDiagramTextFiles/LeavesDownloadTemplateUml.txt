@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Leaves Scenario
+participant User
+User -> CXFServlet: Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << downloadTemplate >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesController: downloadTemplate(:String fileName)
+activate LeavesController
+LeavesController -> LeavesControllerImpl: ResponseBuilder(workbook,fileName)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesController: response(:ResponseEntity)
+deactivate LeavesControllerImpl
+LeavesController -> CXFServlet: << Leaves  >>
+deactivate LeavesController
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

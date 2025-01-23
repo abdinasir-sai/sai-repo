@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Asset Scenario
+participant User
+User -> CXFServlet: POST, Asset
+activate CXFServlet
+CXFServlet -> Asset: << importData >>
+activate Asset
+Asset -> CXFServlet: << instance >>
+deactivate Asset
+CXFServlet -> AssetControllerImpl: importData(:Asset)
+activate AssetControllerImpl
+AssetControllerImpl -> AssetService: importData(:Asset)
+activate AssetService
+activate AssetServiceImpl
+AssetService -> AssetServiceImpl: importData(:Asset)
+AssetServiceImpl -> AssetJPARepository: saveAll(:Asset)
+activate AssetJPARepository
+AssetJPARepository -> EntityManager: save(:Asset)
+activate EntityManager
+EntityManager -> AssetJPARepository: << persisted Asset >>
+deactivate EntityManager
+AssetJPARepository -> AssetServiceImpl: << persisted Asset >>
+AssetServiceImpl -> AssetService: << persisted Asset >>
+deactivate AssetJPARepository
+AssetService -> AssetControllerImpl: << persisted Asset >>
+deactivate AssetServiceImpl
+deactivate AssetService
+AssetControllerImpl -> CXFServlet: << persisted Asset >>
+deactivate AssetControllerImpl
+CXFServlet -> User: marshalled Asset XML
+deactivate CXFServlet
+@enduml

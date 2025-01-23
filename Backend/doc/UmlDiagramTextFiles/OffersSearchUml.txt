@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Offers Scenario
+participant User
+User -> CXFServlet: GET, Offers
+activate CXFServlet
+CXFServlet -> Offers: << search >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: search(:Offers)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: search(:Offers)
+activate OffersService
+OffersService -> OffersJPARepository: search(:Offers)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: response(:Offers)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted Offers >>
+deactivate EntityManager
+OffersJPARepository -> OffersService: << persisted Offers >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: << persisted Offers >>
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted Offers >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Faq Scenario
+participant User
+User -> CXFServlet: GET, Faq
+activate CXFServlet
+CXFServlet -> Faq: << auditHistory >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: auditHistory(:Faq)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: auditHistory(:Faq)
+activate FaqService
+FaqService -> FaqJPARepository: auditHistory(:Faq)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted FaqAuditHistory >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted FaqAuditHistory >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted FaqAuditHistory >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted FaqAuditHistory >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

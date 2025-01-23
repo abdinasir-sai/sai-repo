@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Offers Scenario
+participant User
+User -> CXFServlet: GET, Offers
+activate CXFServlet
+CXFServlet -> Offers: << auditHistory >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: auditHistory(:Offers)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: auditHistory(:Offers)
+activate OffersService
+OffersService -> OffersJPARepository: auditHistory(:Offers)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted OffersAuditHistory >>
+deactivate EntityManager
+OffersJPARepository -> OffersService: << persisted OffersAuditHistory >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: << persisted OffersAuditHistory >>
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted OffersAuditHistory >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

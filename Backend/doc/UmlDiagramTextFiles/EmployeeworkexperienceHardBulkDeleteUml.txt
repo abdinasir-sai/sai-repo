@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete EmployeeWorkExperience Scenario
+participant User
+User -> CXFServlet: DELETE, EmployeeWorkExperience
+activate CXFServlet
+CXFServlet -> EmployeeWorkExperience: << bulkdelete >>
+activate EmployeeWorkExperience
+EmployeeWorkExperience -> CXFServlet: << instance >>
+deactivate EmployeeWorkExperience
+CXFServlet -> EmployeeWorkExperienceControllerImpl: bulkdelete(:List<EmployeeWorkExperience>)
+activate EmployeeWorkExperienceControllerImpl
+EmployeeWorkExperienceControllerImpl -> EmployeeWorkExperienceService: bulkDelete(:List<EmployeeWorkExperience>)
+activate EmployeeWorkExperienceService
+EmployeeWorkExperienceService -> EmployeeWorkExperienceJPARepository: deleteAll(:List<EmployeeWorkExperience>)
+activate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceJPARepository -> EntityManager: delete(:List<EmployeeWorkExperience>)
+activate EntityManager
+EntityManager -> EmployeeWorkExperienceJPARepository: << persisted EmployeeWorkExperience >>
+deactivate EntityManager
+EmployeeWorkExperienceJPARepository -> EmployeeWorkExperienceService: << persisted EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceService -> EmployeeWorkExperienceControllerImpl: << persisted EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceService
+EmployeeWorkExperienceControllerImpl -> CXFServlet: << persisted EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceControllerImpl
+CXFServlet -> User: marshalled EmployeeWorkExperience XML
+deactivate CXFServlet
+@enduml

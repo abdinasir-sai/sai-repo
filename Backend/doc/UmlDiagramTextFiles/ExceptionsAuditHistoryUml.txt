@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Exceptions Scenario
+participant User
+User -> CXFServlet: GET, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << auditHistory >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: auditHistory(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: auditHistory(:Exceptions)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: auditHistory(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted ExceptionsAuditHistory >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted ExceptionsAuditHistory >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted ExceptionsAuditHistory >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted ExceptionsAuditHistory >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

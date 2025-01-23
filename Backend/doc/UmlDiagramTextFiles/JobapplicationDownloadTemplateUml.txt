@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template JobApplication Scenario
+participant User
+User -> CXFServlet: JobApplication
+activate CXFServlet
+CXFServlet -> JobApplication: << downloadTemplate >>
+activate JobApplication
+JobApplication -> CXFServlet: << instance >>
+deactivate JobApplication
+CXFServlet -> JobApplicationController: downloadTemplate(:String fileName)
+activate JobApplicationController
+JobApplicationController -> JobApplicationControllerImpl: ResponseBuilder(workbook,fileName)
+activate JobApplicationControllerImpl
+JobApplicationControllerImpl -> JobApplicationController: response(:ResponseEntity)
+deactivate JobApplicationControllerImpl
+JobApplicationController -> CXFServlet: << JobApplication  >>
+deactivate JobApplicationController
+CXFServlet -> User: marshalled JobApplication XML
+deactivate CXFServlet
+@enduml

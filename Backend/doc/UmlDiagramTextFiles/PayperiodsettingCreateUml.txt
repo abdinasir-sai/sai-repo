@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create PayPeriodSetting Scenario
+participant User
+User -> CXFServlet: POST, PayPeriodSetting
+activate CXFServlet
+CXFServlet -> PayPeriodSetting: << create >>
+activate PayPeriodSetting
+PayPeriodSetting -> CXFServlet: << instance >>
+deactivate PayPeriodSetting
+CXFServlet -> PayPeriodSettingControllerImpl: create(:PayPeriodSetting)
+activate PayPeriodSettingControllerImpl
+PayPeriodSettingControllerImpl -> PayPeriodSettingService: create(:PayPeriodSetting)
+activate PayPeriodSettingService
+PayPeriodSettingService -> PayPeriodSettingJPARepository: create(:PayPeriodSetting)
+activate PayPeriodSettingJPARepository
+PayPeriodSettingJPARepository -> EntityManager: save(:PayPeriodSetting)
+activate EntityManager
+EntityManager -> PayPeriodSettingJPARepository: << persisted PayPeriodSetting >>
+deactivate EntityManager
+PayPeriodSettingJPARepository -> PayPeriodSettingService: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingJPARepository
+PayPeriodSettingService -> PayPeriodSettingControllerImpl: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingService
+PayPeriodSettingControllerImpl -> CXFServlet: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingControllerImpl
+CXFServlet -> User: marshalled PayPeriodSetting XML
+deactivate CXFServlet
+@enduml

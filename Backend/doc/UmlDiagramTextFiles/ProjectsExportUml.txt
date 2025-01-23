@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Projects Scenario
+participant User
+User -> CXFServlet: Projects
+activate CXFServlet
+CXFServlet -> Projects: << export >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: export(:Projects)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: search(:Projects)
+activate ProjectsService
+ProjectsService -> ProjectsJPARepository: search(:Projects)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: save(:Projects)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: response(:List<Projects>)
+ProjectsControllerImpl -> ProjectsService: export(:Projects)
+ProjectsService -> ProjectsControllerImpl: << persisted Projects.xlsx >>
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects.xlsx >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

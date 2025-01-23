@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Leaves Scenario
+participant User
+User -> CXFServlet: POST, Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << importData >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesControllerImpl: importData(:Leaves)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesService: importData(:Leaves)
+activate LeavesService
+activate LeavesServiceImpl
+LeavesService -> LeavesServiceImpl: importData(:Leaves)
+LeavesServiceImpl -> LeavesJPARepository: saveAll(:Leaves)
+activate LeavesJPARepository
+LeavesJPARepository -> EntityManager: save(:Leaves)
+activate EntityManager
+EntityManager -> LeavesJPARepository: << persisted Leaves >>
+deactivate EntityManager
+LeavesJPARepository -> LeavesServiceImpl: << persisted Leaves >>
+LeavesServiceImpl -> LeavesService: << persisted Leaves >>
+deactivate LeavesJPARepository
+LeavesService -> LeavesControllerImpl: << persisted Leaves >>
+deactivate LeavesServiceImpl
+deactivate LeavesService
+LeavesControllerImpl -> CXFServlet: << persisted Leaves >>
+deactivate LeavesControllerImpl
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

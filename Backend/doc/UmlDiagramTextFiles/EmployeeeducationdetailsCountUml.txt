@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Employeeeducationdetails Scenario
+participant User
+User -> CXFServlet: GET, Employeeeducationdetails
+activate CXFServlet
+CXFServlet -> Employeeeducationdetails: << count >>
+activate Employeeeducationdetails
+Employeeeducationdetails -> CXFServlet: << instance >>
+deactivate Employeeeducationdetails
+CXFServlet -> EmployeeeducationdetailsControllerImpl: count(:Employeeeducationdetails)
+activate EmployeeeducationdetailsControllerImpl
+EmployeeeducationdetailsControllerImpl -> EmployeeeducationdetailsService: count(:Employeeeducationdetails)
+activate EmployeeeducationdetailsService
+EmployeeeducationdetailsService -> EmployeeeducationdetailsJPARepository: count(:Employeeeducationdetails)
+activate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> EmployeeeducationdetailsJPARepository: << persisted Count >>
+deactivate EntityManager
+EmployeeeducationdetailsJPARepository -> EmployeeeducationdetailsService: << persisted Count >>
+deactivate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsService -> EmployeeeducationdetailsControllerImpl: << persisted Count >>
+deactivate EmployeeeducationdetailsService
+EmployeeeducationdetailsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate EmployeeeducationdetailsControllerImpl
+CXFServlet -> User: marshalled Employeeeducationdetails XML
+deactivate CXFServlet
+@enduml

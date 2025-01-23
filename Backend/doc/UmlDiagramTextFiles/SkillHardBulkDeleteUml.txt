@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Skill Scenario
+participant User
+User -> CXFServlet: DELETE, Skill
+activate CXFServlet
+CXFServlet -> Skill: << bulkdelete >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: bulkdelete(:List<Skill>)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: bulkDelete(:List<Skill>)
+activate SkillService
+SkillService -> SkillJPARepository: deleteAll(:List<Skill>)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: delete(:List<Skill>)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted Skill >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted Skill >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted Skill >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted Skill >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

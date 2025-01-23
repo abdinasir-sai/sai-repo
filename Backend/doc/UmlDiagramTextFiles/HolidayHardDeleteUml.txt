@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Holiday Scenario
+participant User
+User -> CXFServlet: DELETE, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << delete >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: delete(:Holiday)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: deleteById(:Holiday)
+activate HolidayService
+HolidayService -> HolidayJPARepository: deleteById(:Holiday)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: delete(:Holiday)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted Holiday >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted Holiday >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted Holiday >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted Holiday >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

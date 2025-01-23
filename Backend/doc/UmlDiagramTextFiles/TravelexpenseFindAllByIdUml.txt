@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById TravelExpense Scenario
+participant User
+User -> CXFServlet: GET, TravelExpense
+activate CXFServlet
+CXFServlet -> TravelExpense: << findAllById >>
+activate TravelExpense
+TravelExpense -> CXFServlet: << instance >>
+deactivate TravelExpense
+CXFServlet -> TravelExpenseControllerImpl: findAllById(:List<TravelExpense> id)
+activate TravelExpenseControllerImpl
+TravelExpenseControllerImpl -> TravelExpenseService: findAllById(:List<TravelExpense> id)
+activate TravelExpenseService
+TravelExpenseService -> TravelExpenseJPARepository: findAllById(:List<TravelExpense> id)
+activate TravelExpenseJPARepository
+TravelExpenseJPARepository -> EntityManager: response(:List<TravelExpense>findAllById)
+activate EntityManager
+EntityManager -> TravelExpenseJPARepository: << persisted List TravelExpense >>
+deactivate EntityManager
+TravelExpenseJPARepository -> TravelExpenseService: << persisted List TravelExpense >>
+deactivate TravelExpenseJPARepository
+TravelExpenseService -> TravelExpenseControllerImpl: << persisted List TravelExpense >>
+deactivate TravelExpenseService
+TravelExpenseControllerImpl -> CXFServlet: << persisted List TravelExpense >>
+deactivate TravelExpenseControllerImpl
+CXFServlet -> User: marshalled TravelExpense XML
+deactivate CXFServlet
+@enduml

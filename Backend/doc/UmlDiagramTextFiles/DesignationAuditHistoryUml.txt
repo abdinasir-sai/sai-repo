@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Designation Scenario
+participant User
+User -> CXFServlet: GET, Designation
+activate CXFServlet
+CXFServlet -> Designation: << auditHistory >>
+activate Designation
+Designation -> CXFServlet: << instance >>
+deactivate Designation
+CXFServlet -> DesignationControllerImpl: auditHistory(:Designation)
+activate DesignationControllerImpl
+DesignationControllerImpl -> DesignationService: auditHistory(:Designation)
+activate DesignationService
+DesignationService -> DesignationJPARepository: auditHistory(:Designation)
+activate DesignationJPARepository
+DesignationJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> DesignationJPARepository: << persisted DesignationAuditHistory >>
+deactivate EntityManager
+DesignationJPARepository -> DesignationService: << persisted DesignationAuditHistory >>
+deactivate DesignationJPARepository
+DesignationService -> DesignationControllerImpl: << persisted DesignationAuditHistory >>
+deactivate DesignationService
+DesignationControllerImpl -> CXFServlet: << persisted DesignationAuditHistory >>
+deactivate DesignationControllerImpl
+CXFServlet -> User: marshalled Designation XML
+deactivate CXFServlet
+@enduml

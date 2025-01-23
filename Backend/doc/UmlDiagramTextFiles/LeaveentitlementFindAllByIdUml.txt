@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById LeaveEntitlement Scenario
+participant User
+User -> CXFServlet: GET, LeaveEntitlement
+activate CXFServlet
+CXFServlet -> LeaveEntitlement: << findAllById >>
+activate LeaveEntitlement
+LeaveEntitlement -> CXFServlet: << instance >>
+deactivate LeaveEntitlement
+CXFServlet -> LeaveEntitlementControllerImpl: findAllById(:List<LeaveEntitlement> id)
+activate LeaveEntitlementControllerImpl
+LeaveEntitlementControllerImpl -> LeaveEntitlementService: findAllById(:List<LeaveEntitlement> id)
+activate LeaveEntitlementService
+LeaveEntitlementService -> LeaveEntitlementJPARepository: findAllById(:List<LeaveEntitlement> id)
+activate LeaveEntitlementJPARepository
+LeaveEntitlementJPARepository -> EntityManager: response(:List<LeaveEntitlement>findAllById)
+activate EntityManager
+EntityManager -> LeaveEntitlementJPARepository: << persisted List LeaveEntitlement >>
+deactivate EntityManager
+LeaveEntitlementJPARepository -> LeaveEntitlementService: << persisted List LeaveEntitlement >>
+deactivate LeaveEntitlementJPARepository
+LeaveEntitlementService -> LeaveEntitlementControllerImpl: << persisted List LeaveEntitlement >>
+deactivate LeaveEntitlementService
+LeaveEntitlementControllerImpl -> CXFServlet: << persisted List LeaveEntitlement >>
+deactivate LeaveEntitlementControllerImpl
+CXFServlet -> User: marshalled LeaveEntitlement XML
+deactivate CXFServlet
+@enduml

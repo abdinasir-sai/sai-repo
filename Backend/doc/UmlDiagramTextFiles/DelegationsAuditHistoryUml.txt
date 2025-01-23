@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Delegations Scenario
+participant User
+User -> CXFServlet: GET, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << auditHistory >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: auditHistory(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: auditHistory(:Delegations)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: auditHistory(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted DelegationsAuditHistory >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted DelegationsAuditHistory >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted DelegationsAuditHistory >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted DelegationsAuditHistory >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

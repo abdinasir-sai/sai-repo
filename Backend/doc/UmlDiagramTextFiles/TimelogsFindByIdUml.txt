@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById TimeLogs Scenario
+participant User
+User -> CXFServlet: GET, TimeLogs
+activate CXFServlet
+CXFServlet -> TimeLogs: << findById >>
+activate TimeLogs
+TimeLogs -> CXFServlet: << instance >>
+deactivate TimeLogs
+CXFServlet -> TimeLogsControllerImpl: findById(:int)
+activate TimeLogsControllerImpl
+TimeLogsControllerImpl -> TimeLogsService: findById(:int)
+activate TimeLogsService
+TimeLogsService -> TimeLogsJPARepository: findById(:int)
+activate TimeLogsJPARepository
+TimeLogsJPARepository -> EntityManager: response(:TimeLogs)
+activate EntityManager
+EntityManager -> TimeLogsJPARepository: << persisted TimeLogs >>
+deactivate EntityManager
+TimeLogsJPARepository -> TimeLogsService: << persisted TimeLogs >>
+deactivate TimeLogsJPARepository
+TimeLogsService -> TimeLogsControllerImpl: << persisted TimeLogs >>
+deactivate TimeLogsService
+TimeLogsControllerImpl -> CXFServlet: << persisted TimeLogs >>
+deactivate TimeLogsControllerImpl
+CXFServlet -> User: marshalled TimeLogs XML
+deactivate CXFServlet
+@enduml

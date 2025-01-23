@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Exceptions Scenario
+participant User
+User -> CXFServlet: GET, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << findAllById >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: findAllById(:List<Exceptions> id)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: findAllById(:List<Exceptions> id)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: findAllById(:List<Exceptions> id)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: response(:List<Exceptions>findAllById)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted List Exceptions >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted List Exceptions >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted List Exceptions >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted List Exceptions >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

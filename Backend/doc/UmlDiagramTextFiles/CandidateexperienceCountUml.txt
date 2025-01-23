@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count CandidateExperience Scenario
+participant User
+User -> CXFServlet: GET, CandidateExperience
+activate CXFServlet
+CXFServlet -> CandidateExperience: << count >>
+activate CandidateExperience
+CandidateExperience -> CXFServlet: << instance >>
+deactivate CandidateExperience
+CXFServlet -> CandidateExperienceControllerImpl: count(:CandidateExperience)
+activate CandidateExperienceControllerImpl
+CandidateExperienceControllerImpl -> CandidateExperienceService: count(:CandidateExperience)
+activate CandidateExperienceService
+CandidateExperienceService -> CandidateExperienceJPARepository: count(:CandidateExperience)
+activate CandidateExperienceJPARepository
+CandidateExperienceJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> CandidateExperienceJPARepository: << persisted Count >>
+deactivate EntityManager
+CandidateExperienceJPARepository -> CandidateExperienceService: << persisted Count >>
+deactivate CandidateExperienceJPARepository
+CandidateExperienceService -> CandidateExperienceControllerImpl: << persisted Count >>
+deactivate CandidateExperienceService
+CandidateExperienceControllerImpl -> CXFServlet: << persisted Count >>
+deactivate CandidateExperienceControllerImpl
+CXFServlet -> User: marshalled CandidateExperience XML
+deactivate CXFServlet
+@enduml

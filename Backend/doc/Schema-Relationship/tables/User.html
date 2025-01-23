@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>User - generatedapps.generatedapps</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-black layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>generatedapps</b></a><span class="navbar-brand" style="padding-left: 0">.generatedapps</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>User</h1><p><span id="recordNumber">0</span> rows</p><br />
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Columns</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="true"
+                                    data-page-length="10"
+                                    data-length-change="false">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th title='Are nulls allowed?'>Nulls</th>
+                                    <th title='Is column automatically updated?'>Auto</th>
+                                    <th title='Default value'>Default</th>
+                                    <th title='Columns in tables that reference this column'>Children</th>
+                                    <th title='Columns in tables that are referenced by this column'>Parents</th>
+                                    <th title='Comments' class="toggle"><span>Comments</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="userid_pk">userid_pk</span></td>
+                                    <td>INT</td>
+                                    <td>10</td>
+                                    <td title=''></td>
+                                    <td title='Automatically updated by the database'>√</td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="ABSENT_SCHEDULE.CREATOR references User.userid_pk via FKojd5f8wf2xy5gu0s6jg47hhmh"><a href='ABSENT_SCHEDULE.html'>ABSENT_SCHEDULE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKojd5f8wf2xy5gu0s6jg47hhmh</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="ABSENT_SCHEDULE.LAST_MODIFIER references User.userid_pk via FKbqhj95x8rcq569gu1s71enfc1"><a href='ABSENT_SCHEDULE.html'>ABSENT_SCHEDULE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKbqhj95x8rcq569gu1s71enfc1</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="APPLICABLE.CREATOR references User.userid_pk via FKl2o4p7jxojhe8a2jc840ujqgq"><a href='APPLICABLE.html'>APPLICABLE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKl2o4p7jxojhe8a2jc840ujqgq</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="APPLICABLE.LAST_MODIFIER references User.userid_pk via FKgw73pdw8um3luq1fl6rm9hg50"><a href='APPLICABLE.html'>APPLICABLE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKgw73pdw8um3luq1fl6rm9hg50</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="APPLICANT.CREATOR references User.userid_pk via FKi4xxlc71wrx0napidqx39djkm"><a href='APPLICANT.html'>APPLICANT</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKi4xxlc71wrx0napidqx39djkm</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="APPLICANT.LAST_MODIFIER references User.userid_pk via FKs5o2353n4qg1420dcxjicpt71"><a href='APPLICANT.html'>APPLICANT</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKs5o2353n4qg1420dcxjicpt71</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="ASSET.CREATOR references User.userid_pk via FKgpccyjrq58s97qec8m26kqsb0"><a href='ASSET.html'>ASSET</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKgpccyjrq58s97qec8m26kqsb0</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="ASSET.LAST_MODIFIER references User.userid_pk via FK2wohvmltt8qf29k2l79kbgipy"><a href='ASSET.html'>ASSET</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK2wohvmltt8qf29k2l79kbgipy</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="ATTENDANCE_REGULARIZATION.CREATOR references User.userid_pk via FK8ll5vt43l90in9ijkf46271uk"><a href='ATTENDANCE_REGULARIZATION.html'>ATTENDANCE_REGULARIZATION</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK8ll5vt43l90in9ijkf46271uk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="ATTENDANCE_REGULARIZATION.LAST_MODIFIER references User.userid_pk via FK23de0seunc2b836u9sfisihoh"><a href='ATTENDANCE_REGULARIZATION.html'>ATTENDANCE_REGULARIZATION</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK23de0seunc2b836u9sfisihoh</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="BREAKDETAILS.CREATOR references User.userid_pk via FK8d2jds69oh98h55g5ne1o0fmc"><a href='BREAKDETAILS.html'>BREAKDETAILS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK8d2jds69oh98h55g5ne1o0fmc</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="BREAKDETAILS.LAST_MODIFIER references User.userid_pk via FK4v7573h5b926s2iohetaxvxwy"><a href='BREAKDETAILS.html'>BREAKDETAILS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK4v7573h5b926s2iohetaxvxwy</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CALENDAR_DEFINITION.CREATOR references User.userid_pk via FKl342xmj1rl6vkpf8l4mk3bjje"><a href='CALENDAR_DEFINITION.html'>CALENDAR_DEFINITION</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKl342xmj1rl6vkpf8l4mk3bjje</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CALENDAR_DEFINITION.LAST_MODIFIER references User.userid_pk via FK4chx7bhtbititrcon8skykm7s"><a href='CALENDAR_DEFINITION.html'>CALENDAR_DEFINITION</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK4chx7bhtbititrcon8skykm7s</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CANDIDATE.CREATOR references User.userid_pk via FKo355oii0a5lxxbkw3dtxihcg8"><a href='CANDIDATE.html'>CANDIDATE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKo355oii0a5lxxbkw3dtxihcg8</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CANDIDATE.LAST_MODIFIER references User.userid_pk via FKb3vuafdaqe2t6rdxm93wr5ojv"><a href='CANDIDATE.html'>CANDIDATE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKb3vuafdaqe2t6rdxm93wr5ojv</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CANDIDATE_EDUCATION.CREATOR references User.userid_pk via FKm0sc9fj9gtwpgok1wyq34c7fs"><a href='CANDIDATE_EDUCATION.html'>CANDIDATE_EDUCATION</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKm0sc9fj9gtwpgok1wyq34c7fs</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CANDIDATE_EDUCATION.LAST_MODIFIER references User.userid_pk via FKrwhd4u70b8j6s84nl96ugotha"><a href='CANDIDATE_EDUCATION.html'>CANDIDATE_EDUCATION</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKrwhd4u70b8j6s84nl96ugotha</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CANDIDATE_EXPERIENCE.CREATOR references User.userid_pk via FK14r9c6f43p9n8j0auwgt0bobh"><a href='CANDIDATE_EXPERIENCE.html'>CANDIDATE_EXPERIENCE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK14r9c6f43p9n8j0auwgt0bobh</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CANDIDATE_EXPERIENCE.LAST_MODIFIER references User.userid_pk via FKscv1fuhdck7ex54phr88v5ayu"><a href='CANDIDATE_EXPERIENCE.html'>CANDIDATE_EXPERIENCE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKscv1fuhdck7ex54phr88v5ayu</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CITY.CREATOR references User.userid_pk via FKc75418g32i3gqjy3cnbsmkwd3"><a href='CITY.html'>CITY</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKc75418g32i3gqjy3cnbsmkwd3</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CITY.LAST_MODIFIER references User.userid_pk via FKku7fvaxvmi809tyq2ebm2kj8l"><a href='CITY.html'>CITY</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKku7fvaxvmi809tyq2ebm2kj8l</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CLIENTS.CREATOR references User.userid_pk via FK3qx1uow1mwpg54hm4wa9gag1w"><a href='CLIENTS.html'>CLIENTS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK3qx1uow1mwpg54hm4wa9gag1w</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="CLIENTS.LAST_MODIFIER references User.userid_pk via FKme2qgfc6qh2gg3ukk0l1n30k1"><a href='CLIENTS.html'>CLIENTS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKme2qgfc6qh2gg3ukk0l1n30k1</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="COMPANY_DETAILS.CREATOR references User.userid_pk via FKmm13bp7kbtcta1f5ssq0sit13"><a href='COMPANY_DETAILS.html'>COMPANY_DETAILS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKmm13bp7kbtcta1f5ssq0sit13</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="COMPANY_DETAILS.LAST_MODIFIER references User.userid_pk via FKbo171kv6f03w8fcm3t4ulwr74"><a href='COMPANY_DETAILS.html'>COMPANY_DETAILS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKbo171kv6f03w8fcm3t4ulwr74</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="COMPENSATORY_REQUEST_SCHEDULER.CREATOR references User.userid_pk via FK6tlonshfpc4503nlice7nlb2a"><a href='COMPENSATORY_REQUEST_SCHEDULER.html'>COMPENSATORY_REQUEST_SCHEDULER</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK6tlonshfpc4503nlice7nlb2a</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="COMPENSATORY_REQUEST_SCHEDULER.LAST_MODIFIER references User.userid_pk via FKhul41g3aq8kxafqvc71yep4xx"><a href='COMPENSATORY_REQUEST_SCHEDULER.html'>COMPENSATORY_REQUEST_SCHEDULER</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKhul41g3aq8kxafqvc71yep4xx</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="COUNTRY.CREATOR references User.userid_pk via FKcgggq7m5nu63ysv3jbvsowjof"><a href='COUNTRY.html'>COUNTRY</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKcgggq7m5nu63ysv3jbvsowjof</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="COUNTRY.LAST_MODIFIER references User.userid_pk via FKuqflkyaggxu9wegxajlddf60"><a href='COUNTRY.html'>COUNTRY</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKuqflkyaggxu9wegxajlddf60</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="DELEGATIONS.CREATOR references User.userid_pk via FKaeibeen9frhk1su9fks90vxuf"><a href='DELEGATIONS.html'>DELEGATIONS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKaeibeen9frhk1su9fks90vxuf</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="DELEGATIONS.LAST_MODIFIER references User.userid_pk via FKfsq4s5ywswnd2oi636oqc8yci"><a href='DELEGATIONS.html'>DELEGATIONS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKfsq4s5ywswnd2oi636oqc8yci</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="DEPARTMENT.CREATOR references User.userid_pk via FK6crtr3h3316388isj5tlx0jvt"><a href='DEPARTMENT.html'>DEPARTMENT</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK6crtr3h3316388isj5tlx0jvt</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="DEPARTMENT.LAST_MODIFIER references User.userid_pk via FKjpp210jhgbwtd2fnmr29th44p"><a href='DEPARTMENT.html'>DEPARTMENT</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKjpp210jhgbwtd2fnmr29th44p</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="DESIGNATION.CREATOR references User.userid_pk via FKp1tvilciqttd5k8ri3e8ka5ve"><a href='DESIGNATION.html'>DESIGNATION</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKp1tvilciqttd5k8ri3e8ka5ve</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="DESIGNATION.LAST_MODIFIER references User.userid_pk via FK74og0it085blf5f2j9f2vhi2k"><a href='DESIGNATION.html'>DESIGNATION</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK74og0it085blf5f2j9f2vhi2k</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE.CREATOR references User.userid_pk via FKirmuqjf8k18t72nbyyw0p5cab"><a href='EMPLOYEE.html'>EMPLOYEE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKirmuqjf8k18t72nbyyw0p5cab</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE.LAST_MODIFIER references User.userid_pk via FK2rq39dovka9cv5nneo3v9vkjr"><a href='EMPLOYEE.html'>EMPLOYEE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK2rq39dovka9cv5nneo3v9vkjr</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE_DEPENDENT_DETAILS.CREATOR references User.userid_pk via FK195gpi69nuexpqv3wglryf4o4"><a href='EMPLOYEE_DEPENDENT_DETAILS.html'>EMPLOYEE_DEPENDENT_DETAILS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK195gpi69nuexpqv3wglryf4o4</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE_DEPENDENT_DETAILS.LAST_MODIFIER references User.userid_pk via FKoras8b15bgf9qmdo1njw4o6oy"><a href='EMPLOYEE_DEPENDENT_DETAILS.html'>EMPLOYEE_DEPENDENT_DETAILS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKoras8b15bgf9qmdo1njw4o6oy</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE_MONTHLY_ATTENDANCE.CREATOR references User.userid_pk via FKs7bvsugsw1sod48o91i6c9dw1"><a href='EMPLOYEE_MONTHLY_ATTENDANCE.html'>EMPLOYEE_MONTHLY_ATTENDANCE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKs7bvsugsw1sod48o91i6c9dw1</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE_MONTHLY_ATTENDANCE.LAST_MODIFIER references User.userid_pk via FKe9hpcxb30uj5jdxqj1t2juqi0"><a href='EMPLOYEE_MONTHLY_ATTENDANCE.html'>EMPLOYEE_MONTHLY_ATTENDANCE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKe9hpcxb30uj5jdxqj1t2juqi0</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE_WORK_EXPERIENCE.CREATOR references User.userid_pk via FK3pnbhr4001qqv4omse4vfvv5u"><a href='EMPLOYEE_WORK_EXPERIENCE.html'>EMPLOYEE_WORK_EXPERIENCE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK3pnbhr4001qqv4omse4vfvv5u</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEE_WORK_EXPERIENCE.LAST_MODIFIER references User.userid_pk via FKri6nmpow3f7aoj8q6au7gq9mr"><a href='EMPLOYEE_WORK_EXPERIENCE.html'>EMPLOYEE_WORK_EXPERIENCE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKri6nmpow3f7aoj8q6au7gq9mr</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEEEDUCATIONDETAILS.CREATOR references User.userid_pk via FKl3xtjxx9hn7ppkloud9pe4w3m"><a href='EMPLOYEEEDUCATIONDETAILS.html'>EMPLOYEEEDUCATIONDETAILS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKl3xtjxx9hn7ppkloud9pe4w3m</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EMPLOYEEEDUCATIONDETAILS.LAST_MODIFIER references User.userid_pk via FKg00aiqu579cfrattvp656g6ut"><a href='EMPLOYEEEDUCATIONDETAILS.html'>EMPLOYEEEDUCATIONDETAILS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKg00aiqu579cfrattvp656g6ut</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EXCEPTIONAL_WORKING_DAY.CREATOR references User.userid_pk via FKiqtfwtnf3j8boptt5yho4r66p"><a href='EXCEPTIONAL_WORKING_DAY.html'>EXCEPTIONAL_WORKING_DAY</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKiqtfwtnf3j8boptt5yho4r66p</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EXCEPTIONAL_WORKING_DAY.LAST_MODIFIER references User.userid_pk via FK52nkrww28a0427jpap54wh6s"><a href='EXCEPTIONAL_WORKING_DAY.html'>EXCEPTIONAL_WORKING_DAY</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK52nkrww28a0427jpap54wh6s</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EXCEPTIONS.CREATOR references User.userid_pk via FKp2mm3ww10l4t7xattbxpx5dp6"><a href='EXCEPTIONS.html'>EXCEPTIONS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKp2mm3ww10l4t7xattbxpx5dp6</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EXCEPTIONS.LAST_MODIFIER references User.userid_pk via FK7alm6iahynr0myd3muufihejy"><a href='EXCEPTIONS.html'>EXCEPTIONS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK7alm6iahynr0myd3muufihejy</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EXIT_DETAILS.CREATOR references User.userid_pk via FKgowiyvc49sbbh49cmpa1njuip"><a href='EXIT_DETAILS.html'>EXIT_DETAILS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKgowiyvc49sbbh49cmpa1njuip</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="EXIT_DETAILS.LAST_MODIFIER references User.userid_pk via FKstutjjgqln8gvkjsp1yg5cc3"><a href='EXIT_DETAILS.html'>EXIT_DETAILS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKstutjjgqln8gvkjsp1yg5cc3</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="FAQ.CREATOR references User.userid_pk via FKirnmqenib82n5t8uchq09bau8"><a href='FAQ.html'>FAQ</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKirnmqenib82n5t8uchq09bau8</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="FAQ.LAST_MODIFIER references User.userid_pk via FKb0cstoe25d3e95sbgard1qnps"><a href='FAQ.html'>FAQ</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKb0cstoe25d3e95sbgard1qnps</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="GENERAL_SETTINGS_LEAVE.CREATOR references User.userid_pk via FKooquftg6w5ukc650oh19fhejh"><a href='GENERAL_SETTINGS_LEAVE.html'>GENERAL_SETTINGS_LEAVE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKooquftg6w5ukc650oh19fhejh</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="GENERAL_SETTINGS_LEAVE.LAST_MODIFIER references User.userid_pk via FKearydhgki0bjiu7n85t2ihm1b"><a href='GENERAL_SETTINGS_LEAVE.html'>GENERAL_SETTINGS_LEAVE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKearydhgki0bjiu7n85t2ihm1b</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="HOLIDAY.CREATOR references User.userid_pk via FKcv5ivawawmj0vlec8myia1bjn"><a href='HOLIDAY.html'>HOLIDAY</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKcv5ivawawmj0vlec8myia1bjn</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="HOLIDAY.LAST_MODIFIER references User.userid_pk via FKshe79j8qu9uqg1ux0bw4b443x"><a href='HOLIDAY.html'>HOLIDAY</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKshe79j8qu9uqg1ux0bw4b443x</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="HR_LETTERS.CREATOR references User.userid_pk via FKivsn5s4ebc94ovjsauiygb3wh"><a href='HR_LETTERS.html'>HR_LETTERS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKivsn5s4ebc94ovjsauiygb3wh</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="HR_LETTERS.LAST_MODIFIER references User.userid_pk via FK7c2g8nx07s17pi5pmbuow4hhd"><a href='HR_LETTERS.html'>HR_LETTERS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK7c2g8nx07s17pi5pmbuow4hhd</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="INTERVIEW.CREATOR references User.userid_pk via FK9pecec1p30ojpcvlngme1bmyy"><a href='INTERVIEW.html'>INTERVIEW</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK9pecec1p30ojpcvlngme1bmyy</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="INTERVIEW.LAST_MODIFIER references User.userid_pk via FKl675ajsbt8gw0ek8kh9i9eijn"><a href='INTERVIEW.html'>INTERVIEW</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKl675ajsbt8gw0ek8kh9i9eijn</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="JOB_APPLICATION.CREATOR references User.userid_pk via FKq40lpkk6ieu3lbnpcoc0w9d4q"><a href='JOB_APPLICATION.html'>JOB_APPLICATION</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKq40lpkk6ieu3lbnpcoc0w9d4q</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="JOB_APPLICATION.LAST_MODIFIER references User.userid_pk via FKl58smqo4ijwg158kgj4jqbuiy"><a href='JOB_APPLICATION.html'>JOB_APPLICATION</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKl58smqo4ijwg158kgj4jqbuiy</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="JOB_OPENING.CREATOR references User.userid_pk via FKa56gbqx4782g6dwtk36vj77bp"><a href='JOB_OPENING.html'>JOB_OPENING</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKa56gbqx4782g6dwtk36vj77bp</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="JOB_OPENING.LAST_MODIFIER references User.userid_pk via FKn1m4kyikfe7mj6ga8phu66fk"><a href='JOB_OPENING.html'>JOB_OPENING</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKn1m4kyikfe7mj6ga8phu66fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="JOBS.CREATOR references User.userid_pk via FKrn1xcks4glj9ycmn7gjr40tpr"><a href='JOBS.html'>JOBS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKrn1xcks4glj9ycmn7gjr40tpr</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="JOBS.LAST_MODIFIER references User.userid_pk via FKmrxnfqktkbtinyd3cxgl94alo"><a href='JOBS.html'>JOBS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKmrxnfqktkbtinyd3cxgl94alo</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LEAVE_ENTITLEMENT.CREATOR references User.userid_pk via FKlwelulxhfebqep49ahs7ir18h"><a href='LEAVE_ENTITLEMENT.html'>LEAVE_ENTITLEMENT</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKlwelulxhfebqep49ahs7ir18h</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LEAVE_ENTITLEMENT.LAST_MODIFIER references User.userid_pk via FK4d0wrypsbsvhbk05xm5u6e3ss"><a href='LEAVE_ENTITLEMENT.html'>LEAVE_ENTITLEMENT</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK4d0wrypsbsvhbk05xm5u6e3ss</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LEAVE_TYPE.CREATOR references User.userid_pk via FKi6us55shaoeenosb8djcfm6no"><a href='LEAVE_TYPE.html'>LEAVE_TYPE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKi6us55shaoeenosb8djcfm6no</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LEAVE_TYPE.LAST_MODIFIER references User.userid_pk via FKghksaiu9qd6p2whx2dpcg4jos"><a href='LEAVE_TYPE.html'>LEAVE_TYPE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKghksaiu9qd6p2whx2dpcg4jos</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LEAVES.CREATOR references User.userid_pk via FKpiehg4k3c0a2ljn5a47prfh2n"><a href='LEAVES.html'>LEAVES</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKpiehg4k3c0a2ljn5a47prfh2n</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LEAVES.LAST_MODIFIER references User.userid_pk via FKemdn7xlk1ixn1ach7ptpr261g"><a href='LEAVES.html'>LEAVES</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKemdn7xlk1ixn1ach7ptpr261g</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LOCATION.CREATOR references User.userid_pk via FKk1gsun5ont0ll06u7n082q41y"><a href='LOCATION.html'>LOCATION</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKk1gsun5ont0ll06u7n082q41y</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="LOCATION.LAST_MODIFIER references User.userid_pk via FKs8bcn2f31g38oqkqa5pqiemid"><a href='LOCATION.html'>LOCATION</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKs8bcn2f31g38oqkqa5pqiemid</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="OFFERS.CREATOR references User.userid_pk via FK47fp90maccg1ifiiucg9cucjx"><a href='OFFERS.html'>OFFERS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK47fp90maccg1ifiiucg9cucjx</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="OFFERS.LAST_MODIFIER references User.userid_pk via FKifbbe63owccr92pf489b2h099"><a href='OFFERS.html'>OFFERS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKifbbe63owccr92pf489b2h099</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="PAY_PERIOD_SETTING.CREATOR references User.userid_pk via FKoayn9jps4kogmxc78kbg0dnm8"><a href='PAY_PERIOD_SETTING.html'>PAY_PERIOD_SETTING</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKoayn9jps4kogmxc78kbg0dnm8</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="PAY_PERIOD_SETTING.LAST_MODIFIER references User.userid_pk via FK5w3hocop6ssabxrrcthp3bl0x"><a href='PAY_PERIOD_SETTING.html'>PAY_PERIOD_SETTING</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK5w3hocop6ssabxrrcthp3bl0x</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="PAYROLL.CREATOR references User.userid_pk via FKxndf00h2pwy81bmrkassa66y"><a href='PAYROLL.html'>PAYROLL</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKxndf00h2pwy81bmrkassa66y</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="PAYROLL.LAST_MODIFIER references User.userid_pk via FKe7s9eut0txc2k2h35bsxegtdm"><a href='PAYROLL.html'>PAYROLL</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKe7s9eut0txc2k2h35bsxegtdm</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="PROJECTS.CREATOR references User.userid_pk via FKq7u8t9ex2th3am1yb1hljchtf"><a href='PROJECTS.html'>PROJECTS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKq7u8t9ex2th3am1yb1hljchtf</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="PROJECTS.LAST_MODIFIER references User.userid_pk via FK3xujrpywyuaku4688s2w8lrly"><a href='PROJECTS.html'>PROJECTS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK3xujrpywyuaku4688s2w8lrly</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="RESTRICTIONS.CREATOR references User.userid_pk via FKfx24s9l5hj2s1mqa1cgbsnnhv"><a href='RESTRICTIONS.html'>RESTRICTIONS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKfx24s9l5hj2s1mqa1cgbsnnhv</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="RESTRICTIONS.LAST_MODIFIER references User.userid_pk via FKm7htnojdy463mwg35s7vhqpmt"><a href='RESTRICTIONS.html'>RESTRICTIONS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKm7htnojdy463mwg35s7vhqpmt</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="SKILL.CREATOR references User.userid_pk via FKlyust233r8kg27qnd5vw61od4"><a href='SKILL.html'>SKILL</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKlyust233r8kg27qnd5vw61od4</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="SKILL.LAST_MODIFIER references User.userid_pk via FKfnsvht93nh88sta8url5ne02e"><a href='SKILL.html'>SKILL</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKfnsvht93nh88sta8url5ne02e</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="STATE.CREATOR references User.userid_pk via FKdg1484q1ncjlm7ywymgsex983"><a href='STATE.html'>STATE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKdg1484q1ncjlm7ywymgsex983</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="STATE.LAST_MODIFIER references User.userid_pk via FKsxsu79ga474h4iwfmbihrqawt"><a href='STATE.html'>STATE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKsxsu79ga474h4iwfmbihrqawt</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="SUB_CONTRACTOR.CREATOR references User.userid_pk via FK1edk67yh7gc32etjyb4au7uwf"><a href='SUB_CONTRACTOR.html'>SUB_CONTRACTOR</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK1edk67yh7gc32etjyb4au7uwf</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="SUB_CONTRACTOR.LAST_MODIFIER references User.userid_pk via FKmtclr5u27swa3pk5bw6p71wwn"><a href='SUB_CONTRACTOR.html'>SUB_CONTRACTOR</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKmtclr5u27swa3pk5bw6p71wwn</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TIME_LOGS.CREATOR references User.userid_pk via FK7cuo1f4lfos14jht02f55biad"><a href='TIME_LOGS.html'>TIME_LOGS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK7cuo1f4lfos14jht02f55biad</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TIME_LOGS.LAST_MODIFIER references User.userid_pk via FKqgj7131peo00782yim2rokqtu"><a href='TIME_LOGS.html'>TIME_LOGS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKqgj7131peo00782yim2rokqtu</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TIME_SHEET.CREATOR references User.userid_pk via FK1tv8eufpeg2rw8qgmil61ei6k"><a href='TIME_SHEET.html'>TIME_SHEET</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK1tv8eufpeg2rw8qgmil61ei6k</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TIME_SHEET.LAST_MODIFIER references User.userid_pk via FKcj0k9rpfnyc47xx81pis0grob"><a href='TIME_SHEET.html'>TIME_SHEET</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKcj0k9rpfnyc47xx81pis0grob</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TRAVEL_EXPENSE.CREATOR references User.userid_pk via FKcto2jxitp6p6mt02tm50md63n"><a href='TRAVEL_EXPENSE.html'>TRAVEL_EXPENSE</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FKcto2jxitp6p6mt02tm50md63n</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TRAVEL_EXPENSE.LAST_MODIFIER references User.userid_pk via FK95hf76ho5ykssreeq9pne36ks"><a href='TRAVEL_EXPENSE.html'>TRAVEL_EXPENSE</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK95hf76ho5ykssreeq9pne36ks</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TRAVEL_REQUEST.CREATOR references User.userid_pk via FK586lugtm0hx3tapjf649mbl69"><a href='TRAVEL_REQUEST.html'>TRAVEL_REQUEST</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK586lugtm0hx3tapjf649mbl69</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="TRAVEL_REQUEST.LAST_MODIFIER references User.userid_pk via FKt9txe6qh39w51yj2b1oivap2"><a href='TRAVEL_REQUEST.html'>TRAVEL_REQUEST</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FKt9txe6qh39w51yj2b1oivap2</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="WORKING_HOURS.CREATOR references User.userid_pk via FK8vbnm0pkfsswlbyij6b1nqwju"><a href='WORKING_HOURS.html'>WORKING_HOURS</a><span class='relatedKey'>.CREATOR</span></td>
+                                                <td class="constraint detail">FK8vbnm0pkfsswlbyij6b1nqwju</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="WORKING_HOURS.LAST_MODIFIER references User.userid_pk via FK234m7sln2i4bmr75msw6yuidf"><a href='WORKING_HOURS.html'>WORKING_HOURS</a><span class='relatedKey'>.LAST_MODIFIER</span></td>
+                                                <td class="constraint detail">FK234m7sln2i4bmr75msw6yuidf</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="firstname">firstname</span></td>
+                                    <td>VARCHAR</td>
+                                    <td>50</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="lastname">lastname</span></td>
+                                    <td>VARCHAR</td>
+                                    <td>50</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="middlename">middlename</span></td>
+                                    <td>VARCHAR</td>
+                                    <td>50</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="username">username</span></td>
+                                    <td>VARCHAR</td>
+                                    <td>100</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-sitemap"></i>
+                            <h3 id="Indexes" class="box-title">Indexes</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="true"
+                                    data-page-length="10"
+                                    data-length-change="false">
+                                <thead>
+                                <tr>
+                                    <th>Constraint Name</th>
+                                    <th>Type</th>
+                                    <th>Sort</th>
+                                    <th>Column(s)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> PRIMARY</td>
+                                    <td>Primary key</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>userid_pk</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/User.1degree.svg" class="diagram" border="0" align="left"></object></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="table.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
+</html>

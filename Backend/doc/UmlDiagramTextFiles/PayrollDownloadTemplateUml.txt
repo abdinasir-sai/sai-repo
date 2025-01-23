@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Payroll Scenario
+participant User
+User -> CXFServlet: Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << downloadTemplate >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollController: downloadTemplate(:String fileName)
+activate PayrollController
+PayrollController -> PayrollControllerImpl: ResponseBuilder(workbook,fileName)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollController: response(:ResponseEntity)
+deactivate PayrollControllerImpl
+PayrollController -> CXFServlet: << Payroll  >>
+deactivate PayrollController
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Exceptions Scenario
+participant User
+User -> CXFServlet: Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << export >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: export(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: search(:Exceptions)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: search(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: save(:Exceptions)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted Exceptions >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted Exceptions >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: response(:List<Exceptions>)
+ExceptionsControllerImpl -> ExceptionsService: export(:Exceptions)
+ExceptionsService -> ExceptionsControllerImpl: << persisted Exceptions.xlsx >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted Exceptions.xlsx >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

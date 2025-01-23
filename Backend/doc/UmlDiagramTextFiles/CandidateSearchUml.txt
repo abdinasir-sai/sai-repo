@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Candidate Scenario
+participant User
+User -> CXFServlet: GET, Candidate
+activate CXFServlet
+CXFServlet -> Candidate: << search >>
+activate Candidate
+Candidate -> CXFServlet: << instance >>
+deactivate Candidate
+CXFServlet -> CandidateControllerImpl: search(:Candidate)
+activate CandidateControllerImpl
+CandidateControllerImpl -> CandidateService: search(:Candidate)
+activate CandidateService
+CandidateService -> CandidateJPARepository: search(:Candidate)
+activate CandidateJPARepository
+CandidateJPARepository -> EntityManager: response(:Candidate)
+activate EntityManager
+EntityManager -> CandidateJPARepository: << persisted Candidate >>
+deactivate EntityManager
+CandidateJPARepository -> CandidateService: << persisted Candidate >>
+deactivate CandidateJPARepository
+CandidateService -> CandidateControllerImpl: << persisted Candidate >>
+deactivate CandidateService
+CandidateControllerImpl -> CXFServlet: << persisted Candidate >>
+deactivate CandidateControllerImpl
+CXFServlet -> User: marshalled Candidate XML
+deactivate CXFServlet
+@enduml

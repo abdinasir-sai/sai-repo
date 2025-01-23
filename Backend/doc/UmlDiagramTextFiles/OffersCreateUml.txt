@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Offers Scenario
+participant User
+User -> CXFServlet: POST, Offers
+activate CXFServlet
+CXFServlet -> Offers: << create >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: create(:Offers)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: create(:Offers)
+activate OffersService
+OffersService -> OffersJPARepository: create(:Offers)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: save(:Offers)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted Offers >>
+deactivate EntityManager
+OffersJPARepository -> OffersService: << persisted Offers >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: << persisted Offers >>
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted Offers >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

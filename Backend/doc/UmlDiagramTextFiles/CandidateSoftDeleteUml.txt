@@ -1,0 +1,30 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Candidate Scenario
+participant User
+User -> CXFServlet: DELETE, Candidate
+activate CXFServlet
+CXFServlet -> Candidate: << delete >>
+activate Candidate
+Candidate -> CXFServlet: << instance >>
+deactivate Candidate
+CXFServlet -> CandidateControllerImpl: deleteById(:Candidate)
+activate CandidateControllerImpl
+CandidateControllerImpl -> CandidateService: softDelete(:Candidate)
+activate CandidateService
+CandidateService -> CandidateServiceImpl: softDelete(:Candidate)
+CandidateServiceImpl -> CandidateJPARepository: deleteById(:Candidate)
+activate CandidateJPARepository
+CandidateJPARepository -> EntityManager: delete(:Candidate)
+activate EntityManager
+EntityManager -> CandidateJPARepository: << persisted Candidate >>
+deactivate EntityManager
+CandidateJPARepository -> CandidateService: << persisted Candidate >>
+deactivate CandidateJPARepository
+CandidateService -> CandidateControllerImpl: << persisted Candidate >>
+deactivate CandidateService
+CandidateControllerImpl -> CXFServlet: << persisted Candidate >>
+deactivate CandidateControllerImpl
+CXFServlet -> User: marshalled Candidate XML
+deactivate CXFServlet
+@enduml

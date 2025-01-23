@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template CompensatoryRequestScheduler Scenario
+participant User
+User -> CXFServlet: CompensatoryRequestScheduler
+activate CXFServlet
+CXFServlet -> CompensatoryRequestScheduler: << downloadTemplate >>
+activate CompensatoryRequestScheduler
+CompensatoryRequestScheduler -> CXFServlet: << instance >>
+deactivate CompensatoryRequestScheduler
+CXFServlet -> CompensatoryRequestSchedulerController: downloadTemplate(:String fileName)
+activate CompensatoryRequestSchedulerController
+CompensatoryRequestSchedulerController -> CompensatoryRequestSchedulerControllerImpl: ResponseBuilder(workbook,fileName)
+activate CompensatoryRequestSchedulerControllerImpl
+CompensatoryRequestSchedulerControllerImpl -> CompensatoryRequestSchedulerController: response(:ResponseEntity)
+deactivate CompensatoryRequestSchedulerControllerImpl
+CompensatoryRequestSchedulerController -> CXFServlet: << CompensatoryRequestScheduler  >>
+deactivate CompensatoryRequestSchedulerController
+CXFServlet -> User: marshalled CompensatoryRequestScheduler XML
+deactivate CXFServlet
+@enduml

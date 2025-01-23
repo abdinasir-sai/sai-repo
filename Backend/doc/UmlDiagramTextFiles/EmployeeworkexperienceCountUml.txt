@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count EmployeeWorkExperience Scenario
+participant User
+User -> CXFServlet: GET, EmployeeWorkExperience
+activate CXFServlet
+CXFServlet -> EmployeeWorkExperience: << count >>
+activate EmployeeWorkExperience
+EmployeeWorkExperience -> CXFServlet: << instance >>
+deactivate EmployeeWorkExperience
+CXFServlet -> EmployeeWorkExperienceControllerImpl: count(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceControllerImpl
+EmployeeWorkExperienceControllerImpl -> EmployeeWorkExperienceService: count(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceService
+EmployeeWorkExperienceService -> EmployeeWorkExperienceJPARepository: count(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> EmployeeWorkExperienceJPARepository: << persisted Count >>
+deactivate EntityManager
+EmployeeWorkExperienceJPARepository -> EmployeeWorkExperienceService: << persisted Count >>
+deactivate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceService -> EmployeeWorkExperienceControllerImpl: << persisted Count >>
+deactivate EmployeeWorkExperienceService
+EmployeeWorkExperienceControllerImpl -> CXFServlet: << persisted Count >>
+deactivate EmployeeWorkExperienceControllerImpl
+CXFServlet -> User: marshalled EmployeeWorkExperience XML
+deactivate CXFServlet
+@enduml

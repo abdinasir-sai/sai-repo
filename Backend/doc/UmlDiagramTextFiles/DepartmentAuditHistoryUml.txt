@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Department Scenario
+participant User
+User -> CXFServlet: GET, Department
+activate CXFServlet
+CXFServlet -> Department: << auditHistory >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: auditHistory(:Department)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: auditHistory(:Department)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: auditHistory(:Department)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted DepartmentAuditHistory >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted DepartmentAuditHistory >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted DepartmentAuditHistory >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted DepartmentAuditHistory >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

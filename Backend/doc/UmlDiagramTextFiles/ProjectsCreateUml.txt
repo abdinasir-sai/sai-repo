@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Projects Scenario
+participant User
+User -> CXFServlet: POST, Projects
+activate CXFServlet
+CXFServlet -> Projects: << create >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: create(:Projects)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: create(:Projects)
+activate ProjectsService
+ProjectsService -> ProjectsJPARepository: create(:Projects)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: save(:Projects)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: << persisted Projects >>
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

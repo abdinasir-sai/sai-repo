@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search TravelExpense Scenario
+participant User
+User -> CXFServlet: GET, TravelExpense
+activate CXFServlet
+CXFServlet -> TravelExpense: << search >>
+activate TravelExpense
+TravelExpense -> CXFServlet: << instance >>
+deactivate TravelExpense
+CXFServlet -> TravelExpenseControllerImpl: search(:TravelExpense)
+activate TravelExpenseControllerImpl
+TravelExpenseControllerImpl -> TravelExpenseService: search(:TravelExpense)
+activate TravelExpenseService
+TravelExpenseService -> TravelExpenseJPARepository: search(:TravelExpense)
+activate TravelExpenseJPARepository
+TravelExpenseJPARepository -> EntityManager: response(:TravelExpense)
+activate EntityManager
+EntityManager -> TravelExpenseJPARepository: << persisted TravelExpense >>
+deactivate EntityManager
+TravelExpenseJPARepository -> TravelExpenseService: << persisted TravelExpense >>
+deactivate TravelExpenseJPARepository
+TravelExpenseService -> TravelExpenseControllerImpl: << persisted TravelExpense >>
+deactivate TravelExpenseService
+TravelExpenseControllerImpl -> CXFServlet: << persisted TravelExpense >>
+deactivate TravelExpenseControllerImpl
+CXFServlet -> User: marshalled TravelExpense XML
+deactivate CXFServlet
+@enduml

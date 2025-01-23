@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template TimeSheet Scenario
+participant User
+User -> CXFServlet: TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << downloadTemplate >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetController: downloadTemplate(:String fileName)
+activate TimeSheetController
+TimeSheetController -> TimeSheetControllerImpl: ResponseBuilder(workbook,fileName)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetController: response(:ResponseEntity)
+deactivate TimeSheetControllerImpl
+TimeSheetController -> CXFServlet: << TimeSheet  >>
+deactivate TimeSheetController
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template LeaveEntitlement Scenario
+participant User
+User -> CXFServlet: LeaveEntitlement
+activate CXFServlet
+CXFServlet -> LeaveEntitlement: << downloadTemplate >>
+activate LeaveEntitlement
+LeaveEntitlement -> CXFServlet: << instance >>
+deactivate LeaveEntitlement
+CXFServlet -> LeaveEntitlementController: downloadTemplate(:String fileName)
+activate LeaveEntitlementController
+LeaveEntitlementController -> LeaveEntitlementControllerImpl: ResponseBuilder(workbook,fileName)
+activate LeaveEntitlementControllerImpl
+LeaveEntitlementControllerImpl -> LeaveEntitlementController: response(:ResponseEntity)
+deactivate LeaveEntitlementControllerImpl
+LeaveEntitlementController -> CXFServlet: << LeaveEntitlement  >>
+deactivate LeaveEntitlementController
+CXFServlet -> User: marshalled LeaveEntitlement XML
+deactivate CXFServlet
+@enduml

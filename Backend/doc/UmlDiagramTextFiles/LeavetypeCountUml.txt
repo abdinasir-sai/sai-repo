@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count LeaveType Scenario
+participant User
+User -> CXFServlet: GET, LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << count >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: count(:LeaveType)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: count(:LeaveType)
+activate LeaveTypeService
+LeaveTypeService -> LeaveTypeJPARepository: count(:LeaveType)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted Count >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeService: << persisted Count >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted Count >>
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted Count >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

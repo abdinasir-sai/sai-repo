@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Holiday Scenario
+participant User
+User -> CXFServlet: GET, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << findAllById >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: findAllById(:List<Holiday> id)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: findAllById(:List<Holiday> id)
+activate HolidayService
+HolidayService -> HolidayJPARepository: findAllById(:List<Holiday> id)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: response(:List<Holiday>findAllById)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted List Holiday >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted List Holiday >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted List Holiday >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted List Holiday >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

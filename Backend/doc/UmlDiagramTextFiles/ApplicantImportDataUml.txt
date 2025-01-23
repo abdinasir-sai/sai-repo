@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Applicant Scenario
+participant User
+User -> CXFServlet: POST, Applicant
+activate CXFServlet
+CXFServlet -> Applicant: << importData >>
+activate Applicant
+Applicant -> CXFServlet: << instance >>
+deactivate Applicant
+CXFServlet -> ApplicantControllerImpl: importData(:Applicant)
+activate ApplicantControllerImpl
+ApplicantControllerImpl -> ApplicantService: importData(:Applicant)
+activate ApplicantService
+activate ApplicantServiceImpl
+ApplicantService -> ApplicantServiceImpl: importData(:Applicant)
+ApplicantServiceImpl -> ApplicantJPARepository: saveAll(:Applicant)
+activate ApplicantJPARepository
+ApplicantJPARepository -> EntityManager: save(:Applicant)
+activate EntityManager
+EntityManager -> ApplicantJPARepository: << persisted Applicant >>
+deactivate EntityManager
+ApplicantJPARepository -> ApplicantServiceImpl: << persisted Applicant >>
+ApplicantServiceImpl -> ApplicantService: << persisted Applicant >>
+deactivate ApplicantJPARepository
+ApplicantService -> ApplicantControllerImpl: << persisted Applicant >>
+deactivate ApplicantServiceImpl
+deactivate ApplicantService
+ApplicantControllerImpl -> CXFServlet: << persisted Applicant >>
+deactivate ApplicantControllerImpl
+CXFServlet -> User: marshalled Applicant XML
+deactivate CXFServlet
+@enduml

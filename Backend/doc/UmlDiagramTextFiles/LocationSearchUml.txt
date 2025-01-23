@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Location Scenario
+participant User
+User -> CXFServlet: GET, Location
+activate CXFServlet
+CXFServlet -> Location: << search >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: search(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: search(:Location)
+activate LocationService
+LocationService -> LocationJPARepository: search(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: response(:Location)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted Location >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Location >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

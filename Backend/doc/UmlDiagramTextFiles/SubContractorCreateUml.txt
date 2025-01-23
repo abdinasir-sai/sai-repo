@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create SubContractor Scenario
+participant User
+User -> CXFServlet: POST, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << create >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: create(:SubContractor)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: create(:SubContractor)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: create(:SubContractor)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: save(:SubContractor)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted SubContractor >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted SubContractor >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted SubContractor >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted SubContractor >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

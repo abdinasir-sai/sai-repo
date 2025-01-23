@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Projects Scenario
+participant User
+User -> CXFServlet: Projects
+activate CXFServlet
+CXFServlet -> Projects: << downloadTemplate >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsController: downloadTemplate(:String fileName)
+activate ProjectsController
+ProjectsController -> ProjectsControllerImpl: ResponseBuilder(workbook,fileName)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsController: response(:ResponseEntity)
+deactivate ProjectsControllerImpl
+ProjectsController -> CXFServlet: << Projects  >>
+deactivate ProjectsController
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

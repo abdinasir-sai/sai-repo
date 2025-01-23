@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Department Scenario
+participant User
+User -> CXFServlet: POST, Department
+activate CXFServlet
+CXFServlet -> Department: << importData >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: importData(:Department)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: importData(:Department)
+activate DepartmentService
+activate DepartmentServiceImpl
+DepartmentService -> DepartmentServiceImpl: importData(:Department)
+DepartmentServiceImpl -> DepartmentJPARepository: saveAll(:Department)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: save(:Department)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted Department >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentServiceImpl: << persisted Department >>
+DepartmentServiceImpl -> DepartmentService: << persisted Department >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted Department >>
+deactivate DepartmentServiceImpl
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted Department >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Delegations Scenario
+participant User
+User -> CXFServlet: GET, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << count >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: count(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: count(:Delegations)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: count(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted Count >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted Count >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted Count >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

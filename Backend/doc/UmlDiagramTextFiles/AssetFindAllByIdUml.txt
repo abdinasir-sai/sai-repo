@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Asset Scenario
+participant User
+User -> CXFServlet: GET, Asset
+activate CXFServlet
+CXFServlet -> Asset: << findAllById >>
+activate Asset
+Asset -> CXFServlet: << instance >>
+deactivate Asset
+CXFServlet -> AssetControllerImpl: findAllById(:List<Asset> id)
+activate AssetControllerImpl
+AssetControllerImpl -> AssetService: findAllById(:List<Asset> id)
+activate AssetService
+AssetService -> AssetJPARepository: findAllById(:List<Asset> id)
+activate AssetJPARepository
+AssetJPARepository -> EntityManager: response(:List<Asset>findAllById)
+activate EntityManager
+EntityManager -> AssetJPARepository: << persisted List Asset >>
+deactivate EntityManager
+AssetJPARepository -> AssetService: << persisted List Asset >>
+deactivate AssetJPARepository
+AssetService -> AssetControllerImpl: << persisted List Asset >>
+deactivate AssetService
+AssetControllerImpl -> CXFServlet: << persisted List Asset >>
+deactivate AssetControllerImpl
+CXFServlet -> User: marshalled Asset XML
+deactivate CXFServlet
+@enduml

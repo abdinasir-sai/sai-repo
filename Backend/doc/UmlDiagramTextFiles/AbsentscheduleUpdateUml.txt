@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update AbsentSchedule Scenario
+participant User
+User -> CXFServlet: UPDATE, AbsentSchedule
+activate CXFServlet
+CXFServlet -> AbsentSchedule: << update >>
+activate AbsentSchedule
+AbsentSchedule -> CXFServlet: << instance >>
+deactivate AbsentSchedule
+CXFServlet -> AbsentScheduleControllerImpl: update(:AbsentSchedule)
+activate AbsentScheduleControllerImpl
+AbsentScheduleControllerImpl -> AbsentScheduleService: update(:AbsentSchedule)
+activate AbsentScheduleService
+AbsentScheduleService -> AbsentScheduleJPARepository: update(:AbsentSchedule)
+activate AbsentScheduleJPARepository
+AbsentScheduleJPARepository -> EntityManager: update(:AbsentSchedule)
+activate EntityManager
+EntityManager -> AbsentScheduleJPARepository: << persisted AbsentSchedule >>
+deactivate EntityManager
+AbsentScheduleJPARepository -> AbsentScheduleService: << persisted AbsentSchedule >>
+deactivate AbsentScheduleJPARepository
+AbsentScheduleService -> AbsentScheduleControllerImpl: << persisted AbsentSchedule >>
+deactivate AbsentScheduleService
+AbsentScheduleControllerImpl -> CXFServlet: << persisted AbsentSchedule >>
+deactivate AbsentScheduleControllerImpl
+CXFServlet -> User: marshalled AbsentSchedule XML
+deactivate CXFServlet
+@enduml

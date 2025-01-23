@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Clients Scenario
+participant User
+User -> CXFServlet: GET, Clients
+activate CXFServlet
+CXFServlet -> Clients: << search >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: search(:Clients)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: search(:Clients)
+activate ClientsService
+ClientsService -> ClientsJPARepository: search(:Clients)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: response(:Clients)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted Clients >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Clients >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

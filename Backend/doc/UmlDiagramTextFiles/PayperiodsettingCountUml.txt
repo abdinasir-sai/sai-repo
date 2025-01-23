@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count PayPeriodSetting Scenario
+participant User
+User -> CXFServlet: GET, PayPeriodSetting
+activate CXFServlet
+CXFServlet -> PayPeriodSetting: << count >>
+activate PayPeriodSetting
+PayPeriodSetting -> CXFServlet: << instance >>
+deactivate PayPeriodSetting
+CXFServlet -> PayPeriodSettingControllerImpl: count(:PayPeriodSetting)
+activate PayPeriodSettingControllerImpl
+PayPeriodSettingControllerImpl -> PayPeriodSettingService: count(:PayPeriodSetting)
+activate PayPeriodSettingService
+PayPeriodSettingService -> PayPeriodSettingJPARepository: count(:PayPeriodSetting)
+activate PayPeriodSettingJPARepository
+PayPeriodSettingJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> PayPeriodSettingJPARepository: << persisted Count >>
+deactivate EntityManager
+PayPeriodSettingJPARepository -> PayPeriodSettingService: << persisted Count >>
+deactivate PayPeriodSettingJPARepository
+PayPeriodSettingService -> PayPeriodSettingControllerImpl: << persisted Count >>
+deactivate PayPeriodSettingService
+PayPeriodSettingControllerImpl -> CXFServlet: << persisted Count >>
+deactivate PayPeriodSettingControllerImpl
+CXFServlet -> User: marshalled PayPeriodSetting XML
+deactivate CXFServlet
+@enduml

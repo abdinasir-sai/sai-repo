@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Department Scenario
+participant User
+User -> CXFServlet: Department
+activate CXFServlet
+CXFServlet -> Department: << export >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: export(:Department)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: search(:Department)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: search(:Department)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: save(:Department)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted Department >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted Department >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: response(:List<Department>)
+DepartmentControllerImpl -> DepartmentService: export(:Department)
+DepartmentService -> DepartmentControllerImpl: << persisted Department.xlsx >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted Department.xlsx >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

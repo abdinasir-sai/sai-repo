@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Payroll Scenario
+participant User
+User -> CXFServlet: UPDATE, Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << update >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: update(:Payroll)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: update(:Payroll)
+activate PayrollService
+PayrollService -> PayrollJPARepository: update(:Payroll)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: update(:Payroll)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted Payroll >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollService: << persisted Payroll >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: << persisted Payroll >>
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted Payroll >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

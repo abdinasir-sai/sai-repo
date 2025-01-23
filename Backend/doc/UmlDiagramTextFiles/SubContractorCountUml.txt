@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count SubContractor Scenario
+participant User
+User -> CXFServlet: GET, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << count >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: count(:SubContractor)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: count(:SubContractor)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: count(:SubContractor)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted Count >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted Count >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted Count >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted Count >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

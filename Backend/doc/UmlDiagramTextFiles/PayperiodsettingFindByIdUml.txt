@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById PayPeriodSetting Scenario
+participant User
+User -> CXFServlet: GET, PayPeriodSetting
+activate CXFServlet
+CXFServlet -> PayPeriodSetting: << findById >>
+activate PayPeriodSetting
+PayPeriodSetting -> CXFServlet: << instance >>
+deactivate PayPeriodSetting
+CXFServlet -> PayPeriodSettingControllerImpl: findById(:int)
+activate PayPeriodSettingControllerImpl
+PayPeriodSettingControllerImpl -> PayPeriodSettingService: findById(:int)
+activate PayPeriodSettingService
+PayPeriodSettingService -> PayPeriodSettingJPARepository: findById(:int)
+activate PayPeriodSettingJPARepository
+PayPeriodSettingJPARepository -> EntityManager: response(:PayPeriodSetting)
+activate EntityManager
+EntityManager -> PayPeriodSettingJPARepository: << persisted PayPeriodSetting >>
+deactivate EntityManager
+PayPeriodSettingJPARepository -> PayPeriodSettingService: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingJPARepository
+PayPeriodSettingService -> PayPeriodSettingControllerImpl: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingService
+PayPeriodSettingControllerImpl -> CXFServlet: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingControllerImpl
+CXFServlet -> User: marshalled PayPeriodSetting XML
+deactivate CXFServlet
+@enduml

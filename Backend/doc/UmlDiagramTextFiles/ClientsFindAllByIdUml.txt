@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Clients Scenario
+participant User
+User -> CXFServlet: GET, Clients
+activate CXFServlet
+CXFServlet -> Clients: << findAllById >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: findAllById(:List<Clients> id)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: findAllById(:List<Clients> id)
+activate ClientsService
+ClientsService -> ClientsJPARepository: findAllById(:List<Clients> id)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: response(:List<Clients>findAllById)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted List Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted List Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted List Clients >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted List Clients >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

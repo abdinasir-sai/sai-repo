@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History WorkingHours Scenario
+participant User
+User -> CXFServlet: GET, WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << auditHistory >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursControllerImpl: auditHistory(:WorkingHours)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursService: auditHistory(:WorkingHours)
+activate WorkingHoursService
+WorkingHoursService -> WorkingHoursJPARepository: auditHistory(:WorkingHours)
+activate WorkingHoursJPARepository
+WorkingHoursJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> WorkingHoursJPARepository: << persisted WorkingHoursAuditHistory >>
+deactivate EntityManager
+WorkingHoursJPARepository -> WorkingHoursService: << persisted WorkingHoursAuditHistory >>
+deactivate WorkingHoursJPARepository
+WorkingHoursService -> WorkingHoursControllerImpl: << persisted WorkingHoursAuditHistory >>
+deactivate WorkingHoursService
+WorkingHoursControllerImpl -> CXFServlet: << persisted WorkingHoursAuditHistory >>
+deactivate WorkingHoursControllerImpl
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml

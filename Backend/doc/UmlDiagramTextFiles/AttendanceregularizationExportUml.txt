@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data AttendanceRegularization Scenario
+participant User
+User -> CXFServlet: AttendanceRegularization
+activate CXFServlet
+CXFServlet -> AttendanceRegularization: << export >>
+activate AttendanceRegularization
+AttendanceRegularization -> CXFServlet: << instance >>
+deactivate AttendanceRegularization
+CXFServlet -> AttendanceRegularizationControllerImpl: export(:AttendanceRegularization)
+activate AttendanceRegularizationControllerImpl
+AttendanceRegularizationControllerImpl -> AttendanceRegularizationService: search(:AttendanceRegularization)
+activate AttendanceRegularizationService
+AttendanceRegularizationService -> AttendanceRegularizationJPARepository: search(:AttendanceRegularization)
+activate AttendanceRegularizationJPARepository
+AttendanceRegularizationJPARepository -> EntityManager: save(:AttendanceRegularization)
+activate EntityManager
+EntityManager -> AttendanceRegularizationJPARepository: << persisted AttendanceRegularization >>
+deactivate EntityManager
+AttendanceRegularizationJPARepository -> AttendanceRegularizationService: << persisted AttendanceRegularization >>
+deactivate AttendanceRegularizationJPARepository
+AttendanceRegularizationService -> AttendanceRegularizationControllerImpl: response(:List<AttendanceRegularization>)
+AttendanceRegularizationControllerImpl -> AttendanceRegularizationService: export(:AttendanceRegularization)
+AttendanceRegularizationService -> AttendanceRegularizationControllerImpl: << persisted AttendanceRegularization.xlsx >>
+deactivate AttendanceRegularizationService
+AttendanceRegularizationControllerImpl -> CXFServlet: << persisted AttendanceRegularization.xlsx >>
+deactivate AttendanceRegularizationControllerImpl
+CXFServlet -> User: marshalled AttendanceRegularization XML
+deactivate CXFServlet
+@enduml

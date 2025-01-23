@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Delegations Scenario
+participant User
+User -> CXFServlet: UPDATE, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << update >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: update(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: update(:Delegations)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: update(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: update(:Delegations)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted Delegations >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted Delegations >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted Delegations >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted Delegations >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

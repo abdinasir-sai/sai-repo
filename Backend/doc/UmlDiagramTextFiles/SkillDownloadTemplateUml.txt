@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Skill Scenario
+participant User
+User -> CXFServlet: Skill
+activate CXFServlet
+CXFServlet -> Skill: << downloadTemplate >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillController: downloadTemplate(:String fileName)
+activate SkillController
+SkillController -> SkillControllerImpl: ResponseBuilder(workbook,fileName)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillController: response(:ResponseEntity)
+deactivate SkillControllerImpl
+SkillController -> CXFServlet: << Skill  >>
+deactivate SkillController
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

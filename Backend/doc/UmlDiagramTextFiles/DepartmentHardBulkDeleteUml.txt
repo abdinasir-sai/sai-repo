@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Department Scenario
+participant User
+User -> CXFServlet: DELETE, Department
+activate CXFServlet
+CXFServlet -> Department: << bulkdelete >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: bulkdelete(:List<Department>)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: bulkDelete(:List<Department>)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: deleteAll(:List<Department>)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: delete(:List<Department>)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted Department >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted Department >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted Department >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted Department >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

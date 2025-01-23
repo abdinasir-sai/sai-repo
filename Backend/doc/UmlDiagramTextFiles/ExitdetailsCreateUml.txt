@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create ExitDetails Scenario
+participant User
+User -> CXFServlet: POST, ExitDetails
+activate CXFServlet
+CXFServlet -> ExitDetails: << create >>
+activate ExitDetails
+ExitDetails -> CXFServlet: << instance >>
+deactivate ExitDetails
+CXFServlet -> ExitDetailsControllerImpl: create(:ExitDetails)
+activate ExitDetailsControllerImpl
+ExitDetailsControllerImpl -> ExitDetailsService: create(:ExitDetails)
+activate ExitDetailsService
+ExitDetailsService -> ExitDetailsJPARepository: create(:ExitDetails)
+activate ExitDetailsJPARepository
+ExitDetailsJPARepository -> EntityManager: save(:ExitDetails)
+activate EntityManager
+EntityManager -> ExitDetailsJPARepository: << persisted ExitDetails >>
+deactivate EntityManager
+ExitDetailsJPARepository -> ExitDetailsService: << persisted ExitDetails >>
+deactivate ExitDetailsJPARepository
+ExitDetailsService -> ExitDetailsControllerImpl: << persisted ExitDetails >>
+deactivate ExitDetailsService
+ExitDetailsControllerImpl -> CXFServlet: << persisted ExitDetails >>
+deactivate ExitDetailsControllerImpl
+CXFServlet -> User: marshalled ExitDetails XML
+deactivate CXFServlet
+@enduml

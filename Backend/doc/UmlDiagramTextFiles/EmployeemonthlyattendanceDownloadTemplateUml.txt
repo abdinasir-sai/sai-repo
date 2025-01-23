@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template EmployeeMonthlyAttendance Scenario
+participant User
+User -> CXFServlet: EmployeeMonthlyAttendance
+activate CXFServlet
+CXFServlet -> EmployeeMonthlyAttendance: << downloadTemplate >>
+activate EmployeeMonthlyAttendance
+EmployeeMonthlyAttendance -> CXFServlet: << instance >>
+deactivate EmployeeMonthlyAttendance
+CXFServlet -> EmployeeMonthlyAttendanceController: downloadTemplate(:String fileName)
+activate EmployeeMonthlyAttendanceController
+EmployeeMonthlyAttendanceController -> EmployeeMonthlyAttendanceControllerImpl: ResponseBuilder(workbook,fileName)
+activate EmployeeMonthlyAttendanceControllerImpl
+EmployeeMonthlyAttendanceControllerImpl -> EmployeeMonthlyAttendanceController: response(:ResponseEntity)
+deactivate EmployeeMonthlyAttendanceControllerImpl
+EmployeeMonthlyAttendanceController -> CXFServlet: << EmployeeMonthlyAttendance  >>
+deactivate EmployeeMonthlyAttendanceController
+CXFServlet -> User: marshalled EmployeeMonthlyAttendance XML
+deactivate CXFServlet
+@enduml

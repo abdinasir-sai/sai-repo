@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Interview Scenario
+participant User
+User -> CXFServlet: GET, Interview
+activate CXFServlet
+CXFServlet -> Interview: << auditHistory >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: auditHistory(:Interview)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: auditHistory(:Interview)
+activate InterviewService
+InterviewService -> InterviewJPARepository: auditHistory(:Interview)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted InterviewAuditHistory >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted InterviewAuditHistory >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted InterviewAuditHistory >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted InterviewAuditHistory >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

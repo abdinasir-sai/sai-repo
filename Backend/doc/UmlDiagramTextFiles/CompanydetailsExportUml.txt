@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data CompanyDetails Scenario
+participant User
+User -> CXFServlet: CompanyDetails
+activate CXFServlet
+CXFServlet -> CompanyDetails: << export >>
+activate CompanyDetails
+CompanyDetails -> CXFServlet: << instance >>
+deactivate CompanyDetails
+CXFServlet -> CompanyDetailsControllerImpl: export(:CompanyDetails)
+activate CompanyDetailsControllerImpl
+CompanyDetailsControllerImpl -> CompanyDetailsService: search(:CompanyDetails)
+activate CompanyDetailsService
+CompanyDetailsService -> CompanyDetailsJPARepository: search(:CompanyDetails)
+activate CompanyDetailsJPARepository
+CompanyDetailsJPARepository -> EntityManager: save(:CompanyDetails)
+activate EntityManager
+EntityManager -> CompanyDetailsJPARepository: << persisted CompanyDetails >>
+deactivate EntityManager
+CompanyDetailsJPARepository -> CompanyDetailsService: << persisted CompanyDetails >>
+deactivate CompanyDetailsJPARepository
+CompanyDetailsService -> CompanyDetailsControllerImpl: response(:List<CompanyDetails>)
+CompanyDetailsControllerImpl -> CompanyDetailsService: export(:CompanyDetails)
+CompanyDetailsService -> CompanyDetailsControllerImpl: << persisted CompanyDetails.xlsx >>
+deactivate CompanyDetailsService
+CompanyDetailsControllerImpl -> CXFServlet: << persisted CompanyDetails.xlsx >>
+deactivate CompanyDetailsControllerImpl
+CXFServlet -> User: marshalled CompanyDetails XML
+deactivate CXFServlet
+@enduml

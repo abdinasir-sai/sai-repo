@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Designation Scenario
+participant User
+User -> CXFServlet: POST, Designation
+activate CXFServlet
+CXFServlet -> Designation: << create >>
+activate Designation
+Designation -> CXFServlet: << instance >>
+deactivate Designation
+CXFServlet -> DesignationControllerImpl: create(:Designation)
+activate DesignationControllerImpl
+DesignationControllerImpl -> DesignationService: create(:Designation)
+activate DesignationService
+DesignationService -> DesignationJPARepository: create(:Designation)
+activate DesignationJPARepository
+DesignationJPARepository -> EntityManager: save(:Designation)
+activate EntityManager
+EntityManager -> DesignationJPARepository: << persisted Designation >>
+deactivate EntityManager
+DesignationJPARepository -> DesignationService: << persisted Designation >>
+deactivate DesignationJPARepository
+DesignationService -> DesignationControllerImpl: << persisted Designation >>
+deactivate DesignationService
+DesignationControllerImpl -> CXFServlet: << persisted Designation >>
+deactivate DesignationControllerImpl
+CXFServlet -> User: marshalled Designation XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Candidate Scenario
+participant User
+User -> CXFServlet: Candidate
+activate CXFServlet
+CXFServlet -> Candidate: << export >>
+activate Candidate
+Candidate -> CXFServlet: << instance >>
+deactivate Candidate
+CXFServlet -> CandidateControllerImpl: export(:Candidate)
+activate CandidateControllerImpl
+CandidateControllerImpl -> CandidateService: search(:Candidate)
+activate CandidateService
+CandidateService -> CandidateJPARepository: search(:Candidate)
+activate CandidateJPARepository
+CandidateJPARepository -> EntityManager: save(:Candidate)
+activate EntityManager
+EntityManager -> CandidateJPARepository: << persisted Candidate >>
+deactivate EntityManager
+CandidateJPARepository -> CandidateService: << persisted Candidate >>
+deactivate CandidateJPARepository
+CandidateService -> CandidateControllerImpl: response(:List<Candidate>)
+CandidateControllerImpl -> CandidateService: export(:Candidate)
+CandidateService -> CandidateControllerImpl: << persisted Candidate.xlsx >>
+deactivate CandidateService
+CandidateControllerImpl -> CXFServlet: << persisted Candidate.xlsx >>
+deactivate CandidateControllerImpl
+CXFServlet -> User: marshalled Candidate XML
+deactivate CXFServlet
+@enduml

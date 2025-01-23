@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template ExceptionalWorkingDay Scenario
+participant User
+User -> CXFServlet: ExceptionalWorkingDay
+activate CXFServlet
+CXFServlet -> ExceptionalWorkingDay: << downloadTemplate >>
+activate ExceptionalWorkingDay
+ExceptionalWorkingDay -> CXFServlet: << instance >>
+deactivate ExceptionalWorkingDay
+CXFServlet -> ExceptionalWorkingDayController: downloadTemplate(:String fileName)
+activate ExceptionalWorkingDayController
+ExceptionalWorkingDayController -> ExceptionalWorkingDayControllerImpl: ResponseBuilder(workbook,fileName)
+activate ExceptionalWorkingDayControllerImpl
+ExceptionalWorkingDayControllerImpl -> ExceptionalWorkingDayController: response(:ResponseEntity)
+deactivate ExceptionalWorkingDayControllerImpl
+ExceptionalWorkingDayController -> CXFServlet: << ExceptionalWorkingDay  >>
+deactivate ExceptionalWorkingDayController
+CXFServlet -> User: marshalled ExceptionalWorkingDay XML
+deactivate CXFServlet
+@enduml

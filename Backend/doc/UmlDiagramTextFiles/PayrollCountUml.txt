@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Payroll Scenario
+participant User
+User -> CXFServlet: GET, Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << count >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: count(:Payroll)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: count(:Payroll)
+activate PayrollService
+PayrollService -> PayrollJPARepository: count(:Payroll)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted Count >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollService: << persisted Count >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: << persisted Count >>
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted Count >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

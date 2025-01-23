@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Interview Scenario
+participant User
+User -> CXFServlet: DELETE, Interview
+activate CXFServlet
+CXFServlet -> Interview: << bulkdelete >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: bulkdelete(:List<Interview>)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: bulkDelete(:List<Interview>)
+activate InterviewService
+InterviewService -> InterviewJPARepository: deleteAll(:List<Interview>)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: delete(:List<Interview>)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted Interview >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted Interview >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

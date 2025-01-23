@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Jobs Scenario
+participant User
+User -> CXFServlet: GET, Jobs
+activate CXFServlet
+CXFServlet -> Jobs: << search >>
+activate Jobs
+Jobs -> CXFServlet: << instance >>
+deactivate Jobs
+CXFServlet -> JobsControllerImpl: search(:Jobs)
+activate JobsControllerImpl
+JobsControllerImpl -> JobsService: search(:Jobs)
+activate JobsService
+JobsService -> JobsJPARepository: search(:Jobs)
+activate JobsJPARepository
+JobsJPARepository -> EntityManager: response(:Jobs)
+activate EntityManager
+EntityManager -> JobsJPARepository: << persisted Jobs >>
+deactivate EntityManager
+JobsJPARepository -> JobsService: << persisted Jobs >>
+deactivate JobsJPARepository
+JobsService -> JobsControllerImpl: << persisted Jobs >>
+deactivate JobsService
+JobsControllerImpl -> CXFServlet: << persisted Jobs >>
+deactivate JobsControllerImpl
+CXFServlet -> User: marshalled Jobs XML
+deactivate CXFServlet
+@enduml

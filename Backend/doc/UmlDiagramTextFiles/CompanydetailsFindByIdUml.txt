@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById CompanyDetails Scenario
+participant User
+User -> CXFServlet: GET, CompanyDetails
+activate CXFServlet
+CXFServlet -> CompanyDetails: << findById >>
+activate CompanyDetails
+CompanyDetails -> CXFServlet: << instance >>
+deactivate CompanyDetails
+CXFServlet -> CompanyDetailsControllerImpl: findById(:int)
+activate CompanyDetailsControllerImpl
+CompanyDetailsControllerImpl -> CompanyDetailsService: findById(:int)
+activate CompanyDetailsService
+CompanyDetailsService -> CompanyDetailsJPARepository: findById(:int)
+activate CompanyDetailsJPARepository
+CompanyDetailsJPARepository -> EntityManager: response(:CompanyDetails)
+activate EntityManager
+EntityManager -> CompanyDetailsJPARepository: << persisted CompanyDetails >>
+deactivate EntityManager
+CompanyDetailsJPARepository -> CompanyDetailsService: << persisted CompanyDetails >>
+deactivate CompanyDetailsJPARepository
+CompanyDetailsService -> CompanyDetailsControllerImpl: << persisted CompanyDetails >>
+deactivate CompanyDetailsService
+CompanyDetailsControllerImpl -> CXFServlet: << persisted CompanyDetails >>
+deactivate CompanyDetailsControllerImpl
+CXFServlet -> User: marshalled CompanyDetails XML
+deactivate CXFServlet
+@enduml

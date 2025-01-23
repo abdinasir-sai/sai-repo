@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Offers Scenario
+participant User
+User -> CXFServlet: DELETE, Offers
+activate CXFServlet
+CXFServlet -> Offers: << delete >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: delete(:Offers)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: deleteById(:Offers)
+activate OffersService
+OffersService -> OffersJPARepository: deleteById(:Offers)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: delete(:Offers)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted Offers >>
+deactivate EntityManager
+OffersJPARepository -> OffersService: << persisted Offers >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: << persisted Offers >>
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted Offers >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

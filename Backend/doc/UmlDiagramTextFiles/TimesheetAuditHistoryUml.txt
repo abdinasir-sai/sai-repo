@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History TimeSheet Scenario
+participant User
+User -> CXFServlet: GET, TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << auditHistory >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: auditHistory(:TimeSheet)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: auditHistory(:TimeSheet)
+activate TimeSheetService
+TimeSheetService -> TimeSheetJPARepository: auditHistory(:TimeSheet)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted TimeSheetAuditHistory >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetService: << persisted TimeSheetAuditHistory >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: << persisted TimeSheetAuditHistory >>
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted TimeSheetAuditHistory >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

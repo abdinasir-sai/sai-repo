@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Interview Scenario
+participant User
+User -> CXFServlet: UPDATE, Interview
+activate CXFServlet
+CXFServlet -> Interview: << update >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: update(:Interview)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: update(:Interview)
+activate InterviewService
+InterviewService -> InterviewJPARepository: update(:Interview)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: update(:Interview)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted Interview >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted Interview >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

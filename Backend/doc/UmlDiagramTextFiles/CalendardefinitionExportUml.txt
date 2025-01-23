@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data CalendarDefinition Scenario
+participant User
+User -> CXFServlet: CalendarDefinition
+activate CXFServlet
+CXFServlet -> CalendarDefinition: << export >>
+activate CalendarDefinition
+CalendarDefinition -> CXFServlet: << instance >>
+deactivate CalendarDefinition
+CXFServlet -> CalendarDefinitionControllerImpl: export(:CalendarDefinition)
+activate CalendarDefinitionControllerImpl
+CalendarDefinitionControllerImpl -> CalendarDefinitionService: search(:CalendarDefinition)
+activate CalendarDefinitionService
+CalendarDefinitionService -> CalendarDefinitionJPARepository: search(:CalendarDefinition)
+activate CalendarDefinitionJPARepository
+CalendarDefinitionJPARepository -> EntityManager: save(:CalendarDefinition)
+activate EntityManager
+EntityManager -> CalendarDefinitionJPARepository: << persisted CalendarDefinition >>
+deactivate EntityManager
+CalendarDefinitionJPARepository -> CalendarDefinitionService: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionJPARepository
+CalendarDefinitionService -> CalendarDefinitionControllerImpl: response(:List<CalendarDefinition>)
+CalendarDefinitionControllerImpl -> CalendarDefinitionService: export(:CalendarDefinition)
+CalendarDefinitionService -> CalendarDefinitionControllerImpl: << persisted CalendarDefinition.xlsx >>
+deactivate CalendarDefinitionService
+CalendarDefinitionControllerImpl -> CXFServlet: << persisted CalendarDefinition.xlsx >>
+deactivate CalendarDefinitionControllerImpl
+CXFServlet -> User: marshalled CalendarDefinition XML
+deactivate CXFServlet
+@enduml

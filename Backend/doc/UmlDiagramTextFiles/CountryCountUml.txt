@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Country Scenario
+participant User
+User -> CXFServlet: GET, Country
+activate CXFServlet
+CXFServlet -> Country: << count >>
+activate Country
+Country -> CXFServlet: << instance >>
+deactivate Country
+CXFServlet -> CountryControllerImpl: count(:Country)
+activate CountryControllerImpl
+CountryControllerImpl -> CountryService: count(:Country)
+activate CountryService
+CountryService -> CountryJPARepository: count(:Country)
+activate CountryJPARepository
+CountryJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> CountryJPARepository: << persisted Count >>
+deactivate EntityManager
+CountryJPARepository -> CountryService: << persisted Count >>
+deactivate CountryJPARepository
+CountryService -> CountryControllerImpl: << persisted Count >>
+deactivate CountryService
+CountryControllerImpl -> CXFServlet: << persisted Count >>
+deactivate CountryControllerImpl
+CXFServlet -> User: marshalled Country XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Leaves Scenario
+participant User
+User -> CXFServlet: GET, Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << auditHistory >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesControllerImpl: auditHistory(:Leaves)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesService: auditHistory(:Leaves)
+activate LeavesService
+LeavesService -> LeavesJPARepository: auditHistory(:Leaves)
+activate LeavesJPARepository
+LeavesJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> LeavesJPARepository: << persisted LeavesAuditHistory >>
+deactivate EntityManager
+LeavesJPARepository -> LeavesService: << persisted LeavesAuditHistory >>
+deactivate LeavesJPARepository
+LeavesService -> LeavesControllerImpl: << persisted LeavesAuditHistory >>
+deactivate LeavesService
+LeavesControllerImpl -> CXFServlet: << persisted LeavesAuditHistory >>
+deactivate LeavesControllerImpl
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

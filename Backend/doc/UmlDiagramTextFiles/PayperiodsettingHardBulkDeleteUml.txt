@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete PayPeriodSetting Scenario
+participant User
+User -> CXFServlet: DELETE, PayPeriodSetting
+activate CXFServlet
+CXFServlet -> PayPeriodSetting: << bulkdelete >>
+activate PayPeriodSetting
+PayPeriodSetting -> CXFServlet: << instance >>
+deactivate PayPeriodSetting
+CXFServlet -> PayPeriodSettingControllerImpl: bulkdelete(:List<PayPeriodSetting>)
+activate PayPeriodSettingControllerImpl
+PayPeriodSettingControllerImpl -> PayPeriodSettingService: bulkDelete(:List<PayPeriodSetting>)
+activate PayPeriodSettingService
+PayPeriodSettingService -> PayPeriodSettingJPARepository: deleteAll(:List<PayPeriodSetting>)
+activate PayPeriodSettingJPARepository
+PayPeriodSettingJPARepository -> EntityManager: delete(:List<PayPeriodSetting>)
+activate EntityManager
+EntityManager -> PayPeriodSettingJPARepository: << persisted PayPeriodSetting >>
+deactivate EntityManager
+PayPeriodSettingJPARepository -> PayPeriodSettingService: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingJPARepository
+PayPeriodSettingService -> PayPeriodSettingControllerImpl: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingService
+PayPeriodSettingControllerImpl -> CXFServlet: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingControllerImpl
+CXFServlet -> User: marshalled PayPeriodSetting XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById ExceptionalWorkingDay Scenario
+participant User
+User -> CXFServlet: GET, ExceptionalWorkingDay
+activate CXFServlet
+CXFServlet -> ExceptionalWorkingDay: << findById >>
+activate ExceptionalWorkingDay
+ExceptionalWorkingDay -> CXFServlet: << instance >>
+deactivate ExceptionalWorkingDay
+CXFServlet -> ExceptionalWorkingDayControllerImpl: findById(:int)
+activate ExceptionalWorkingDayControllerImpl
+ExceptionalWorkingDayControllerImpl -> ExceptionalWorkingDayService: findById(:int)
+activate ExceptionalWorkingDayService
+ExceptionalWorkingDayService -> ExceptionalWorkingDayJPARepository: findById(:int)
+activate ExceptionalWorkingDayJPARepository
+ExceptionalWorkingDayJPARepository -> EntityManager: response(:ExceptionalWorkingDay)
+activate EntityManager
+EntityManager -> ExceptionalWorkingDayJPARepository: << persisted ExceptionalWorkingDay >>
+deactivate EntityManager
+ExceptionalWorkingDayJPARepository -> ExceptionalWorkingDayService: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayJPARepository
+ExceptionalWorkingDayService -> ExceptionalWorkingDayControllerImpl: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayService
+ExceptionalWorkingDayControllerImpl -> CXFServlet: << persisted ExceptionalWorkingDay >>
+deactivate ExceptionalWorkingDayControllerImpl
+CXFServlet -> User: marshalled ExceptionalWorkingDay XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data City Scenario
+participant User
+User -> CXFServlet: City
+activate CXFServlet
+CXFServlet -> City: << export >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: export(:City)
+activate CityControllerImpl
+CityControllerImpl -> CityService: search(:City)
+activate CityService
+CityService -> CityJPARepository: search(:City)
+activate CityJPARepository
+CityJPARepository -> EntityManager: save(:City)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted City >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted City >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: response(:List<City>)
+CityControllerImpl -> CityService: export(:City)
+CityService -> CityControllerImpl: << persisted City.xlsx >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted City.xlsx >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

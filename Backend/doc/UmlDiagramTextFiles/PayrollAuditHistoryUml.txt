@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Payroll Scenario
+participant User
+User -> CXFServlet: GET, Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << auditHistory >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: auditHistory(:Payroll)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: auditHistory(:Payroll)
+activate PayrollService
+PayrollService -> PayrollJPARepository: auditHistory(:Payroll)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted PayrollAuditHistory >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollService: << persisted PayrollAuditHistory >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: << persisted PayrollAuditHistory >>
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted PayrollAuditHistory >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

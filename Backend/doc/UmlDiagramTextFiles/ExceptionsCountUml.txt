@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Exceptions Scenario
+participant User
+User -> CXFServlet: GET, Exceptions
+activate CXFServlet
+CXFServlet -> Exceptions: << count >>
+activate Exceptions
+Exceptions -> CXFServlet: << instance >>
+deactivate Exceptions
+CXFServlet -> ExceptionsControllerImpl: count(:Exceptions)
+activate ExceptionsControllerImpl
+ExceptionsControllerImpl -> ExceptionsService: count(:Exceptions)
+activate ExceptionsService
+ExceptionsService -> ExceptionsJPARepository: count(:Exceptions)
+activate ExceptionsJPARepository
+ExceptionsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> ExceptionsJPARepository: << persisted Count >>
+deactivate EntityManager
+ExceptionsJPARepository -> ExceptionsService: << persisted Count >>
+deactivate ExceptionsJPARepository
+ExceptionsService -> ExceptionsControllerImpl: << persisted Count >>
+deactivate ExceptionsService
+ExceptionsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate ExceptionsControllerImpl
+CXFServlet -> User: marshalled Exceptions XML
+deactivate CXFServlet
+@enduml

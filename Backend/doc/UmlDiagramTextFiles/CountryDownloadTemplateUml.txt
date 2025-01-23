@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Country Scenario
+participant User
+User -> CXFServlet: Country
+activate CXFServlet
+CXFServlet -> Country: << downloadTemplate >>
+activate Country
+Country -> CXFServlet: << instance >>
+deactivate Country
+CXFServlet -> CountryController: downloadTemplate(:String fileName)
+activate CountryController
+CountryController -> CountryControllerImpl: ResponseBuilder(workbook,fileName)
+activate CountryControllerImpl
+CountryControllerImpl -> CountryController: response(:ResponseEntity)
+deactivate CountryControllerImpl
+CountryController -> CXFServlet: << Country  >>
+deactivate CountryController
+CXFServlet -> User: marshalled Country XML
+deactivate CXFServlet
+@enduml

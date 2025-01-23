@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Delegations Scenario
+participant User
+User -> CXFServlet: GET, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << findAllById >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: findAllById(:List<Delegations> id)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: findAllById(:List<Delegations> id)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: findAllById(:List<Delegations> id)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: response(:List<Delegations>findAllById)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted List Delegations >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted List Delegations >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted List Delegations >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted List Delegations >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

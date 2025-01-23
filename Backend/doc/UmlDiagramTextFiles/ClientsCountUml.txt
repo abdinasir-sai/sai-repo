@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Clients Scenario
+participant User
+User -> CXFServlet: GET, Clients
+activate CXFServlet
+CXFServlet -> Clients: << count >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: count(:Clients)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: count(:Clients)
+activate ClientsService
+ClientsService -> ClientsJPARepository: count(:Clients)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Count >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted Count >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted Count >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

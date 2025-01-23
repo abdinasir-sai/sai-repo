@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Offers Scenario
+participant User
+User -> CXFServlet: Offers
+activate CXFServlet
+CXFServlet -> Offers: << downloadTemplate >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersController: downloadTemplate(:String fileName)
+activate OffersController
+OffersController -> OffersControllerImpl: ResponseBuilder(workbook,fileName)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersController: response(:ResponseEntity)
+deactivate OffersControllerImpl
+OffersController -> CXFServlet: << Offers  >>
+deactivate OffersController
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

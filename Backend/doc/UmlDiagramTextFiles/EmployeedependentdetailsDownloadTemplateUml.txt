@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template EmployeeDependentDetails Scenario
+participant User
+User -> CXFServlet: EmployeeDependentDetails
+activate CXFServlet
+CXFServlet -> EmployeeDependentDetails: << downloadTemplate >>
+activate EmployeeDependentDetails
+EmployeeDependentDetails -> CXFServlet: << instance >>
+deactivate EmployeeDependentDetails
+CXFServlet -> EmployeeDependentDetailsController: downloadTemplate(:String fileName)
+activate EmployeeDependentDetailsController
+EmployeeDependentDetailsController -> EmployeeDependentDetailsControllerImpl: ResponseBuilder(workbook,fileName)
+activate EmployeeDependentDetailsControllerImpl
+EmployeeDependentDetailsControllerImpl -> EmployeeDependentDetailsController: response(:ResponseEntity)
+deactivate EmployeeDependentDetailsControllerImpl
+EmployeeDependentDetailsController -> CXFServlet: << EmployeeDependentDetails  >>
+deactivate EmployeeDependentDetailsController
+CXFServlet -> User: marshalled EmployeeDependentDetails XML
+deactivate CXFServlet
+@enduml

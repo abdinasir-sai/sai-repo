@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create LeaveType Scenario
+participant User
+User -> CXFServlet: POST, LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << create >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: create(:LeaveType)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: create(:LeaveType)
+activate LeaveTypeService
+LeaveTypeService -> LeaveTypeJPARepository: create(:LeaveType)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: save(:LeaveType)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted LeaveType >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeService: << persisted LeaveType >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted LeaveType >>
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted LeaveType >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

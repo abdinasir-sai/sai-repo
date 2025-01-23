@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Restrictions Scenario
+participant User
+User -> CXFServlet: Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << export >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsControllerImpl: export(:Restrictions)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsService: search(:Restrictions)
+activate RestrictionsService
+RestrictionsService -> RestrictionsJPARepository: search(:Restrictions)
+activate RestrictionsJPARepository
+RestrictionsJPARepository -> EntityManager: save(:Restrictions)
+activate EntityManager
+EntityManager -> RestrictionsJPARepository: << persisted Restrictions >>
+deactivate EntityManager
+RestrictionsJPARepository -> RestrictionsService: << persisted Restrictions >>
+deactivate RestrictionsJPARepository
+RestrictionsService -> RestrictionsControllerImpl: response(:List<Restrictions>)
+RestrictionsControllerImpl -> RestrictionsService: export(:Restrictions)
+RestrictionsService -> RestrictionsControllerImpl: << persisted Restrictions.xlsx >>
+deactivate RestrictionsService
+RestrictionsControllerImpl -> CXFServlet: << persisted Restrictions.xlsx >>
+deactivate RestrictionsControllerImpl
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

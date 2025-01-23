@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById JobApplication Scenario
+participant User
+User -> CXFServlet: DELETE, JobApplication
+activate CXFServlet
+CXFServlet -> JobApplication: << delete >>
+activate JobApplication
+JobApplication -> CXFServlet: << instance >>
+deactivate JobApplication
+CXFServlet -> JobApplicationControllerImpl: delete(:JobApplication)
+activate JobApplicationControllerImpl
+JobApplicationControllerImpl -> JobApplicationService: deleteById(:JobApplication)
+activate JobApplicationService
+JobApplicationService -> JobApplicationJPARepository: deleteById(:JobApplication)
+activate JobApplicationJPARepository
+JobApplicationJPARepository -> EntityManager: delete(:JobApplication)
+activate EntityManager
+EntityManager -> JobApplicationJPARepository: << persisted JobApplication >>
+deactivate EntityManager
+JobApplicationJPARepository -> JobApplicationService: << persisted JobApplication >>
+deactivate JobApplicationJPARepository
+JobApplicationService -> JobApplicationControllerImpl: << persisted JobApplication >>
+deactivate JobApplicationService
+JobApplicationControllerImpl -> CXFServlet: << persisted JobApplication >>
+deactivate JobApplicationControllerImpl
+CXFServlet -> User: marshalled JobApplication XML
+deactivate CXFServlet
+@enduml

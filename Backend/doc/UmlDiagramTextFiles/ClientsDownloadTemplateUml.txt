@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Clients Scenario
+participant User
+User -> CXFServlet: Clients
+activate CXFServlet
+CXFServlet -> Clients: << downloadTemplate >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsController: downloadTemplate(:String fileName)
+activate ClientsController
+ClientsController -> ClientsControllerImpl: ResponseBuilder(workbook,fileName)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsController: response(:ResponseEntity)
+deactivate ClientsControllerImpl
+ClientsController -> CXFServlet: << Clients  >>
+deactivate ClientsController
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Location Scenario
+participant User
+User -> CXFServlet: UPDATE, Location
+activate CXFServlet
+CXFServlet -> Location: << update >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: update(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: update(:Location)
+activate LocationService
+LocationService -> LocationJPARepository: update(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: update(:Location)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted Location >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Location >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

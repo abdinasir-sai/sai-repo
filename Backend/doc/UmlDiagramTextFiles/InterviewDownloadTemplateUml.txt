@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Interview Scenario
+participant User
+User -> CXFServlet: Interview
+activate CXFServlet
+CXFServlet -> Interview: << downloadTemplate >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewController: downloadTemplate(:String fileName)
+activate InterviewController
+InterviewController -> InterviewControllerImpl: ResponseBuilder(workbook,fileName)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewController: response(:ResponseEntity)
+deactivate InterviewControllerImpl
+InterviewController -> CXFServlet: << Interview  >>
+deactivate InterviewController
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById TimeSheet Scenario
+participant User
+User -> CXFServlet: GET, TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << findById >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: findById(:int)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: findById(:int)
+activate TimeSheetService
+TimeSheetService -> TimeSheetJPARepository: findById(:int)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: response(:TimeSheet)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted TimeSheet >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetService: << persisted TimeSheet >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: << persisted TimeSheet >>
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted TimeSheet >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

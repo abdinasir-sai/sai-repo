@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update CompensatoryRequestScheduler Scenario
+participant User
+User -> CXFServlet: UPDATE, CompensatoryRequestScheduler
+activate CXFServlet
+CXFServlet -> CompensatoryRequestScheduler: << update >>
+activate CompensatoryRequestScheduler
+CompensatoryRequestScheduler -> CXFServlet: << instance >>
+deactivate CompensatoryRequestScheduler
+CXFServlet -> CompensatoryRequestSchedulerControllerImpl: update(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerControllerImpl
+CompensatoryRequestSchedulerControllerImpl -> CompensatoryRequestSchedulerService: update(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerJPARepository: update(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerJPARepository -> EntityManager: update(:CompensatoryRequestScheduler)
+activate EntityManager
+EntityManager -> CompensatoryRequestSchedulerJPARepository: << persisted CompensatoryRequestScheduler >>
+deactivate EntityManager
+CompensatoryRequestSchedulerJPARepository -> CompensatoryRequestSchedulerService: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerControllerImpl: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerControllerImpl -> CXFServlet: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerControllerImpl
+CXFServlet -> User: marshalled CompensatoryRequestScheduler XML
+deactivate CXFServlet
+@enduml

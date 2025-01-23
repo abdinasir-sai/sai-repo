@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Clients Scenario
+participant User
+User -> CXFServlet: DELETE, Clients
+activate CXFServlet
+CXFServlet -> Clients: << bulkdelete >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: bulkdelete(:List<Clients>)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: bulkDelete(:List<Clients>)
+activate ClientsService
+ClientsService -> ClientsJPARepository: deleteAll(:List<Clients>)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: delete(:List<Clients>)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: << persisted Clients >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Clients >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

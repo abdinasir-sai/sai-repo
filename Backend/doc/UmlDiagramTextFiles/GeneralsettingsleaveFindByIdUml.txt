@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById GeneralSettingsLeave Scenario
+participant User
+User -> CXFServlet: GET, GeneralSettingsLeave
+activate CXFServlet
+CXFServlet -> GeneralSettingsLeave: << findById >>
+activate GeneralSettingsLeave
+GeneralSettingsLeave -> CXFServlet: << instance >>
+deactivate GeneralSettingsLeave
+CXFServlet -> GeneralSettingsLeaveControllerImpl: findById(:int)
+activate GeneralSettingsLeaveControllerImpl
+GeneralSettingsLeaveControllerImpl -> GeneralSettingsLeaveService: findById(:int)
+activate GeneralSettingsLeaveService
+GeneralSettingsLeaveService -> GeneralSettingsLeaveJPARepository: findById(:int)
+activate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveJPARepository -> EntityManager: response(:GeneralSettingsLeave)
+activate EntityManager
+EntityManager -> GeneralSettingsLeaveJPARepository: << persisted GeneralSettingsLeave >>
+deactivate EntityManager
+GeneralSettingsLeaveJPARepository -> GeneralSettingsLeaveService: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveJPARepository
+GeneralSettingsLeaveService -> GeneralSettingsLeaveControllerImpl: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveService
+GeneralSettingsLeaveControllerImpl -> CXFServlet: << persisted GeneralSettingsLeave >>
+deactivate GeneralSettingsLeaveControllerImpl
+CXFServlet -> User: marshalled GeneralSettingsLeave XML
+deactivate CXFServlet
+@enduml

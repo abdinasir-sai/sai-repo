@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update SubContractor Scenario
+participant User
+User -> CXFServlet: UPDATE, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << update >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: update(:SubContractor)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: update(:SubContractor)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: update(:SubContractor)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: update(:SubContractor)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted SubContractor >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted SubContractor >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted SubContractor >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted SubContractor >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

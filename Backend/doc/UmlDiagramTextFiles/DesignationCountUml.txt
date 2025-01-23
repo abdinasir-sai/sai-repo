@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Designation Scenario
+participant User
+User -> CXFServlet: GET, Designation
+activate CXFServlet
+CXFServlet -> Designation: << count >>
+activate Designation
+Designation -> CXFServlet: << instance >>
+deactivate Designation
+CXFServlet -> DesignationControllerImpl: count(:Designation)
+activate DesignationControllerImpl
+DesignationControllerImpl -> DesignationService: count(:Designation)
+activate DesignationService
+DesignationService -> DesignationJPARepository: count(:Designation)
+activate DesignationJPARepository
+DesignationJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> DesignationJPARepository: << persisted Count >>
+deactivate EntityManager
+DesignationJPARepository -> DesignationService: << persisted Count >>
+deactivate DesignationJPARepository
+DesignationService -> DesignationControllerImpl: << persisted Count >>
+deactivate DesignationService
+DesignationControllerImpl -> CXFServlet: << persisted Count >>
+deactivate DesignationControllerImpl
+CXFServlet -> User: marshalled Designation XML
+deactivate CXFServlet
+@enduml

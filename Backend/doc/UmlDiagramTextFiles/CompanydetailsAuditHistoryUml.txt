@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History CompanyDetails Scenario
+participant User
+User -> CXFServlet: GET, CompanyDetails
+activate CXFServlet
+CXFServlet -> CompanyDetails: << auditHistory >>
+activate CompanyDetails
+CompanyDetails -> CXFServlet: << instance >>
+deactivate CompanyDetails
+CXFServlet -> CompanyDetailsControllerImpl: auditHistory(:CompanyDetails)
+activate CompanyDetailsControllerImpl
+CompanyDetailsControllerImpl -> CompanyDetailsService: auditHistory(:CompanyDetails)
+activate CompanyDetailsService
+CompanyDetailsService -> CompanyDetailsJPARepository: auditHistory(:CompanyDetails)
+activate CompanyDetailsJPARepository
+CompanyDetailsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> CompanyDetailsJPARepository: << persisted CompanyDetailsAuditHistory >>
+deactivate EntityManager
+CompanyDetailsJPARepository -> CompanyDetailsService: << persisted CompanyDetailsAuditHistory >>
+deactivate CompanyDetailsJPARepository
+CompanyDetailsService -> CompanyDetailsControllerImpl: << persisted CompanyDetailsAuditHistory >>
+deactivate CompanyDetailsService
+CompanyDetailsControllerImpl -> CXFServlet: << persisted CompanyDetailsAuditHistory >>
+deactivate CompanyDetailsControllerImpl
+CXFServlet -> User: marshalled CompanyDetails XML
+deactivate CXFServlet
+@enduml

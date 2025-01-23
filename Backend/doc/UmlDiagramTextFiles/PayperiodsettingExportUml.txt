@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data PayPeriodSetting Scenario
+participant User
+User -> CXFServlet: PayPeriodSetting
+activate CXFServlet
+CXFServlet -> PayPeriodSetting: << export >>
+activate PayPeriodSetting
+PayPeriodSetting -> CXFServlet: << instance >>
+deactivate PayPeriodSetting
+CXFServlet -> PayPeriodSettingControllerImpl: export(:PayPeriodSetting)
+activate PayPeriodSettingControllerImpl
+PayPeriodSettingControllerImpl -> PayPeriodSettingService: search(:PayPeriodSetting)
+activate PayPeriodSettingService
+PayPeriodSettingService -> PayPeriodSettingJPARepository: search(:PayPeriodSetting)
+activate PayPeriodSettingJPARepository
+PayPeriodSettingJPARepository -> EntityManager: save(:PayPeriodSetting)
+activate EntityManager
+EntityManager -> PayPeriodSettingJPARepository: << persisted PayPeriodSetting >>
+deactivate EntityManager
+PayPeriodSettingJPARepository -> PayPeriodSettingService: << persisted PayPeriodSetting >>
+deactivate PayPeriodSettingJPARepository
+PayPeriodSettingService -> PayPeriodSettingControllerImpl: response(:List<PayPeriodSetting>)
+PayPeriodSettingControllerImpl -> PayPeriodSettingService: export(:PayPeriodSetting)
+PayPeriodSettingService -> PayPeriodSettingControllerImpl: << persisted PayPeriodSetting.xlsx >>
+deactivate PayPeriodSettingService
+PayPeriodSettingControllerImpl -> CXFServlet: << persisted PayPeriodSetting.xlsx >>
+deactivate PayPeriodSettingControllerImpl
+CXFServlet -> User: marshalled PayPeriodSetting XML
+deactivate CXFServlet
+@enduml

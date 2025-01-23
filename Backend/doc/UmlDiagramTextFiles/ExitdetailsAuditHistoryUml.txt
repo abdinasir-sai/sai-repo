@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History ExitDetails Scenario
+participant User
+User -> CXFServlet: GET, ExitDetails
+activate CXFServlet
+CXFServlet -> ExitDetails: << auditHistory >>
+activate ExitDetails
+ExitDetails -> CXFServlet: << instance >>
+deactivate ExitDetails
+CXFServlet -> ExitDetailsControllerImpl: auditHistory(:ExitDetails)
+activate ExitDetailsControllerImpl
+ExitDetailsControllerImpl -> ExitDetailsService: auditHistory(:ExitDetails)
+activate ExitDetailsService
+ExitDetailsService -> ExitDetailsJPARepository: auditHistory(:ExitDetails)
+activate ExitDetailsJPARepository
+ExitDetailsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> ExitDetailsJPARepository: << persisted ExitDetailsAuditHistory >>
+deactivate EntityManager
+ExitDetailsJPARepository -> ExitDetailsService: << persisted ExitDetailsAuditHistory >>
+deactivate ExitDetailsJPARepository
+ExitDetailsService -> ExitDetailsControllerImpl: << persisted ExitDetailsAuditHistory >>
+deactivate ExitDetailsService
+ExitDetailsControllerImpl -> CXFServlet: << persisted ExitDetailsAuditHistory >>
+deactivate ExitDetailsControllerImpl
+CXFServlet -> User: marshalled ExitDetails XML
+deactivate CXFServlet
+@enduml

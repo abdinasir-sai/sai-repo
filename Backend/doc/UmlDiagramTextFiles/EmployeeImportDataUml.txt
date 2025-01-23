@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Employee Scenario
+participant User
+User -> CXFServlet: POST, Employee
+activate CXFServlet
+CXFServlet -> Employee: << importData >>
+activate Employee
+Employee -> CXFServlet: << instance >>
+deactivate Employee
+CXFServlet -> EmployeeControllerImpl: importData(:Employee)
+activate EmployeeControllerImpl
+EmployeeControllerImpl -> EmployeeService: importData(:Employee)
+activate EmployeeService
+activate EmployeeServiceImpl
+EmployeeService -> EmployeeServiceImpl: importData(:Employee)
+EmployeeServiceImpl -> EmployeeJPARepository: saveAll(:Employee)
+activate EmployeeJPARepository
+EmployeeJPARepository -> EntityManager: save(:Employee)
+activate EntityManager
+EntityManager -> EmployeeJPARepository: << persisted Employee >>
+deactivate EntityManager
+EmployeeJPARepository -> EmployeeServiceImpl: << persisted Employee >>
+EmployeeServiceImpl -> EmployeeService: << persisted Employee >>
+deactivate EmployeeJPARepository
+EmployeeService -> EmployeeControllerImpl: << persisted Employee >>
+deactivate EmployeeServiceImpl
+deactivate EmployeeService
+EmployeeControllerImpl -> CXFServlet: << persisted Employee >>
+deactivate EmployeeControllerImpl
+CXFServlet -> User: marshalled Employee XML
+deactivate CXFServlet
+@enduml

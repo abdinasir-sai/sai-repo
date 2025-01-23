@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById CompanyDetails Scenario
+participant User
+User -> CXFServlet: DELETE, CompanyDetails
+activate CXFServlet
+CXFServlet -> CompanyDetails: << delete >>
+activate CompanyDetails
+CompanyDetails -> CXFServlet: << instance >>
+deactivate CompanyDetails
+CXFServlet -> CompanyDetailsControllerImpl: delete(:CompanyDetails)
+activate CompanyDetailsControllerImpl
+CompanyDetailsControllerImpl -> CompanyDetailsService: deleteById(:CompanyDetails)
+activate CompanyDetailsService
+CompanyDetailsService -> CompanyDetailsJPARepository: deleteById(:CompanyDetails)
+activate CompanyDetailsJPARepository
+CompanyDetailsJPARepository -> EntityManager: delete(:CompanyDetails)
+activate EntityManager
+EntityManager -> CompanyDetailsJPARepository: << persisted CompanyDetails >>
+deactivate EntityManager
+CompanyDetailsJPARepository -> CompanyDetailsService: << persisted CompanyDetails >>
+deactivate CompanyDetailsJPARepository
+CompanyDetailsService -> CompanyDetailsControllerImpl: << persisted CompanyDetails >>
+deactivate CompanyDetailsService
+CompanyDetailsControllerImpl -> CXFServlet: << persisted CompanyDetails >>
+deactivate CompanyDetailsControllerImpl
+CXFServlet -> User: marshalled CompanyDetails XML
+deactivate CXFServlet
+@enduml

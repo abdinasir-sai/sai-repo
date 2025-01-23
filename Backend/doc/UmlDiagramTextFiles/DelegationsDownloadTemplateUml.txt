@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Delegations Scenario
+participant User
+User -> CXFServlet: Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << downloadTemplate >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsController: downloadTemplate(:String fileName)
+activate DelegationsController
+DelegationsController -> DelegationsControllerImpl: ResponseBuilder(workbook,fileName)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsController: response(:ResponseEntity)
+deactivate DelegationsControllerImpl
+DelegationsController -> CXFServlet: << Delegations  >>
+deactivate DelegationsController
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Leaves Scenario
+participant User
+User -> CXFServlet: GET, Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << findAllById >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesControllerImpl: findAllById(:List<Leaves> id)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesService: findAllById(:List<Leaves> id)
+activate LeavesService
+LeavesService -> LeavesJPARepository: findAllById(:List<Leaves> id)
+activate LeavesJPARepository
+LeavesJPARepository -> EntityManager: response(:List<Leaves>findAllById)
+activate EntityManager
+EntityManager -> LeavesJPARepository: << persisted List Leaves >>
+deactivate EntityManager
+LeavesJPARepository -> LeavesService: << persisted List Leaves >>
+deactivate LeavesJPARepository
+LeavesService -> LeavesControllerImpl: << persisted List Leaves >>
+deactivate LeavesService
+LeavesControllerImpl -> CXFServlet: << persisted List Leaves >>
+deactivate LeavesControllerImpl
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search SubContractor Scenario
+participant User
+User -> CXFServlet: GET, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << search >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: search(:SubContractor)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: search(:SubContractor)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: search(:SubContractor)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: response(:SubContractor)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted SubContractor >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted SubContractor >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted SubContractor >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted SubContractor >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

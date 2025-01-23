@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create HrLetters Scenario
+participant User
+User -> CXFServlet: POST, HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << create >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersControllerImpl: create(:HrLetters)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersService: create(:HrLetters)
+activate HrLettersService
+HrLettersService -> HrLettersJPARepository: create(:HrLetters)
+activate HrLettersJPARepository
+HrLettersJPARepository -> EntityManager: save(:HrLetters)
+activate EntityManager
+EntityManager -> HrLettersJPARepository: << persisted HrLetters >>
+deactivate EntityManager
+HrLettersJPARepository -> HrLettersService: << persisted HrLetters >>
+deactivate HrLettersJPARepository
+HrLettersService -> HrLettersControllerImpl: << persisted HrLetters >>
+deactivate HrLettersService
+HrLettersControllerImpl -> CXFServlet: << persisted HrLetters >>
+deactivate HrLettersControllerImpl
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

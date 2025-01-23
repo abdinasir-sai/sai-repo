@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History AbsentSchedule Scenario
+participant User
+User -> CXFServlet: GET, AbsentSchedule
+activate CXFServlet
+CXFServlet -> AbsentSchedule: << auditHistory >>
+activate AbsentSchedule
+AbsentSchedule -> CXFServlet: << instance >>
+deactivate AbsentSchedule
+CXFServlet -> AbsentScheduleControllerImpl: auditHistory(:AbsentSchedule)
+activate AbsentScheduleControllerImpl
+AbsentScheduleControllerImpl -> AbsentScheduleService: auditHistory(:AbsentSchedule)
+activate AbsentScheduleService
+AbsentScheduleService -> AbsentScheduleJPARepository: auditHistory(:AbsentSchedule)
+activate AbsentScheduleJPARepository
+AbsentScheduleJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> AbsentScheduleJPARepository: << persisted AbsentScheduleAuditHistory >>
+deactivate EntityManager
+AbsentScheduleJPARepository -> AbsentScheduleService: << persisted AbsentScheduleAuditHistory >>
+deactivate AbsentScheduleJPARepository
+AbsentScheduleService -> AbsentScheduleControllerImpl: << persisted AbsentScheduleAuditHistory >>
+deactivate AbsentScheduleService
+AbsentScheduleControllerImpl -> CXFServlet: << persisted AbsentScheduleAuditHistory >>
+deactivate AbsentScheduleControllerImpl
+CXFServlet -> User: marshalled AbsentSchedule XML
+deactivate CXFServlet
+@enduml

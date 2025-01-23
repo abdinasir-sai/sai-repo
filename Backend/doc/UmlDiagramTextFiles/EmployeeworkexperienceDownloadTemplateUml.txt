@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template EmployeeWorkExperience Scenario
+participant User
+User -> CXFServlet: EmployeeWorkExperience
+activate CXFServlet
+CXFServlet -> EmployeeWorkExperience: << downloadTemplate >>
+activate EmployeeWorkExperience
+EmployeeWorkExperience -> CXFServlet: << instance >>
+deactivate EmployeeWorkExperience
+CXFServlet -> EmployeeWorkExperienceController: downloadTemplate(:String fileName)
+activate EmployeeWorkExperienceController
+EmployeeWorkExperienceController -> EmployeeWorkExperienceControllerImpl: ResponseBuilder(workbook,fileName)
+activate EmployeeWorkExperienceControllerImpl
+EmployeeWorkExperienceControllerImpl -> EmployeeWorkExperienceController: response(:ResponseEntity)
+deactivate EmployeeWorkExperienceControllerImpl
+EmployeeWorkExperienceController -> CXFServlet: << EmployeeWorkExperience  >>
+deactivate EmployeeWorkExperienceController
+CXFServlet -> User: marshalled EmployeeWorkExperience XML
+deactivate CXFServlet
+@enduml

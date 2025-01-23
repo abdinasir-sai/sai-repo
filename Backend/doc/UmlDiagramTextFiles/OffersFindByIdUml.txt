@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById Offers Scenario
+participant User
+User -> CXFServlet: GET, Offers
+activate CXFServlet
+CXFServlet -> Offers: << findById >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: findById(:int)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: findById(:int)
+activate OffersService
+OffersService -> OffersJPARepository: findById(:int)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: response(:Offers)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted Offers >>
+deactivate EntityManager
+OffersJPARepository -> OffersService: << persisted Offers >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: << persisted Offers >>
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted Offers >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

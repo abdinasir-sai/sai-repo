@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Location Scenario
+participant User
+User -> CXFServlet: POST, Location
+activate CXFServlet
+CXFServlet -> Location: << importData >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: importData(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: importData(:Location)
+activate LocationService
+activate LocationServiceImpl
+LocationService -> LocationServiceImpl: importData(:Location)
+LocationServiceImpl -> LocationJPARepository: saveAll(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: save(:Location)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationServiceImpl: << persisted Location >>
+LocationServiceImpl -> LocationService: << persisted Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted Location >>
+deactivate LocationServiceImpl
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Location >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

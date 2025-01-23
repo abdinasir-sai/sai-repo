@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Delegations Scenario
+participant User
+User -> CXFServlet: GET, Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << search >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: search(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: search(:Delegations)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: search(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: response(:Delegations)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted Delegations >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted Delegations >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: << persisted Delegations >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted Delegations >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Interview Scenario
+participant User
+User -> CXFServlet: POST, Interview
+activate CXFServlet
+CXFServlet -> Interview: << create >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: create(:Interview)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: create(:Interview)
+activate InterviewService
+InterviewService -> InterviewJPARepository: create(:Interview)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: save(:Interview)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted Interview >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted Interview >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

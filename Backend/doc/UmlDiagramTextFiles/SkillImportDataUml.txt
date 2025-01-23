@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Skill Scenario
+participant User
+User -> CXFServlet: POST, Skill
+activate CXFServlet
+CXFServlet -> Skill: << importData >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: importData(:Skill)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: importData(:Skill)
+activate SkillService
+activate SkillServiceImpl
+SkillService -> SkillServiceImpl: importData(:Skill)
+SkillServiceImpl -> SkillJPARepository: saveAll(:Skill)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: save(:Skill)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted Skill >>
+deactivate EntityManager
+SkillJPARepository -> SkillServiceImpl: << persisted Skill >>
+SkillServiceImpl -> SkillService: << persisted Skill >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted Skill >>
+deactivate SkillServiceImpl
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted Skill >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

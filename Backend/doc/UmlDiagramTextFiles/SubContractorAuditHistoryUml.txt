@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History SubContractor Scenario
+participant User
+User -> CXFServlet: GET, SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << auditHistory >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorControllerImpl: auditHistory(:SubContractor)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorService: auditHistory(:SubContractor)
+activate SubContractorService
+SubContractorService -> SubContractorJPARepository: auditHistory(:SubContractor)
+activate SubContractorJPARepository
+SubContractorJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> SubContractorJPARepository: << persisted SubContractorAuditHistory >>
+deactivate EntityManager
+SubContractorJPARepository -> SubContractorService: << persisted SubContractorAuditHistory >>
+deactivate SubContractorJPARepository
+SubContractorService -> SubContractorControllerImpl: << persisted SubContractorAuditHistory >>
+deactivate SubContractorService
+SubContractorControllerImpl -> CXFServlet: << persisted SubContractorAuditHistory >>
+deactivate SubContractorControllerImpl
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

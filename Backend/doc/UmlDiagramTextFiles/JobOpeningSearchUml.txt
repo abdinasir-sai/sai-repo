@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search JobOpening Scenario
+participant User
+User -> CXFServlet: GET, JobOpening
+activate CXFServlet
+CXFServlet -> JobOpening: << search >>
+activate JobOpening
+JobOpening -> CXFServlet: << instance >>
+deactivate JobOpening
+CXFServlet -> JobOpeningControllerImpl: search(:JobOpening)
+activate JobOpeningControllerImpl
+JobOpeningControllerImpl -> JobOpeningService: search(:JobOpening)
+activate JobOpeningService
+JobOpeningService -> JobOpeningJPARepository: search(:JobOpening)
+activate JobOpeningJPARepository
+JobOpeningJPARepository -> EntityManager: response(:JobOpening)
+activate EntityManager
+EntityManager -> JobOpeningJPARepository: << persisted JobOpening >>
+deactivate EntityManager
+JobOpeningJPARepository -> JobOpeningService: << persisted JobOpening >>
+deactivate JobOpeningJPARepository
+JobOpeningService -> JobOpeningControllerImpl: << persisted JobOpening >>
+deactivate JobOpeningService
+JobOpeningControllerImpl -> CXFServlet: << persisted JobOpening >>
+deactivate JobOpeningControllerImpl
+CXFServlet -> User: marshalled JobOpening XML
+deactivate CXFServlet
+@enduml

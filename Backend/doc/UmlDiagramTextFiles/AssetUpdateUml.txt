@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Asset Scenario
+participant User
+User -> CXFServlet: UPDATE, Asset
+activate CXFServlet
+CXFServlet -> Asset: << update >>
+activate Asset
+Asset -> CXFServlet: << instance >>
+deactivate Asset
+CXFServlet -> AssetControllerImpl: update(:Asset)
+activate AssetControllerImpl
+AssetControllerImpl -> AssetService: update(:Asset)
+activate AssetService
+AssetService -> AssetJPARepository: update(:Asset)
+activate AssetJPARepository
+AssetJPARepository -> EntityManager: update(:Asset)
+activate EntityManager
+EntityManager -> AssetJPARepository: << persisted Asset >>
+deactivate EntityManager
+AssetJPARepository -> AssetService: << persisted Asset >>
+deactivate AssetJPARepository
+AssetService -> AssetControllerImpl: << persisted Asset >>
+deactivate AssetService
+AssetControllerImpl -> CXFServlet: << persisted Asset >>
+deactivate AssetControllerImpl
+CXFServlet -> User: marshalled Asset XML
+deactivate CXFServlet
+@enduml

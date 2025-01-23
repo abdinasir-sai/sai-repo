@@ -1,0 +1,30 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete JobOpening Scenario
+participant User
+User -> CXFServlet: DELETE, JobOpening
+activate CXFServlet
+CXFServlet -> JobOpening: << bulkdelete >>
+activate JobOpening
+JobOpening -> CXFServlet: << instance >>
+deactivate JobOpening
+CXFServlet -> JobOpeningControllerImpl: bulkDelete(:List<JobOpening>)
+activate JobOpeningControllerImpl
+JobOpeningControllerImpl -> JobOpeningService: softBulkDelete(:List<JobOpening>)
+activate JobOpeningService
+JobOpeningService -> JobOpeningServiceImpl: softBulkDelete(:List<JobOpening>)
+JobOpeningServiceImpl -> JobOpeningJPARepository: deleteAll(:List<JobOpening>)
+activate JobOpeningJPARepository
+JobOpeningJPARepository -> EntityManager: delete(:List<JobOpening>)
+activate EntityManager
+EntityManager -> JobOpeningJPARepository: << persisted JobOpening >>
+deactivate EntityManager
+JobOpeningJPARepository -> JobOpeningService: << persisted JobOpening >>
+deactivate JobOpeningJPARepository
+JobOpeningService -> JobOpeningControllerImpl: << persisted JobOpening >>
+deactivate JobOpeningService
+JobOpeningControllerImpl -> CXFServlet: << persisted JobOpening >>
+deactivate JobOpeningControllerImpl
+CXFServlet -> User: marshalled JobOpening XML
+deactivate CXFServlet
+@enduml

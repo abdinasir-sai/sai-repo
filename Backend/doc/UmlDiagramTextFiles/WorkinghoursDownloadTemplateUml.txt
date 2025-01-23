@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template WorkingHours Scenario
+participant User
+User -> CXFServlet: WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << downloadTemplate >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursController: downloadTemplate(:String fileName)
+activate WorkingHoursController
+WorkingHoursController -> WorkingHoursControllerImpl: ResponseBuilder(workbook,fileName)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursController: response(:ResponseEntity)
+deactivate WorkingHoursControllerImpl
+WorkingHoursController -> CXFServlet: << WorkingHours  >>
+deactivate WorkingHoursController
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml

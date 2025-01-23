@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Location Scenario
+participant User
+User -> CXFServlet: GET, Location
+activate CXFServlet
+CXFServlet -> Location: << auditHistory >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: auditHistory(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: auditHistory(:Location)
+activate LocationService
+LocationService -> LocationJPARepository: auditHistory(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted LocationAuditHistory >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted LocationAuditHistory >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted LocationAuditHistory >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted LocationAuditHistory >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

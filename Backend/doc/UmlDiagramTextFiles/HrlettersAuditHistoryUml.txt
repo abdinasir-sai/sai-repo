@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History HrLetters Scenario
+participant User
+User -> CXFServlet: GET, HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << auditHistory >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersControllerImpl: auditHistory(:HrLetters)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersService: auditHistory(:HrLetters)
+activate HrLettersService
+HrLettersService -> HrLettersJPARepository: auditHistory(:HrLetters)
+activate HrLettersJPARepository
+HrLettersJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> HrLettersJPARepository: << persisted HrLettersAuditHistory >>
+deactivate EntityManager
+HrLettersJPARepository -> HrLettersService: << persisted HrLettersAuditHistory >>
+deactivate HrLettersJPARepository
+HrLettersService -> HrLettersControllerImpl: << persisted HrLettersAuditHistory >>
+deactivate HrLettersService
+HrLettersControllerImpl -> CXFServlet: << persisted HrLettersAuditHistory >>
+deactivate HrLettersControllerImpl
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

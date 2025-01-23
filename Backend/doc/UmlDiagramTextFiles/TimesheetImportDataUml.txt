@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data TimeSheet Scenario
+participant User
+User -> CXFServlet: POST, TimeSheet
+activate CXFServlet
+CXFServlet -> TimeSheet: << importData >>
+activate TimeSheet
+TimeSheet -> CXFServlet: << instance >>
+deactivate TimeSheet
+CXFServlet -> TimeSheetControllerImpl: importData(:TimeSheet)
+activate TimeSheetControllerImpl
+TimeSheetControllerImpl -> TimeSheetService: importData(:TimeSheet)
+activate TimeSheetService
+activate TimeSheetServiceImpl
+TimeSheetService -> TimeSheetServiceImpl: importData(:TimeSheet)
+TimeSheetServiceImpl -> TimeSheetJPARepository: saveAll(:TimeSheet)
+activate TimeSheetJPARepository
+TimeSheetJPARepository -> EntityManager: save(:TimeSheet)
+activate EntityManager
+EntityManager -> TimeSheetJPARepository: << persisted TimeSheet >>
+deactivate EntityManager
+TimeSheetJPARepository -> TimeSheetServiceImpl: << persisted TimeSheet >>
+TimeSheetServiceImpl -> TimeSheetService: << persisted TimeSheet >>
+deactivate TimeSheetJPARepository
+TimeSheetService -> TimeSheetControllerImpl: << persisted TimeSheet >>
+deactivate TimeSheetServiceImpl
+deactivate TimeSheetService
+TimeSheetControllerImpl -> CXFServlet: << persisted TimeSheet >>
+deactivate TimeSheetControllerImpl
+CXFServlet -> User: marshalled TimeSheet XML
+deactivate CXFServlet
+@enduml

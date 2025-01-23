@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Applicant Scenario
+participant User
+User -> CXFServlet: GET, Applicant
+activate CXFServlet
+CXFServlet -> Applicant: << findAllById >>
+activate Applicant
+Applicant -> CXFServlet: << instance >>
+deactivate Applicant
+CXFServlet -> ApplicantControllerImpl: findAllById(:List<Applicant> id)
+activate ApplicantControllerImpl
+ApplicantControllerImpl -> ApplicantService: findAllById(:List<Applicant> id)
+activate ApplicantService
+ApplicantService -> ApplicantJPARepository: findAllById(:List<Applicant> id)
+activate ApplicantJPARepository
+ApplicantJPARepository -> EntityManager: response(:List<Applicant>findAllById)
+activate EntityManager
+EntityManager -> ApplicantJPARepository: << persisted List Applicant >>
+deactivate EntityManager
+ApplicantJPARepository -> ApplicantService: << persisted List Applicant >>
+deactivate ApplicantJPARepository
+ApplicantService -> ApplicantControllerImpl: << persisted List Applicant >>
+deactivate ApplicantService
+ApplicantControllerImpl -> CXFServlet: << persisted List Applicant >>
+deactivate ApplicantControllerImpl
+CXFServlet -> User: marshalled Applicant XML
+deactivate CXFServlet
+@enduml

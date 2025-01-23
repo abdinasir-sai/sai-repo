@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Applicable Scenario
+participant User
+User -> CXFServlet: POST, Applicable
+activate CXFServlet
+CXFServlet -> Applicable: << create >>
+activate Applicable
+Applicable -> CXFServlet: << instance >>
+deactivate Applicable
+CXFServlet -> ApplicableControllerImpl: create(:Applicable)
+activate ApplicableControllerImpl
+ApplicableControllerImpl -> ApplicableService: create(:Applicable)
+activate ApplicableService
+ApplicableService -> ApplicableJPARepository: create(:Applicable)
+activate ApplicableJPARepository
+ApplicableJPARepository -> EntityManager: save(:Applicable)
+activate EntityManager
+EntityManager -> ApplicableJPARepository: << persisted Applicable >>
+deactivate EntityManager
+ApplicableJPARepository -> ApplicableService: << persisted Applicable >>
+deactivate ApplicableJPARepository
+ApplicableService -> ApplicableControllerImpl: << persisted Applicable >>
+deactivate ApplicableService
+ApplicableControllerImpl -> CXFServlet: << persisted Applicable >>
+deactivate ApplicableControllerImpl
+CXFServlet -> User: marshalled Applicable XML
+deactivate CXFServlet
+@enduml

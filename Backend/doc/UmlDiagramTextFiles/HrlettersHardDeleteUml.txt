@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById HrLetters Scenario
+participant User
+User -> CXFServlet: DELETE, HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << delete >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersControllerImpl: delete(:HrLetters)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersService: deleteById(:HrLetters)
+activate HrLettersService
+HrLettersService -> HrLettersJPARepository: deleteById(:HrLetters)
+activate HrLettersJPARepository
+HrLettersJPARepository -> EntityManager: delete(:HrLetters)
+activate EntityManager
+EntityManager -> HrLettersJPARepository: << persisted HrLetters >>
+deactivate EntityManager
+HrLettersJPARepository -> HrLettersService: << persisted HrLetters >>
+deactivate HrLettersJPARepository
+HrLettersService -> HrLettersControllerImpl: << persisted HrLetters >>
+deactivate HrLettersService
+HrLettersControllerImpl -> CXFServlet: << persisted HrLetters >>
+deactivate HrLettersControllerImpl
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

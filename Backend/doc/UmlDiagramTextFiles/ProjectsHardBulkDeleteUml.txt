@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Projects Scenario
+participant User
+User -> CXFServlet: DELETE, Projects
+activate CXFServlet
+CXFServlet -> Projects: << bulkdelete >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: bulkdelete(:List<Projects>)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: bulkDelete(:List<Projects>)
+activate ProjectsService
+ProjectsService -> ProjectsJPARepository: deleteAll(:List<Projects>)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: delete(:List<Projects>)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: << persisted Projects >>
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

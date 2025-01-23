@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data CompensatoryRequestScheduler Scenario
+participant User
+User -> CXFServlet: POST, CompensatoryRequestScheduler
+activate CXFServlet
+CXFServlet -> CompensatoryRequestScheduler: << importData >>
+activate CompensatoryRequestScheduler
+CompensatoryRequestScheduler -> CXFServlet: << instance >>
+deactivate CompensatoryRequestScheduler
+CXFServlet -> CompensatoryRequestSchedulerControllerImpl: importData(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerControllerImpl
+CompensatoryRequestSchedulerControllerImpl -> CompensatoryRequestSchedulerService: importData(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerService
+activate CompensatoryRequestSchedulerServiceImpl
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerServiceImpl: importData(:CompensatoryRequestScheduler)
+CompensatoryRequestSchedulerServiceImpl -> CompensatoryRequestSchedulerJPARepository: saveAll(:CompensatoryRequestScheduler)
+activate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerJPARepository -> EntityManager: save(:CompensatoryRequestScheduler)
+activate EntityManager
+EntityManager -> CompensatoryRequestSchedulerJPARepository: << persisted CompensatoryRequestScheduler >>
+deactivate EntityManager
+CompensatoryRequestSchedulerJPARepository -> CompensatoryRequestSchedulerServiceImpl: << persisted CompensatoryRequestScheduler >>
+CompensatoryRequestSchedulerServiceImpl -> CompensatoryRequestSchedulerService: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerJPARepository
+CompensatoryRequestSchedulerService -> CompensatoryRequestSchedulerControllerImpl: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerServiceImpl
+deactivate CompensatoryRequestSchedulerService
+CompensatoryRequestSchedulerControllerImpl -> CXFServlet: << persisted CompensatoryRequestScheduler >>
+deactivate CompensatoryRequestSchedulerControllerImpl
+CXFServlet -> User: marshalled CompensatoryRequestScheduler XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update TravelRequest Scenario
+participant User
+User -> CXFServlet: UPDATE, TravelRequest
+activate CXFServlet
+CXFServlet -> TravelRequest: << update >>
+activate TravelRequest
+TravelRequest -> CXFServlet: << instance >>
+deactivate TravelRequest
+CXFServlet -> TravelRequestControllerImpl: update(:TravelRequest)
+activate TravelRequestControllerImpl
+TravelRequestControllerImpl -> TravelRequestService: update(:TravelRequest)
+activate TravelRequestService
+TravelRequestService -> TravelRequestJPARepository: update(:TravelRequest)
+activate TravelRequestJPARepository
+TravelRequestJPARepository -> EntityManager: update(:TravelRequest)
+activate EntityManager
+EntityManager -> TravelRequestJPARepository: << persisted TravelRequest >>
+deactivate EntityManager
+TravelRequestJPARepository -> TravelRequestService: << persisted TravelRequest >>
+deactivate TravelRequestJPARepository
+TravelRequestService -> TravelRequestControllerImpl: << persisted TravelRequest >>
+deactivate TravelRequestService
+TravelRequestControllerImpl -> CXFServlet: << persisted TravelRequest >>
+deactivate TravelRequestControllerImpl
+CXFServlet -> User: marshalled TravelRequest XML
+deactivate CXFServlet
+@enduml

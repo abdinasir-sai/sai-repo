@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template HrLetters Scenario
+participant User
+User -> CXFServlet: HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << downloadTemplate >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersController: downloadTemplate(:String fileName)
+activate HrLettersController
+HrLettersController -> HrLettersControllerImpl: ResponseBuilder(workbook,fileName)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersController: response(:ResponseEntity)
+deactivate HrLettersControllerImpl
+HrLettersController -> CXFServlet: << HrLetters  >>
+deactivate HrLettersController
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

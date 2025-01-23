@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById Applicable Scenario
+participant User
+User -> CXFServlet: GET, Applicable
+activate CXFServlet
+CXFServlet -> Applicable: << findById >>
+activate Applicable
+Applicable -> CXFServlet: << instance >>
+deactivate Applicable
+CXFServlet -> ApplicableControllerImpl: findById(:int)
+activate ApplicableControllerImpl
+ApplicableControllerImpl -> ApplicableService: findById(:int)
+activate ApplicableService
+ApplicableService -> ApplicableJPARepository: findById(:int)
+activate ApplicableJPARepository
+ApplicableJPARepository -> EntityManager: response(:Applicable)
+activate EntityManager
+EntityManager -> ApplicableJPARepository: << persisted Applicable >>
+deactivate EntityManager
+ApplicableJPARepository -> ApplicableService: << persisted Applicable >>
+deactivate ApplicableJPARepository
+ApplicableService -> ApplicableControllerImpl: << persisted Applicable >>
+deactivate ApplicableService
+ApplicableControllerImpl -> CXFServlet: << persisted Applicable >>
+deactivate ApplicableControllerImpl
+CXFServlet -> User: marshalled Applicable XML
+deactivate CXFServlet
+@enduml

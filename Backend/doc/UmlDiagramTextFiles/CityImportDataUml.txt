@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data City Scenario
+participant User
+User -> CXFServlet: POST, City
+activate CXFServlet
+CXFServlet -> City: << importData >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: importData(:City)
+activate CityControllerImpl
+CityControllerImpl -> CityService: importData(:City)
+activate CityService
+activate CityServiceImpl
+CityService -> CityServiceImpl: importData(:City)
+CityServiceImpl -> CityJPARepository: saveAll(:City)
+activate CityJPARepository
+CityJPARepository -> EntityManager: save(:City)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted City >>
+deactivate EntityManager
+CityJPARepository -> CityServiceImpl: << persisted City >>
+CityServiceImpl -> CityService: << persisted City >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted City >>
+deactivate CityServiceImpl
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted City >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

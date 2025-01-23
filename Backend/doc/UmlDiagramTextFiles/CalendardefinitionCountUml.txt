@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count CalendarDefinition Scenario
+participant User
+User -> CXFServlet: GET, CalendarDefinition
+activate CXFServlet
+CXFServlet -> CalendarDefinition: << count >>
+activate CalendarDefinition
+CalendarDefinition -> CXFServlet: << instance >>
+deactivate CalendarDefinition
+CXFServlet -> CalendarDefinitionControllerImpl: count(:CalendarDefinition)
+activate CalendarDefinitionControllerImpl
+CalendarDefinitionControllerImpl -> CalendarDefinitionService: count(:CalendarDefinition)
+activate CalendarDefinitionService
+CalendarDefinitionService -> CalendarDefinitionJPARepository: count(:CalendarDefinition)
+activate CalendarDefinitionJPARepository
+CalendarDefinitionJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> CalendarDefinitionJPARepository: << persisted Count >>
+deactivate EntityManager
+CalendarDefinitionJPARepository -> CalendarDefinitionService: << persisted Count >>
+deactivate CalendarDefinitionJPARepository
+CalendarDefinitionService -> CalendarDefinitionControllerImpl: << persisted Count >>
+deactivate CalendarDefinitionService
+CalendarDefinitionControllerImpl -> CXFServlet: << persisted Count >>
+deactivate CalendarDefinitionControllerImpl
+CXFServlet -> User: marshalled CalendarDefinition XML
+deactivate CXFServlet
+@enduml

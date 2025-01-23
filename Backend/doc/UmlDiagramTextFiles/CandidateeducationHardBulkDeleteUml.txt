@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete CandidateEducation Scenario
+participant User
+User -> CXFServlet: DELETE, CandidateEducation
+activate CXFServlet
+CXFServlet -> CandidateEducation: << bulkdelete >>
+activate CandidateEducation
+CandidateEducation -> CXFServlet: << instance >>
+deactivate CandidateEducation
+CXFServlet -> CandidateEducationControllerImpl: bulkdelete(:List<CandidateEducation>)
+activate CandidateEducationControllerImpl
+CandidateEducationControllerImpl -> CandidateEducationService: bulkDelete(:List<CandidateEducation>)
+activate CandidateEducationService
+CandidateEducationService -> CandidateEducationJPARepository: deleteAll(:List<CandidateEducation>)
+activate CandidateEducationJPARepository
+CandidateEducationJPARepository -> EntityManager: delete(:List<CandidateEducation>)
+activate EntityManager
+EntityManager -> CandidateEducationJPARepository: << persisted CandidateEducation >>
+deactivate EntityManager
+CandidateEducationJPARepository -> CandidateEducationService: << persisted CandidateEducation >>
+deactivate CandidateEducationJPARepository
+CandidateEducationService -> CandidateEducationControllerImpl: << persisted CandidateEducation >>
+deactivate CandidateEducationService
+CandidateEducationControllerImpl -> CXFServlet: << persisted CandidateEducation >>
+deactivate CandidateEducationControllerImpl
+CXFServlet -> User: marshalled CandidateEducation XML
+deactivate CXFServlet
+@enduml

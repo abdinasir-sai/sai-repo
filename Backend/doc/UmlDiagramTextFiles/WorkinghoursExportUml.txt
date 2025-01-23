@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data WorkingHours Scenario
+participant User
+User -> CXFServlet: WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << export >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursControllerImpl: export(:WorkingHours)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursService: search(:WorkingHours)
+activate WorkingHoursService
+WorkingHoursService -> WorkingHoursJPARepository: search(:WorkingHours)
+activate WorkingHoursJPARepository
+WorkingHoursJPARepository -> EntityManager: save(:WorkingHours)
+activate EntityManager
+EntityManager -> WorkingHoursJPARepository: << persisted WorkingHours >>
+deactivate EntityManager
+WorkingHoursJPARepository -> WorkingHoursService: << persisted WorkingHours >>
+deactivate WorkingHoursJPARepository
+WorkingHoursService -> WorkingHoursControllerImpl: response(:List<WorkingHours>)
+WorkingHoursControllerImpl -> WorkingHoursService: export(:WorkingHours)
+WorkingHoursService -> WorkingHoursControllerImpl: << persisted WorkingHours.xlsx >>
+deactivate WorkingHoursService
+WorkingHoursControllerImpl -> CXFServlet: << persisted WorkingHours.xlsx >>
+deactivate WorkingHoursControllerImpl
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create Location Scenario
+participant User
+User -> CXFServlet: POST, Location
+activate CXFServlet
+CXFServlet -> Location: << create >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: create(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: create(:Location)
+activate LocationService
+LocationService -> LocationJPARepository: create(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: save(:Location)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Location >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted Location >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted Location >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Location >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

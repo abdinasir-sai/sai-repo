@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History AttendanceRegularization Scenario
+participant User
+User -> CXFServlet: GET, AttendanceRegularization
+activate CXFServlet
+CXFServlet -> AttendanceRegularization: << auditHistory >>
+activate AttendanceRegularization
+AttendanceRegularization -> CXFServlet: << instance >>
+deactivate AttendanceRegularization
+CXFServlet -> AttendanceRegularizationControllerImpl: auditHistory(:AttendanceRegularization)
+activate AttendanceRegularizationControllerImpl
+AttendanceRegularizationControllerImpl -> AttendanceRegularizationService: auditHistory(:AttendanceRegularization)
+activate AttendanceRegularizationService
+AttendanceRegularizationService -> AttendanceRegularizationJPARepository: auditHistory(:AttendanceRegularization)
+activate AttendanceRegularizationJPARepository
+AttendanceRegularizationJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> AttendanceRegularizationJPARepository: << persisted AttendanceRegularizationAuditHistory >>
+deactivate EntityManager
+AttendanceRegularizationJPARepository -> AttendanceRegularizationService: << persisted AttendanceRegularizationAuditHistory >>
+deactivate AttendanceRegularizationJPARepository
+AttendanceRegularizationService -> AttendanceRegularizationControllerImpl: << persisted AttendanceRegularizationAuditHistory >>
+deactivate AttendanceRegularizationService
+AttendanceRegularizationControllerImpl -> CXFServlet: << persisted AttendanceRegularizationAuditHistory >>
+deactivate AttendanceRegularizationControllerImpl
+CXFServlet -> User: marshalled AttendanceRegularization XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data EmployeeWorkExperience Scenario
+participant User
+User -> CXFServlet: EmployeeWorkExperience
+activate CXFServlet
+CXFServlet -> EmployeeWorkExperience: << export >>
+activate EmployeeWorkExperience
+EmployeeWorkExperience -> CXFServlet: << instance >>
+deactivate EmployeeWorkExperience
+CXFServlet -> EmployeeWorkExperienceControllerImpl: export(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceControllerImpl
+EmployeeWorkExperienceControllerImpl -> EmployeeWorkExperienceService: search(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceService
+EmployeeWorkExperienceService -> EmployeeWorkExperienceJPARepository: search(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceJPARepository -> EntityManager: save(:EmployeeWorkExperience)
+activate EntityManager
+EntityManager -> EmployeeWorkExperienceJPARepository: << persisted EmployeeWorkExperience >>
+deactivate EntityManager
+EmployeeWorkExperienceJPARepository -> EmployeeWorkExperienceService: << persisted EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceService -> EmployeeWorkExperienceControllerImpl: response(:List<EmployeeWorkExperience>)
+EmployeeWorkExperienceControllerImpl -> EmployeeWorkExperienceService: export(:EmployeeWorkExperience)
+EmployeeWorkExperienceService -> EmployeeWorkExperienceControllerImpl: << persisted EmployeeWorkExperience.xlsx >>
+deactivate EmployeeWorkExperienceService
+EmployeeWorkExperienceControllerImpl -> CXFServlet: << persisted EmployeeWorkExperience.xlsx >>
+deactivate EmployeeWorkExperienceControllerImpl
+CXFServlet -> User: marshalled EmployeeWorkExperience XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data TimeLogs Scenario
+participant User
+User -> CXFServlet: POST, TimeLogs
+activate CXFServlet
+CXFServlet -> TimeLogs: << importData >>
+activate TimeLogs
+TimeLogs -> CXFServlet: << instance >>
+deactivate TimeLogs
+CXFServlet -> TimeLogsControllerImpl: importData(:TimeLogs)
+activate TimeLogsControllerImpl
+TimeLogsControllerImpl -> TimeLogsService: importData(:TimeLogs)
+activate TimeLogsService
+activate TimeLogsServiceImpl
+TimeLogsService -> TimeLogsServiceImpl: importData(:TimeLogs)
+TimeLogsServiceImpl -> TimeLogsJPARepository: saveAll(:TimeLogs)
+activate TimeLogsJPARepository
+TimeLogsJPARepository -> EntityManager: save(:TimeLogs)
+activate EntityManager
+EntityManager -> TimeLogsJPARepository: << persisted TimeLogs >>
+deactivate EntityManager
+TimeLogsJPARepository -> TimeLogsServiceImpl: << persisted TimeLogs >>
+TimeLogsServiceImpl -> TimeLogsService: << persisted TimeLogs >>
+deactivate TimeLogsJPARepository
+TimeLogsService -> TimeLogsControllerImpl: << persisted TimeLogs >>
+deactivate TimeLogsServiceImpl
+deactivate TimeLogsService
+TimeLogsControllerImpl -> CXFServlet: << persisted TimeLogs >>
+deactivate TimeLogsControllerImpl
+CXFServlet -> User: marshalled TimeLogs XML
+deactivate CXFServlet
+@enduml

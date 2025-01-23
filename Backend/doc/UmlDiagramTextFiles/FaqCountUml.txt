@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Faq Scenario
+participant User
+User -> CXFServlet: GET, Faq
+activate CXFServlet
+CXFServlet -> Faq: << count >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: count(:Faq)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: count(:Faq)
+activate FaqService
+FaqService -> FaqJPARepository: count(:Faq)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted Count >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted Count >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted Count >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted Count >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

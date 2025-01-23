@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Create CalendarDefinition Scenario
+participant User
+User -> CXFServlet: POST, CalendarDefinition
+activate CXFServlet
+CXFServlet -> CalendarDefinition: << create >>
+activate CalendarDefinition
+CalendarDefinition -> CXFServlet: << instance >>
+deactivate CalendarDefinition
+CXFServlet -> CalendarDefinitionControllerImpl: create(:CalendarDefinition)
+activate CalendarDefinitionControllerImpl
+CalendarDefinitionControllerImpl -> CalendarDefinitionService: create(:CalendarDefinition)
+activate CalendarDefinitionService
+CalendarDefinitionService -> CalendarDefinitionJPARepository: create(:CalendarDefinition)
+activate CalendarDefinitionJPARepository
+CalendarDefinitionJPARepository -> EntityManager: save(:CalendarDefinition)
+activate EntityManager
+EntityManager -> CalendarDefinitionJPARepository: << persisted CalendarDefinition >>
+deactivate EntityManager
+CalendarDefinitionJPARepository -> CalendarDefinitionService: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionJPARepository
+CalendarDefinitionService -> CalendarDefinitionControllerImpl: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionService
+CalendarDefinitionControllerImpl -> CXFServlet: << persisted CalendarDefinition >>
+deactivate CalendarDefinitionControllerImpl
+CXFServlet -> User: marshalled CalendarDefinition XML
+deactivate CXFServlet
+@enduml

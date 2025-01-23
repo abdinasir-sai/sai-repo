@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Breakdetails Scenario
+participant User
+User -> CXFServlet: DELETE, Breakdetails
+activate CXFServlet
+CXFServlet -> Breakdetails: << bulkdelete >>
+activate Breakdetails
+Breakdetails -> CXFServlet: << instance >>
+deactivate Breakdetails
+CXFServlet -> BreakdetailsControllerImpl: bulkdelete(:List<Breakdetails>)
+activate BreakdetailsControllerImpl
+BreakdetailsControllerImpl -> BreakdetailsService: bulkDelete(:List<Breakdetails>)
+activate BreakdetailsService
+BreakdetailsService -> BreakdetailsJPARepository: deleteAll(:List<Breakdetails>)
+activate BreakdetailsJPARepository
+BreakdetailsJPARepository -> EntityManager: delete(:List<Breakdetails>)
+activate EntityManager
+EntityManager -> BreakdetailsJPARepository: << persisted Breakdetails >>
+deactivate EntityManager
+BreakdetailsJPARepository -> BreakdetailsService: << persisted Breakdetails >>
+deactivate BreakdetailsJPARepository
+BreakdetailsService -> BreakdetailsControllerImpl: << persisted Breakdetails >>
+deactivate BreakdetailsService
+BreakdetailsControllerImpl -> CXFServlet: << persisted Breakdetails >>
+deactivate BreakdetailsControllerImpl
+CXFServlet -> User: marshalled Breakdetails XML
+deactivate CXFServlet
+@enduml

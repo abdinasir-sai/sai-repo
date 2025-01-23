@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Holiday Scenario
+participant User
+User -> CXFServlet: Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << downloadTemplate >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayController: downloadTemplate(:String fileName)
+activate HolidayController
+HolidayController -> HolidayControllerImpl: ResponseBuilder(workbook,fileName)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayController: response(:ResponseEntity)
+deactivate HolidayControllerImpl
+HolidayController -> CXFServlet: << Holiday  >>
+deactivate HolidayController
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

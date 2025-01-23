@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template CandidateExperience Scenario
+participant User
+User -> CXFServlet: CandidateExperience
+activate CXFServlet
+CXFServlet -> CandidateExperience: << downloadTemplate >>
+activate CandidateExperience
+CandidateExperience -> CXFServlet: << instance >>
+deactivate CandidateExperience
+CXFServlet -> CandidateExperienceController: downloadTemplate(:String fileName)
+activate CandidateExperienceController
+CandidateExperienceController -> CandidateExperienceControllerImpl: ResponseBuilder(workbook,fileName)
+activate CandidateExperienceControllerImpl
+CandidateExperienceControllerImpl -> CandidateExperienceController: response(:ResponseEntity)
+deactivate CandidateExperienceControllerImpl
+CandidateExperienceController -> CXFServlet: << CandidateExperience  >>
+deactivate CandidateExperienceController
+CXFServlet -> User: marshalled CandidateExperience XML
+deactivate CXFServlet
+@enduml

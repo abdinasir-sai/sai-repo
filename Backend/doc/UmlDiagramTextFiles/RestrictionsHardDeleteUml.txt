@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Restrictions Scenario
+participant User
+User -> CXFServlet: DELETE, Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << delete >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsControllerImpl: delete(:Restrictions)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsService: deleteById(:Restrictions)
+activate RestrictionsService
+RestrictionsService -> RestrictionsJPARepository: deleteById(:Restrictions)
+activate RestrictionsJPARepository
+RestrictionsJPARepository -> EntityManager: delete(:Restrictions)
+activate EntityManager
+EntityManager -> RestrictionsJPARepository: << persisted Restrictions >>
+deactivate EntityManager
+RestrictionsJPARepository -> RestrictionsService: << persisted Restrictions >>
+deactivate RestrictionsJPARepository
+RestrictionsService -> RestrictionsControllerImpl: << persisted Restrictions >>
+deactivate RestrictionsService
+RestrictionsControllerImpl -> CXFServlet: << persisted Restrictions >>
+deactivate RestrictionsControllerImpl
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

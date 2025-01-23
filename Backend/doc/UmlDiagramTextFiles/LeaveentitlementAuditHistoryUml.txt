@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History LeaveEntitlement Scenario
+participant User
+User -> CXFServlet: GET, LeaveEntitlement
+activate CXFServlet
+CXFServlet -> LeaveEntitlement: << auditHistory >>
+activate LeaveEntitlement
+LeaveEntitlement -> CXFServlet: << instance >>
+deactivate LeaveEntitlement
+CXFServlet -> LeaveEntitlementControllerImpl: auditHistory(:LeaveEntitlement)
+activate LeaveEntitlementControllerImpl
+LeaveEntitlementControllerImpl -> LeaveEntitlementService: auditHistory(:LeaveEntitlement)
+activate LeaveEntitlementService
+LeaveEntitlementService -> LeaveEntitlementJPARepository: auditHistory(:LeaveEntitlement)
+activate LeaveEntitlementJPARepository
+LeaveEntitlementJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> LeaveEntitlementJPARepository: << persisted LeaveEntitlementAuditHistory >>
+deactivate EntityManager
+LeaveEntitlementJPARepository -> LeaveEntitlementService: << persisted LeaveEntitlementAuditHistory >>
+deactivate LeaveEntitlementJPARepository
+LeaveEntitlementService -> LeaveEntitlementControllerImpl: << persisted LeaveEntitlementAuditHistory >>
+deactivate LeaveEntitlementService
+LeaveEntitlementControllerImpl -> CXFServlet: << persisted LeaveEntitlementAuditHistory >>
+deactivate LeaveEntitlementControllerImpl
+CXFServlet -> User: marshalled LeaveEntitlement XML
+deactivate CXFServlet
+@enduml

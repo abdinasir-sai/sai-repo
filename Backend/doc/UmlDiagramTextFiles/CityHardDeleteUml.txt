@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById City Scenario
+participant User
+User -> CXFServlet: DELETE, City
+activate CXFServlet
+CXFServlet -> City: << delete >>
+activate City
+City -> CXFServlet: << instance >>
+deactivate City
+CXFServlet -> CityControllerImpl: delete(:City)
+activate CityControllerImpl
+CityControllerImpl -> CityService: deleteById(:City)
+activate CityService
+CityService -> CityJPARepository: deleteById(:City)
+activate CityJPARepository
+CityJPARepository -> EntityManager: delete(:City)
+activate EntityManager
+EntityManager -> CityJPARepository: << persisted City >>
+deactivate EntityManager
+CityJPARepository -> CityService: << persisted City >>
+deactivate CityJPARepository
+CityService -> CityControllerImpl: << persisted City >>
+deactivate CityService
+CityControllerImpl -> CXFServlet: << persisted City >>
+deactivate CityControllerImpl
+CXFServlet -> User: marshalled City XML
+deactivate CXFServlet
+@enduml

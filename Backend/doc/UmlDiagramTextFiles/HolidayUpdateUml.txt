@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Holiday Scenario
+participant User
+User -> CXFServlet: UPDATE, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << update >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: update(:Holiday)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: update(:Holiday)
+activate HolidayService
+HolidayService -> HolidayJPARepository: update(:Holiday)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: update(:Holiday)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted Holiday >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayService: << persisted Holiday >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted Holiday >>
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted Holiday >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

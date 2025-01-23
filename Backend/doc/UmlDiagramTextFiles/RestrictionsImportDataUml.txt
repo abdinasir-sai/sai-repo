@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Restrictions Scenario
+participant User
+User -> CXFServlet: POST, Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << importData >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsControllerImpl: importData(:Restrictions)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsService: importData(:Restrictions)
+activate RestrictionsService
+activate RestrictionsServiceImpl
+RestrictionsService -> RestrictionsServiceImpl: importData(:Restrictions)
+RestrictionsServiceImpl -> RestrictionsJPARepository: saveAll(:Restrictions)
+activate RestrictionsJPARepository
+RestrictionsJPARepository -> EntityManager: save(:Restrictions)
+activate EntityManager
+EntityManager -> RestrictionsJPARepository: << persisted Restrictions >>
+deactivate EntityManager
+RestrictionsJPARepository -> RestrictionsServiceImpl: << persisted Restrictions >>
+RestrictionsServiceImpl -> RestrictionsService: << persisted Restrictions >>
+deactivate RestrictionsJPARepository
+RestrictionsService -> RestrictionsControllerImpl: << persisted Restrictions >>
+deactivate RestrictionsServiceImpl
+deactivate RestrictionsService
+RestrictionsControllerImpl -> CXFServlet: << persisted Restrictions >>
+deactivate RestrictionsControllerImpl
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Skill Scenario
+participant User
+User -> CXFServlet: GET, Skill
+activate CXFServlet
+CXFServlet -> Skill: << auditHistory >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: auditHistory(:Skill)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: auditHistory(:Skill)
+activate SkillService
+SkillService -> SkillJPARepository: auditHistory(:Skill)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted SkillAuditHistory >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted SkillAuditHistory >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted SkillAuditHistory >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted SkillAuditHistory >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

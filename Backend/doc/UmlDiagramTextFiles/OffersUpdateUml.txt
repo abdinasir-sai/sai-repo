@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Offers Scenario
+participant User
+User -> CXFServlet: UPDATE, Offers
+activate CXFServlet
+CXFServlet -> Offers: << update >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: update(:Offers)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: update(:Offers)
+activate OffersService
+OffersService -> OffersJPARepository: update(:Offers)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: update(:Offers)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted Offers >>
+deactivate EntityManager
+OffersJPARepository -> OffersService: << persisted Offers >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: << persisted Offers >>
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted Offers >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

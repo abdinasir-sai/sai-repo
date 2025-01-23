@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Interview Scenario
+participant User
+User -> CXFServlet: DELETE, Interview
+activate CXFServlet
+CXFServlet -> Interview: << delete >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: delete(:Interview)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: deleteById(:Interview)
+activate InterviewService
+InterviewService -> InterviewJPARepository: deleteById(:Interview)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: delete(:Interview)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted Interview >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted Interview >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

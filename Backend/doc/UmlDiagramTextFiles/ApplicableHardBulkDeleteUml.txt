@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Applicable Scenario
+participant User
+User -> CXFServlet: DELETE, Applicable
+activate CXFServlet
+CXFServlet -> Applicable: << bulkdelete >>
+activate Applicable
+Applicable -> CXFServlet: << instance >>
+deactivate Applicable
+CXFServlet -> ApplicableControllerImpl: bulkdelete(:List<Applicable>)
+activate ApplicableControllerImpl
+ApplicableControllerImpl -> ApplicableService: bulkDelete(:List<Applicable>)
+activate ApplicableService
+ApplicableService -> ApplicableJPARepository: deleteAll(:List<Applicable>)
+activate ApplicableJPARepository
+ApplicableJPARepository -> EntityManager: delete(:List<Applicable>)
+activate EntityManager
+EntityManager -> ApplicableJPARepository: << persisted Applicable >>
+deactivate EntityManager
+ApplicableJPARepository -> ApplicableService: << persisted Applicable >>
+deactivate ApplicableJPARepository
+ApplicableService -> ApplicableControllerImpl: << persisted Applicable >>
+deactivate ApplicableService
+ApplicableControllerImpl -> CXFServlet: << persisted Applicable >>
+deactivate ApplicableControllerImpl
+CXFServlet -> User: marshalled Applicable XML
+deactivate CXFServlet
+@enduml

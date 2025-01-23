@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Restrictions Scenario
+participant User
+User -> CXFServlet: GET, Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << auditHistory >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsControllerImpl: auditHistory(:Restrictions)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsService: auditHistory(:Restrictions)
+activate RestrictionsService
+RestrictionsService -> RestrictionsJPARepository: auditHistory(:Restrictions)
+activate RestrictionsJPARepository
+RestrictionsJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> RestrictionsJPARepository: << persisted RestrictionsAuditHistory >>
+deactivate EntityManager
+RestrictionsJPARepository -> RestrictionsService: << persisted RestrictionsAuditHistory >>
+deactivate RestrictionsJPARepository
+RestrictionsService -> RestrictionsControllerImpl: << persisted RestrictionsAuditHistory >>
+deactivate RestrictionsService
+RestrictionsControllerImpl -> CXFServlet: << persisted RestrictionsAuditHistory >>
+deactivate RestrictionsControllerImpl
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

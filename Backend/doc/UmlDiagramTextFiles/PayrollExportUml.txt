@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Payroll Scenario
+participant User
+User -> CXFServlet: Payroll
+activate CXFServlet
+CXFServlet -> Payroll: << export >>
+activate Payroll
+Payroll -> CXFServlet: << instance >>
+deactivate Payroll
+CXFServlet -> PayrollControllerImpl: export(:Payroll)
+activate PayrollControllerImpl
+PayrollControllerImpl -> PayrollService: search(:Payroll)
+activate PayrollService
+PayrollService -> PayrollJPARepository: search(:Payroll)
+activate PayrollJPARepository
+PayrollJPARepository -> EntityManager: save(:Payroll)
+activate EntityManager
+EntityManager -> PayrollJPARepository: << persisted Payroll >>
+deactivate EntityManager
+PayrollJPARepository -> PayrollService: << persisted Payroll >>
+deactivate PayrollJPARepository
+PayrollService -> PayrollControllerImpl: response(:List<Payroll>)
+PayrollControllerImpl -> PayrollService: export(:Payroll)
+PayrollService -> PayrollControllerImpl: << persisted Payroll.xlsx >>
+deactivate PayrollService
+PayrollControllerImpl -> CXFServlet: << persisted Payroll.xlsx >>
+deactivate PayrollControllerImpl
+CXFServlet -> User: marshalled Payroll XML
+deactivate CXFServlet
+@enduml

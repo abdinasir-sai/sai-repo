@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById EmployeeWorkExperience Scenario
+participant User
+User -> CXFServlet: GET, EmployeeWorkExperience
+activate CXFServlet
+CXFServlet -> EmployeeWorkExperience: << findAllById >>
+activate EmployeeWorkExperience
+EmployeeWorkExperience -> CXFServlet: << instance >>
+deactivate EmployeeWorkExperience
+CXFServlet -> EmployeeWorkExperienceControllerImpl: findAllById(:List<EmployeeWorkExperience> id)
+activate EmployeeWorkExperienceControllerImpl
+EmployeeWorkExperienceControllerImpl -> EmployeeWorkExperienceService: findAllById(:List<EmployeeWorkExperience> id)
+activate EmployeeWorkExperienceService
+EmployeeWorkExperienceService -> EmployeeWorkExperienceJPARepository: findAllById(:List<EmployeeWorkExperience> id)
+activate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceJPARepository -> EntityManager: response(:List<EmployeeWorkExperience>findAllById)
+activate EntityManager
+EntityManager -> EmployeeWorkExperienceJPARepository: << persisted List EmployeeWorkExperience >>
+deactivate EntityManager
+EmployeeWorkExperienceJPARepository -> EmployeeWorkExperienceService: << persisted List EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceService -> EmployeeWorkExperienceControllerImpl: << persisted List EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceService
+EmployeeWorkExperienceControllerImpl -> CXFServlet: << persisted List EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceControllerImpl
+CXFServlet -> User: marshalled EmployeeWorkExperience XML
+deactivate CXFServlet
+@enduml

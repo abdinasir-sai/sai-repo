@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Skill Scenario
+participant User
+User -> CXFServlet: Skill
+activate CXFServlet
+CXFServlet -> Skill: << export >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: export(:Skill)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: search(:Skill)
+activate SkillService
+SkillService -> SkillJPARepository: search(:Skill)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: save(:Skill)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted Skill >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted Skill >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: response(:List<Skill>)
+SkillControllerImpl -> SkillService: export(:Skill)
+SkillService -> SkillControllerImpl: << persisted Skill.xlsx >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted Skill.xlsx >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

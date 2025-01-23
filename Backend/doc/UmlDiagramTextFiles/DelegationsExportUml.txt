@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Delegations Scenario
+participant User
+User -> CXFServlet: Delegations
+activate CXFServlet
+CXFServlet -> Delegations: << export >>
+activate Delegations
+Delegations -> CXFServlet: << instance >>
+deactivate Delegations
+CXFServlet -> DelegationsControllerImpl: export(:Delegations)
+activate DelegationsControllerImpl
+DelegationsControllerImpl -> DelegationsService: search(:Delegations)
+activate DelegationsService
+DelegationsService -> DelegationsJPARepository: search(:Delegations)
+activate DelegationsJPARepository
+DelegationsJPARepository -> EntityManager: save(:Delegations)
+activate EntityManager
+EntityManager -> DelegationsJPARepository: << persisted Delegations >>
+deactivate EntityManager
+DelegationsJPARepository -> DelegationsService: << persisted Delegations >>
+deactivate DelegationsJPARepository
+DelegationsService -> DelegationsControllerImpl: response(:List<Delegations>)
+DelegationsControllerImpl -> DelegationsService: export(:Delegations)
+DelegationsService -> DelegationsControllerImpl: << persisted Delegations.xlsx >>
+deactivate DelegationsService
+DelegationsControllerImpl -> CXFServlet: << persisted Delegations.xlsx >>
+deactivate DelegationsControllerImpl
+CXFServlet -> User: marshalled Delegations XML
+deactivate CXFServlet
+@enduml

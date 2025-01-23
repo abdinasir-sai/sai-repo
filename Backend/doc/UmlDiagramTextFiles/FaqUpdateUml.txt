@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Faq Scenario
+participant User
+User -> CXFServlet: UPDATE, Faq
+activate CXFServlet
+CXFServlet -> Faq: << update >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: update(:Faq)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: update(:Faq)
+activate FaqService
+FaqService -> FaqJPARepository: update(:Faq)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: update(:Faq)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted Faq >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted Faq >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted Faq >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted Faq >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

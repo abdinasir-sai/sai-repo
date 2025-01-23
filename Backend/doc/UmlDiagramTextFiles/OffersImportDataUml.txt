@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Offers Scenario
+participant User
+User -> CXFServlet: POST, Offers
+activate CXFServlet
+CXFServlet -> Offers: << importData >>
+activate Offers
+Offers -> CXFServlet: << instance >>
+deactivate Offers
+CXFServlet -> OffersControllerImpl: importData(:Offers)
+activate OffersControllerImpl
+OffersControllerImpl -> OffersService: importData(:Offers)
+activate OffersService
+activate OffersServiceImpl
+OffersService -> OffersServiceImpl: importData(:Offers)
+OffersServiceImpl -> OffersJPARepository: saveAll(:Offers)
+activate OffersJPARepository
+OffersJPARepository -> EntityManager: save(:Offers)
+activate EntityManager
+EntityManager -> OffersJPARepository: << persisted Offers >>
+deactivate EntityManager
+OffersJPARepository -> OffersServiceImpl: << persisted Offers >>
+OffersServiceImpl -> OffersService: << persisted Offers >>
+deactivate OffersJPARepository
+OffersService -> OffersControllerImpl: << persisted Offers >>
+deactivate OffersServiceImpl
+deactivate OffersService
+OffersControllerImpl -> CXFServlet: << persisted Offers >>
+deactivate OffersControllerImpl
+CXFServlet -> User: marshalled Offers XML
+deactivate CXFServlet
+@enduml

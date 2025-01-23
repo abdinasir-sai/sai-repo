@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count ExitDetails Scenario
+participant User
+User -> CXFServlet: GET, ExitDetails
+activate CXFServlet
+CXFServlet -> ExitDetails: << count >>
+activate ExitDetails
+ExitDetails -> CXFServlet: << instance >>
+deactivate ExitDetails
+CXFServlet -> ExitDetailsControllerImpl: count(:ExitDetails)
+activate ExitDetailsControllerImpl
+ExitDetailsControllerImpl -> ExitDetailsService: count(:ExitDetails)
+activate ExitDetailsService
+ExitDetailsService -> ExitDetailsJPARepository: count(:ExitDetails)
+activate ExitDetailsJPARepository
+ExitDetailsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> ExitDetailsJPARepository: << persisted Count >>
+deactivate EntityManager
+ExitDetailsJPARepository -> ExitDetailsService: << persisted Count >>
+deactivate ExitDetailsJPARepository
+ExitDetailsService -> ExitDetailsControllerImpl: << persisted Count >>
+deactivate ExitDetailsService
+ExitDetailsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate ExitDetailsControllerImpl
+CXFServlet -> User: marshalled ExitDetails XML
+deactivate CXFServlet
+@enduml

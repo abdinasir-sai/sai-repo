@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Clients Scenario
+participant User
+User -> CXFServlet: Clients
+activate CXFServlet
+CXFServlet -> Clients: << export >>
+activate Clients
+Clients -> CXFServlet: << instance >>
+deactivate Clients
+CXFServlet -> ClientsControllerImpl: export(:Clients)
+activate ClientsControllerImpl
+ClientsControllerImpl -> ClientsService: search(:Clients)
+activate ClientsService
+ClientsService -> ClientsJPARepository: search(:Clients)
+activate ClientsJPARepository
+ClientsJPARepository -> EntityManager: save(:Clients)
+activate EntityManager
+EntityManager -> ClientsJPARepository: << persisted Clients >>
+deactivate EntityManager
+ClientsJPARepository -> ClientsService: << persisted Clients >>
+deactivate ClientsJPARepository
+ClientsService -> ClientsControllerImpl: response(:List<Clients>)
+ClientsControllerImpl -> ClientsService: export(:Clients)
+ClientsService -> ClientsControllerImpl: << persisted Clients.xlsx >>
+deactivate ClientsService
+ClientsControllerImpl -> CXFServlet: << persisted Clients.xlsx >>
+deactivate ClientsControllerImpl
+CXFServlet -> User: marshalled Clients XML
+deactivate CXFServlet
+@enduml

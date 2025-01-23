@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Audit History Asset Scenario
+participant User
+User -> CXFServlet: GET, Asset
+activate CXFServlet
+CXFServlet -> Asset: << auditHistory >>
+activate Asset
+Asset -> CXFServlet: << instance >>
+deactivate Asset
+CXFServlet -> AssetControllerImpl: auditHistory(:Asset)
+activate AssetControllerImpl
+AssetControllerImpl -> AssetService: auditHistory(:Asset)
+activate AssetService
+AssetService -> AssetJPARepository: auditHistory(:Asset)
+activate AssetJPARepository
+AssetJPARepository -> EntityManager: response(:int,Integer,Integer)
+activate EntityManager
+EntityManager -> AssetJPARepository: << persisted AssetAuditHistory >>
+deactivate EntityManager
+AssetJPARepository -> AssetService: << persisted AssetAuditHistory >>
+deactivate AssetJPARepository
+AssetService -> AssetControllerImpl: << persisted AssetAuditHistory >>
+deactivate AssetService
+AssetControllerImpl -> CXFServlet: << persisted AssetAuditHistory >>
+deactivate AssetControllerImpl
+CXFServlet -> User: marshalled Asset XML
+deactivate CXFServlet
+@enduml

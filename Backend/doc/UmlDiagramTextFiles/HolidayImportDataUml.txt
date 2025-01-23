@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Holiday Scenario
+participant User
+User -> CXFServlet: POST, Holiday
+activate CXFServlet
+CXFServlet -> Holiday: << importData >>
+activate Holiday
+Holiday -> CXFServlet: << instance >>
+deactivate Holiday
+CXFServlet -> HolidayControllerImpl: importData(:Holiday)
+activate HolidayControllerImpl
+HolidayControllerImpl -> HolidayService: importData(:Holiday)
+activate HolidayService
+activate HolidayServiceImpl
+HolidayService -> HolidayServiceImpl: importData(:Holiday)
+HolidayServiceImpl -> HolidayJPARepository: saveAll(:Holiday)
+activate HolidayJPARepository
+HolidayJPARepository -> EntityManager: save(:Holiday)
+activate EntityManager
+EntityManager -> HolidayJPARepository: << persisted Holiday >>
+deactivate EntityManager
+HolidayJPARepository -> HolidayServiceImpl: << persisted Holiday >>
+HolidayServiceImpl -> HolidayService: << persisted Holiday >>
+deactivate HolidayJPARepository
+HolidayService -> HolidayControllerImpl: << persisted Holiday >>
+deactivate HolidayServiceImpl
+deactivate HolidayService
+HolidayControllerImpl -> CXFServlet: << persisted Holiday >>
+deactivate HolidayControllerImpl
+CXFServlet -> User: marshalled Holiday XML
+deactivate CXFServlet
+@enduml

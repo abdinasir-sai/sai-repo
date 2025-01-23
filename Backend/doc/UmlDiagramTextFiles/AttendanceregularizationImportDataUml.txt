@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data AttendanceRegularization Scenario
+participant User
+User -> CXFServlet: POST, AttendanceRegularization
+activate CXFServlet
+CXFServlet -> AttendanceRegularization: << importData >>
+activate AttendanceRegularization
+AttendanceRegularization -> CXFServlet: << instance >>
+deactivate AttendanceRegularization
+CXFServlet -> AttendanceRegularizationControllerImpl: importData(:AttendanceRegularization)
+activate AttendanceRegularizationControllerImpl
+AttendanceRegularizationControllerImpl -> AttendanceRegularizationService: importData(:AttendanceRegularization)
+activate AttendanceRegularizationService
+activate AttendanceRegularizationServiceImpl
+AttendanceRegularizationService -> AttendanceRegularizationServiceImpl: importData(:AttendanceRegularization)
+AttendanceRegularizationServiceImpl -> AttendanceRegularizationJPARepository: saveAll(:AttendanceRegularization)
+activate AttendanceRegularizationJPARepository
+AttendanceRegularizationJPARepository -> EntityManager: save(:AttendanceRegularization)
+activate EntityManager
+EntityManager -> AttendanceRegularizationJPARepository: << persisted AttendanceRegularization >>
+deactivate EntityManager
+AttendanceRegularizationJPARepository -> AttendanceRegularizationServiceImpl: << persisted AttendanceRegularization >>
+AttendanceRegularizationServiceImpl -> AttendanceRegularizationService: << persisted AttendanceRegularization >>
+deactivate AttendanceRegularizationJPARepository
+AttendanceRegularizationService -> AttendanceRegularizationControllerImpl: << persisted AttendanceRegularization >>
+deactivate AttendanceRegularizationServiceImpl
+deactivate AttendanceRegularizationService
+AttendanceRegularizationControllerImpl -> CXFServlet: << persisted AttendanceRegularization >>
+deactivate AttendanceRegularizationControllerImpl
+CXFServlet -> User: marshalled AttendanceRegularization XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete TimeLogs Scenario
+participant User
+User -> CXFServlet: DELETE, TimeLogs
+activate CXFServlet
+CXFServlet -> TimeLogs: << bulkdelete >>
+activate TimeLogs
+TimeLogs -> CXFServlet: << instance >>
+deactivate TimeLogs
+CXFServlet -> TimeLogsControllerImpl: bulkdelete(:List<TimeLogs>)
+activate TimeLogsControllerImpl
+TimeLogsControllerImpl -> TimeLogsService: bulkDelete(:List<TimeLogs>)
+activate TimeLogsService
+TimeLogsService -> TimeLogsJPARepository: deleteAll(:List<TimeLogs>)
+activate TimeLogsJPARepository
+TimeLogsJPARepository -> EntityManager: delete(:List<TimeLogs>)
+activate EntityManager
+EntityManager -> TimeLogsJPARepository: << persisted TimeLogs >>
+deactivate EntityManager
+TimeLogsJPARepository -> TimeLogsService: << persisted TimeLogs >>
+deactivate TimeLogsJPARepository
+TimeLogsService -> TimeLogsControllerImpl: << persisted TimeLogs >>
+deactivate TimeLogsService
+TimeLogsControllerImpl -> CXFServlet: << persisted TimeLogs >>
+deactivate TimeLogsControllerImpl
+CXFServlet -> User: marshalled TimeLogs XML
+deactivate CXFServlet
+@enduml

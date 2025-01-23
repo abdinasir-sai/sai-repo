@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById AttendanceRegularization Scenario
+participant User
+User -> CXFServlet: DELETE, AttendanceRegularization
+activate CXFServlet
+CXFServlet -> AttendanceRegularization: << delete >>
+activate AttendanceRegularization
+AttendanceRegularization -> CXFServlet: << instance >>
+deactivate AttendanceRegularization
+CXFServlet -> AttendanceRegularizationControllerImpl: delete(:AttendanceRegularization)
+activate AttendanceRegularizationControllerImpl
+AttendanceRegularizationControllerImpl -> AttendanceRegularizationService: deleteById(:AttendanceRegularization)
+activate AttendanceRegularizationService
+AttendanceRegularizationService -> AttendanceRegularizationJPARepository: deleteById(:AttendanceRegularization)
+activate AttendanceRegularizationJPARepository
+AttendanceRegularizationJPARepository -> EntityManager: delete(:AttendanceRegularization)
+activate EntityManager
+EntityManager -> AttendanceRegularizationJPARepository: << persisted AttendanceRegularization >>
+deactivate EntityManager
+AttendanceRegularizationJPARepository -> AttendanceRegularizationService: << persisted AttendanceRegularization >>
+deactivate AttendanceRegularizationJPARepository
+AttendanceRegularizationService -> AttendanceRegularizationControllerImpl: << persisted AttendanceRegularization >>
+deactivate AttendanceRegularizationService
+AttendanceRegularizationControllerImpl -> CXFServlet: << persisted AttendanceRegularization >>
+deactivate AttendanceRegularizationControllerImpl
+CXFServlet -> User: marshalled AttendanceRegularization XML
+deactivate CXFServlet
+@enduml

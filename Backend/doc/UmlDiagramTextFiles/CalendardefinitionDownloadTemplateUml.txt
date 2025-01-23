@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template CalendarDefinition Scenario
+participant User
+User -> CXFServlet: CalendarDefinition
+activate CXFServlet
+CXFServlet -> CalendarDefinition: << downloadTemplate >>
+activate CalendarDefinition
+CalendarDefinition -> CXFServlet: << instance >>
+deactivate CalendarDefinition
+CXFServlet -> CalendarDefinitionController: downloadTemplate(:String fileName)
+activate CalendarDefinitionController
+CalendarDefinitionController -> CalendarDefinitionControllerImpl: ResponseBuilder(workbook,fileName)
+activate CalendarDefinitionControllerImpl
+CalendarDefinitionControllerImpl -> CalendarDefinitionController: response(:ResponseEntity)
+deactivate CalendarDefinitionControllerImpl
+CalendarDefinitionController -> CXFServlet: << CalendarDefinition  >>
+deactivate CalendarDefinitionController
+CXFServlet -> User: marshalled CalendarDefinition XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data HrLetters Scenario
+participant User
+User -> CXFServlet: HrLetters
+activate CXFServlet
+CXFServlet -> HrLetters: << export >>
+activate HrLetters
+HrLetters -> CXFServlet: << instance >>
+deactivate HrLetters
+CXFServlet -> HrLettersControllerImpl: export(:HrLetters)
+activate HrLettersControllerImpl
+HrLettersControllerImpl -> HrLettersService: search(:HrLetters)
+activate HrLettersService
+HrLettersService -> HrLettersJPARepository: search(:HrLetters)
+activate HrLettersJPARepository
+HrLettersJPARepository -> EntityManager: save(:HrLetters)
+activate EntityManager
+EntityManager -> HrLettersJPARepository: << persisted HrLetters >>
+deactivate EntityManager
+HrLettersJPARepository -> HrLettersService: << persisted HrLetters >>
+deactivate HrLettersJPARepository
+HrLettersService -> HrLettersControllerImpl: response(:List<HrLetters>)
+HrLettersControllerImpl -> HrLettersService: export(:HrLetters)
+HrLettersService -> HrLettersControllerImpl: << persisted HrLetters.xlsx >>
+deactivate HrLettersService
+HrLettersControllerImpl -> CXFServlet: << persisted HrLetters.xlsx >>
+deactivate HrLettersControllerImpl
+CXFServlet -> User: marshalled HrLetters XML
+deactivate CXFServlet
+@enduml

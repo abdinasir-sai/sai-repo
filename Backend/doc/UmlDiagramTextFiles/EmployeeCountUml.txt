@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Employee Scenario
+participant User
+User -> CXFServlet: GET, Employee
+activate CXFServlet
+CXFServlet -> Employee: << count >>
+activate Employee
+Employee -> CXFServlet: << instance >>
+deactivate Employee
+CXFServlet -> EmployeeControllerImpl: count(:Employee)
+activate EmployeeControllerImpl
+EmployeeControllerImpl -> EmployeeService: count(:Employee)
+activate EmployeeService
+EmployeeService -> EmployeeJPARepository: count(:Employee)
+activate EmployeeJPARepository
+EmployeeJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> EmployeeJPARepository: << persisted Count >>
+deactivate EntityManager
+EmployeeJPARepository -> EmployeeService: << persisted Count >>
+deactivate EmployeeJPARepository
+EmployeeService -> EmployeeControllerImpl: << persisted Count >>
+deactivate EmployeeService
+EmployeeControllerImpl -> CXFServlet: << persisted Count >>
+deactivate EmployeeControllerImpl
+CXFServlet -> User: marshalled Employee XML
+deactivate CXFServlet
+@enduml

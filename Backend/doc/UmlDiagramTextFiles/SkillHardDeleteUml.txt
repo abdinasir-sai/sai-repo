@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Skill Scenario
+participant User
+User -> CXFServlet: DELETE, Skill
+activate CXFServlet
+CXFServlet -> Skill: << delete >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: delete(:Skill)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: deleteById(:Skill)
+activate SkillService
+SkillService -> SkillJPARepository: deleteById(:Skill)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: delete(:Skill)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted Skill >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted Skill >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted Skill >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted Skill >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

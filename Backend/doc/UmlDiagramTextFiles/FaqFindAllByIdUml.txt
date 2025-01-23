@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Faq Scenario
+participant User
+User -> CXFServlet: GET, Faq
+activate CXFServlet
+CXFServlet -> Faq: << findAllById >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: findAllById(:List<Faq> id)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: findAllById(:List<Faq> id)
+activate FaqService
+FaqService -> FaqJPARepository: findAllById(:List<Faq> id)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: response(:List<Faq>findAllById)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted List Faq >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted List Faq >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted List Faq >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted List Faq >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

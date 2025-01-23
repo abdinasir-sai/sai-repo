@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Projects Scenario
+participant User
+User -> CXFServlet: DELETE, Projects
+activate CXFServlet
+CXFServlet -> Projects: << delete >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: delete(:Projects)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: deleteById(:Projects)
+activate ProjectsService
+ProjectsService -> ProjectsJPARepository: deleteById(:Projects)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: delete(:Projects)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: << persisted Projects >>
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

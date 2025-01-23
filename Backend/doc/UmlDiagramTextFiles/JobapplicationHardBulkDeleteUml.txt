@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete JobApplication Scenario
+participant User
+User -> CXFServlet: DELETE, JobApplication
+activate CXFServlet
+CXFServlet -> JobApplication: << bulkdelete >>
+activate JobApplication
+JobApplication -> CXFServlet: << instance >>
+deactivate JobApplication
+CXFServlet -> JobApplicationControllerImpl: bulkdelete(:List<JobApplication>)
+activate JobApplicationControllerImpl
+JobApplicationControllerImpl -> JobApplicationService: bulkDelete(:List<JobApplication>)
+activate JobApplicationService
+JobApplicationService -> JobApplicationJPARepository: deleteAll(:List<JobApplication>)
+activate JobApplicationJPARepository
+JobApplicationJPARepository -> EntityManager: delete(:List<JobApplication>)
+activate EntityManager
+EntityManager -> JobApplicationJPARepository: << persisted JobApplication >>
+deactivate EntityManager
+JobApplicationJPARepository -> JobApplicationService: << persisted JobApplication >>
+deactivate JobApplicationJPARepository
+JobApplicationService -> JobApplicationControllerImpl: << persisted JobApplication >>
+deactivate JobApplicationService
+JobApplicationControllerImpl -> CXFServlet: << persisted JobApplication >>
+deactivate JobApplicationControllerImpl
+CXFServlet -> User: marshalled JobApplication XML
+deactivate CXFServlet
+@enduml

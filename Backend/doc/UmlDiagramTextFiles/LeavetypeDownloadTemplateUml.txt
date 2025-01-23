@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template LeaveType Scenario
+participant User
+User -> CXFServlet: LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << downloadTemplate >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeController: downloadTemplate(:String fileName)
+activate LeaveTypeController
+LeaveTypeController -> LeaveTypeControllerImpl: ResponseBuilder(workbook,fileName)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeController: response(:ResponseEntity)
+deactivate LeaveTypeControllerImpl
+LeaveTypeController -> CXFServlet: << LeaveType  >>
+deactivate LeaveTypeController
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

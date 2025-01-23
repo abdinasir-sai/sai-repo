@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template SubContractor Scenario
+participant User
+User -> CXFServlet: SubContractor
+activate CXFServlet
+CXFServlet -> SubContractor: << downloadTemplate >>
+activate SubContractor
+SubContractor -> CXFServlet: << instance >>
+deactivate SubContractor
+CXFServlet -> SubContractorController: downloadTemplate(:String fileName)
+activate SubContractorController
+SubContractorController -> SubContractorControllerImpl: ResponseBuilder(workbook,fileName)
+activate SubContractorControllerImpl
+SubContractorControllerImpl -> SubContractorController: response(:ResponseEntity)
+deactivate SubContractorControllerImpl
+SubContractorController -> CXFServlet: << SubContractor  >>
+deactivate SubContractorController
+CXFServlet -> User: marshalled SubContractor XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template State Scenario
+participant User
+User -> CXFServlet: State
+activate CXFServlet
+CXFServlet -> State: << downloadTemplate >>
+activate State
+State -> CXFServlet: << instance >>
+deactivate State
+CXFServlet -> StateController: downloadTemplate(:String fileName)
+activate StateController
+StateController -> StateControllerImpl: ResponseBuilder(workbook,fileName)
+activate StateControllerImpl
+StateControllerImpl -> StateController: response(:ResponseEntity)
+deactivate StateControllerImpl
+StateController -> CXFServlet: << State  >>
+deactivate StateController
+CXFServlet -> User: marshalled State XML
+deactivate CXFServlet
+@enduml

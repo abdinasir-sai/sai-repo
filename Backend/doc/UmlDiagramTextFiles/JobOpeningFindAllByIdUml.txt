@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById JobOpening Scenario
+participant User
+User -> CXFServlet: GET, JobOpening
+activate CXFServlet
+CXFServlet -> JobOpening: << findAllById >>
+activate JobOpening
+JobOpening -> CXFServlet: << instance >>
+deactivate JobOpening
+CXFServlet -> JobOpeningControllerImpl: findAllById(:List<JobOpening> id)
+activate JobOpeningControllerImpl
+JobOpeningControllerImpl -> JobOpeningService: findAllById(:List<JobOpening> id)
+activate JobOpeningService
+JobOpeningService -> JobOpeningJPARepository: findAllById(:List<JobOpening> id)
+activate JobOpeningJPARepository
+JobOpeningJPARepository -> EntityManager: response(:List<JobOpening>findAllById)
+activate EntityManager
+EntityManager -> JobOpeningJPARepository: << persisted List JobOpening >>
+deactivate EntityManager
+JobOpeningJPARepository -> JobOpeningService: << persisted List JobOpening >>
+deactivate JobOpeningJPARepository
+JobOpeningService -> JobOpeningControllerImpl: << persisted List JobOpening >>
+deactivate JobOpeningService
+JobOpeningControllerImpl -> CXFServlet: << persisted List JobOpening >>
+deactivate JobOpeningControllerImpl
+CXFServlet -> User: marshalled JobOpening XML
+deactivate CXFServlet
+@enduml

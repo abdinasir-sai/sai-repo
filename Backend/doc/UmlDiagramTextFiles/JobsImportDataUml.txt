@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Jobs Scenario
+participant User
+User -> CXFServlet: POST, Jobs
+activate CXFServlet
+CXFServlet -> Jobs: << importData >>
+activate Jobs
+Jobs -> CXFServlet: << instance >>
+deactivate Jobs
+CXFServlet -> JobsControllerImpl: importData(:Jobs)
+activate JobsControllerImpl
+JobsControllerImpl -> JobsService: importData(:Jobs)
+activate JobsService
+activate JobsServiceImpl
+JobsService -> JobsServiceImpl: importData(:Jobs)
+JobsServiceImpl -> JobsJPARepository: saveAll(:Jobs)
+activate JobsJPARepository
+JobsJPARepository -> EntityManager: save(:Jobs)
+activate EntityManager
+EntityManager -> JobsJPARepository: << persisted Jobs >>
+deactivate EntityManager
+JobsJPARepository -> JobsServiceImpl: << persisted Jobs >>
+JobsServiceImpl -> JobsService: << persisted Jobs >>
+deactivate JobsJPARepository
+JobsService -> JobsControllerImpl: << persisted Jobs >>
+deactivate JobsServiceImpl
+deactivate JobsService
+JobsControllerImpl -> CXFServlet: << persisted Jobs >>
+deactivate JobsControllerImpl
+CXFServlet -> User: marshalled Jobs XML
+deactivate CXFServlet
+@enduml

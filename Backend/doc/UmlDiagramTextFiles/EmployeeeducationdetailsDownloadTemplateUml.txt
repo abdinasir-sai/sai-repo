@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Employeeeducationdetails Scenario
+participant User
+User -> CXFServlet: Employeeeducationdetails
+activate CXFServlet
+CXFServlet -> Employeeeducationdetails: << downloadTemplate >>
+activate Employeeeducationdetails
+Employeeeducationdetails -> CXFServlet: << instance >>
+deactivate Employeeeducationdetails
+CXFServlet -> EmployeeeducationdetailsController: downloadTemplate(:String fileName)
+activate EmployeeeducationdetailsController
+EmployeeeducationdetailsController -> EmployeeeducationdetailsControllerImpl: ResponseBuilder(workbook,fileName)
+activate EmployeeeducationdetailsControllerImpl
+EmployeeeducationdetailsControllerImpl -> EmployeeeducationdetailsController: response(:ResponseEntity)
+deactivate EmployeeeducationdetailsControllerImpl
+EmployeeeducationdetailsController -> CXFServlet: << Employeeeducationdetails  >>
+deactivate EmployeeeducationdetailsController
+CXFServlet -> User: marshalled Employeeeducationdetails XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data CompanyDetails Scenario
+participant User
+User -> CXFServlet: POST, CompanyDetails
+activate CXFServlet
+CXFServlet -> CompanyDetails: << importData >>
+activate CompanyDetails
+CompanyDetails -> CXFServlet: << instance >>
+deactivate CompanyDetails
+CXFServlet -> CompanyDetailsControllerImpl: importData(:CompanyDetails)
+activate CompanyDetailsControllerImpl
+CompanyDetailsControllerImpl -> CompanyDetailsService: importData(:CompanyDetails)
+activate CompanyDetailsService
+activate CompanyDetailsServiceImpl
+CompanyDetailsService -> CompanyDetailsServiceImpl: importData(:CompanyDetails)
+CompanyDetailsServiceImpl -> CompanyDetailsJPARepository: saveAll(:CompanyDetails)
+activate CompanyDetailsJPARepository
+CompanyDetailsJPARepository -> EntityManager: save(:CompanyDetails)
+activate EntityManager
+EntityManager -> CompanyDetailsJPARepository: << persisted CompanyDetails >>
+deactivate EntityManager
+CompanyDetailsJPARepository -> CompanyDetailsServiceImpl: << persisted CompanyDetails >>
+CompanyDetailsServiceImpl -> CompanyDetailsService: << persisted CompanyDetails >>
+deactivate CompanyDetailsJPARepository
+CompanyDetailsService -> CompanyDetailsControllerImpl: << persisted CompanyDetails >>
+deactivate CompanyDetailsServiceImpl
+deactivate CompanyDetailsService
+CompanyDetailsControllerImpl -> CXFServlet: << persisted CompanyDetails >>
+deactivate CompanyDetailsControllerImpl
+CXFServlet -> User: marshalled CompanyDetails XML
+deactivate CXFServlet
+@enduml

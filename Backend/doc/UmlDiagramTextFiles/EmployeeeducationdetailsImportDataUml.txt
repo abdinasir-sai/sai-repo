@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data Employeeeducationdetails Scenario
+participant User
+User -> CXFServlet: POST, Employeeeducationdetails
+activate CXFServlet
+CXFServlet -> Employeeeducationdetails: << importData >>
+activate Employeeeducationdetails
+Employeeeducationdetails -> CXFServlet: << instance >>
+deactivate Employeeeducationdetails
+CXFServlet -> EmployeeeducationdetailsControllerImpl: importData(:Employeeeducationdetails)
+activate EmployeeeducationdetailsControllerImpl
+EmployeeeducationdetailsControllerImpl -> EmployeeeducationdetailsService: importData(:Employeeeducationdetails)
+activate EmployeeeducationdetailsService
+activate EmployeeeducationdetailsServiceImpl
+EmployeeeducationdetailsService -> EmployeeeducationdetailsServiceImpl: importData(:Employeeeducationdetails)
+EmployeeeducationdetailsServiceImpl -> EmployeeeducationdetailsJPARepository: saveAll(:Employeeeducationdetails)
+activate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsJPARepository -> EntityManager: save(:Employeeeducationdetails)
+activate EntityManager
+EntityManager -> EmployeeeducationdetailsJPARepository: << persisted Employeeeducationdetails >>
+deactivate EntityManager
+EmployeeeducationdetailsJPARepository -> EmployeeeducationdetailsServiceImpl: << persisted Employeeeducationdetails >>
+EmployeeeducationdetailsServiceImpl -> EmployeeeducationdetailsService: << persisted Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsJPARepository
+EmployeeeducationdetailsService -> EmployeeeducationdetailsControllerImpl: << persisted Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsServiceImpl
+deactivate EmployeeeducationdetailsService
+EmployeeeducationdetailsControllerImpl -> CXFServlet: << persisted Employeeeducationdetails >>
+deactivate EmployeeeducationdetailsControllerImpl
+CXFServlet -> User: marshalled Employeeeducationdetails XML
+deactivate CXFServlet
+@enduml

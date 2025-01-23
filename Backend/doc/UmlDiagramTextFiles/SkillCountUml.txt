@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Skill Scenario
+participant User
+User -> CXFServlet: GET, Skill
+activate CXFServlet
+CXFServlet -> Skill: << count >>
+activate Skill
+Skill -> CXFServlet: << instance >>
+deactivate Skill
+CXFServlet -> SkillControllerImpl: count(:Skill)
+activate SkillControllerImpl
+SkillControllerImpl -> SkillService: count(:Skill)
+activate SkillService
+SkillService -> SkillJPARepository: count(:Skill)
+activate SkillJPARepository
+SkillJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> SkillJPARepository: << persisted Count >>
+deactivate EntityManager
+SkillJPARepository -> SkillService: << persisted Count >>
+deactivate SkillJPARepository
+SkillService -> SkillControllerImpl: << persisted Count >>
+deactivate SkillService
+SkillControllerImpl -> CXFServlet: << persisted Count >>
+deactivate SkillControllerImpl
+CXFServlet -> User: marshalled Skill XML
+deactivate CXFServlet
+@enduml

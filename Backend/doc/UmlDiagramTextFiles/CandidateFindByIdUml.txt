@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById Candidate Scenario
+participant User
+User -> CXFServlet: GET, Candidate
+activate CXFServlet
+CXFServlet -> Candidate: << findById >>
+activate Candidate
+Candidate -> CXFServlet: << instance >>
+deactivate Candidate
+CXFServlet -> CandidateControllerImpl: findById(:int)
+activate CandidateControllerImpl
+CandidateControllerImpl -> CandidateService: findById(:int)
+activate CandidateService
+CandidateService -> CandidateJPARepository: findById(:int)
+activate CandidateJPARepository
+CandidateJPARepository -> EntityManager: response(:Candidate)
+activate EntityManager
+EntityManager -> CandidateJPARepository: << persisted Candidate >>
+deactivate EntityManager
+CandidateJPARepository -> CandidateService: << persisted Candidate >>
+deactivate CandidateJPARepository
+CandidateService -> CandidateControllerImpl: << persisted Candidate >>
+deactivate CandidateService
+CandidateControllerImpl -> CXFServlet: << persisted Candidate >>
+deactivate CandidateControllerImpl
+CXFServlet -> User: marshalled Candidate XML
+deactivate CXFServlet
+@enduml

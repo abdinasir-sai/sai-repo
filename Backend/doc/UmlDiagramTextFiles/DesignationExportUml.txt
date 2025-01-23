@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Designation Scenario
+participant User
+User -> CXFServlet: Designation
+activate CXFServlet
+CXFServlet -> Designation: << export >>
+activate Designation
+Designation -> CXFServlet: << instance >>
+deactivate Designation
+CXFServlet -> DesignationControllerImpl: export(:Designation)
+activate DesignationControllerImpl
+DesignationControllerImpl -> DesignationService: search(:Designation)
+activate DesignationService
+DesignationService -> DesignationJPARepository: search(:Designation)
+activate DesignationJPARepository
+DesignationJPARepository -> EntityManager: save(:Designation)
+activate EntityManager
+EntityManager -> DesignationJPARepository: << persisted Designation >>
+deactivate EntityManager
+DesignationJPARepository -> DesignationService: << persisted Designation >>
+deactivate DesignationJPARepository
+DesignationService -> DesignationControllerImpl: response(:List<Designation>)
+DesignationControllerImpl -> DesignationService: export(:Designation)
+DesignationService -> DesignationControllerImpl: << persisted Designation.xlsx >>
+deactivate DesignationService
+DesignationControllerImpl -> CXFServlet: << persisted Designation.xlsx >>
+deactivate DesignationControllerImpl
+CXFServlet -> User: marshalled Designation XML
+deactivate CXFServlet
+@enduml

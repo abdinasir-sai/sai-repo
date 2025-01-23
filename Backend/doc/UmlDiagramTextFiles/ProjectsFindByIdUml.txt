@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindById Projects Scenario
+participant User
+User -> CXFServlet: GET, Projects
+activate CXFServlet
+CXFServlet -> Projects: << findById >>
+activate Projects
+Projects -> CXFServlet: << instance >>
+deactivate Projects
+CXFServlet -> ProjectsControllerImpl: findById(:int)
+activate ProjectsControllerImpl
+ProjectsControllerImpl -> ProjectsService: findById(:int)
+activate ProjectsService
+ProjectsService -> ProjectsJPARepository: findById(:int)
+activate ProjectsJPARepository
+ProjectsJPARepository -> EntityManager: response(:Projects)
+activate EntityManager
+EntityManager -> ProjectsJPARepository: << persisted Projects >>
+deactivate EntityManager
+ProjectsJPARepository -> ProjectsService: << persisted Projects >>
+deactivate ProjectsJPARepository
+ProjectsService -> ProjectsControllerImpl: << persisted Projects >>
+deactivate ProjectsService
+ProjectsControllerImpl -> CXFServlet: << persisted Projects >>
+deactivate ProjectsControllerImpl
+CXFServlet -> User: marshalled Projects XML
+deactivate CXFServlet
+@enduml

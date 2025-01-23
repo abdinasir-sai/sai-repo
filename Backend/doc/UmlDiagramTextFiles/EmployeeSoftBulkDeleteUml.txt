@@ -1,0 +1,30 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Employee Scenario
+participant User
+User -> CXFServlet: DELETE, Employee
+activate CXFServlet
+CXFServlet -> Employee: << bulkdelete >>
+activate Employee
+Employee -> CXFServlet: << instance >>
+deactivate Employee
+CXFServlet -> EmployeeControllerImpl: bulkDelete(:List<Employee>)
+activate EmployeeControllerImpl
+EmployeeControllerImpl -> EmployeeService: softBulkDelete(:List<Employee>)
+activate EmployeeService
+EmployeeService -> EmployeeServiceImpl: softBulkDelete(:List<Employee>)
+EmployeeServiceImpl -> EmployeeJPARepository: deleteAll(:List<Employee>)
+activate EmployeeJPARepository
+EmployeeJPARepository -> EntityManager: delete(:List<Employee>)
+activate EntityManager
+EntityManager -> EmployeeJPARepository: << persisted Employee >>
+deactivate EntityManager
+EmployeeJPARepository -> EmployeeService: << persisted Employee >>
+deactivate EmployeeJPARepository
+EmployeeService -> EmployeeControllerImpl: << persisted Employee >>
+deactivate EmployeeService
+EmployeeControllerImpl -> CXFServlet: << persisted Employee >>
+deactivate EmployeeControllerImpl
+CXFServlet -> User: marshalled Employee XML
+deactivate CXFServlet
+@enduml

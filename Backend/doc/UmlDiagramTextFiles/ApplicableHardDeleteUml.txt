@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title DeleteById Applicable Scenario
+participant User
+User -> CXFServlet: DELETE, Applicable
+activate CXFServlet
+CXFServlet -> Applicable: << delete >>
+activate Applicable
+Applicable -> CXFServlet: << instance >>
+deactivate Applicable
+CXFServlet -> ApplicableControllerImpl: delete(:Applicable)
+activate ApplicableControllerImpl
+ApplicableControllerImpl -> ApplicableService: deleteById(:Applicable)
+activate ApplicableService
+ApplicableService -> ApplicableJPARepository: deleteById(:Applicable)
+activate ApplicableJPARepository
+ApplicableJPARepository -> EntityManager: delete(:Applicable)
+activate EntityManager
+EntityManager -> ApplicableJPARepository: << persisted Applicable >>
+deactivate EntityManager
+ApplicableJPARepository -> ApplicableService: << persisted Applicable >>
+deactivate ApplicableJPARepository
+ApplicableService -> ApplicableControllerImpl: << persisted Applicable >>
+deactivate ApplicableService
+ApplicableControllerImpl -> CXFServlet: << persisted Applicable >>
+deactivate ApplicableControllerImpl
+CXFServlet -> User: marshalled Applicable XML
+deactivate CXFServlet
+@enduml

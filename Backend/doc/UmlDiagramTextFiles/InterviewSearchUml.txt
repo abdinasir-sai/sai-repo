@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Search Interview Scenario
+participant User
+User -> CXFServlet: GET, Interview
+activate CXFServlet
+CXFServlet -> Interview: << search >>
+activate Interview
+Interview -> CXFServlet: << instance >>
+deactivate Interview
+CXFServlet -> InterviewControllerImpl: search(:Interview)
+activate InterviewControllerImpl
+InterviewControllerImpl -> InterviewService: search(:Interview)
+activate InterviewService
+InterviewService -> InterviewJPARepository: search(:Interview)
+activate InterviewJPARepository
+InterviewJPARepository -> EntityManager: response(:Interview)
+activate EntityManager
+EntityManager -> InterviewJPARepository: << persisted Interview >>
+deactivate EntityManager
+InterviewJPARepository -> InterviewService: << persisted Interview >>
+deactivate InterviewJPARepository
+InterviewService -> InterviewControllerImpl: << persisted Interview >>
+deactivate InterviewService
+InterviewControllerImpl -> CXFServlet: << persisted Interview >>
+deactivate InterviewControllerImpl
+CXFServlet -> User: marshalled Interview XML
+deactivate CXFServlet
+@enduml

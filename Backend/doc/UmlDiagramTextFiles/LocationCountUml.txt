@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Location Scenario
+participant User
+User -> CXFServlet: GET, Location
+activate CXFServlet
+CXFServlet -> Location: << count >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationControllerImpl: count(:Location)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationService: count(:Location)
+activate LocationService
+LocationService -> LocationJPARepository: count(:Location)
+activate LocationJPARepository
+LocationJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> LocationJPARepository: << persisted Count >>
+deactivate EntityManager
+LocationJPARepository -> LocationService: << persisted Count >>
+deactivate LocationJPARepository
+LocationService -> LocationControllerImpl: << persisted Count >>
+deactivate LocationService
+LocationControllerImpl -> CXFServlet: << persisted Count >>
+deactivate LocationControllerImpl
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

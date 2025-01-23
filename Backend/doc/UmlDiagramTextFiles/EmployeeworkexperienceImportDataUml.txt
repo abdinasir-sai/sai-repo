@@ -1,0 +1,33 @@
+@startuml
+!theme cyborg-outline
+title Import Data EmployeeWorkExperience Scenario
+participant User
+User -> CXFServlet: POST, EmployeeWorkExperience
+activate CXFServlet
+CXFServlet -> EmployeeWorkExperience: << importData >>
+activate EmployeeWorkExperience
+EmployeeWorkExperience -> CXFServlet: << instance >>
+deactivate EmployeeWorkExperience
+CXFServlet -> EmployeeWorkExperienceControllerImpl: importData(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceControllerImpl
+EmployeeWorkExperienceControllerImpl -> EmployeeWorkExperienceService: importData(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceService
+activate EmployeeWorkExperienceServiceImpl
+EmployeeWorkExperienceService -> EmployeeWorkExperienceServiceImpl: importData(:EmployeeWorkExperience)
+EmployeeWorkExperienceServiceImpl -> EmployeeWorkExperienceJPARepository: saveAll(:EmployeeWorkExperience)
+activate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceJPARepository -> EntityManager: save(:EmployeeWorkExperience)
+activate EntityManager
+EntityManager -> EmployeeWorkExperienceJPARepository: << persisted EmployeeWorkExperience >>
+deactivate EntityManager
+EmployeeWorkExperienceJPARepository -> EmployeeWorkExperienceServiceImpl: << persisted EmployeeWorkExperience >>
+EmployeeWorkExperienceServiceImpl -> EmployeeWorkExperienceService: << persisted EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceJPARepository
+EmployeeWorkExperienceService -> EmployeeWorkExperienceControllerImpl: << persisted EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceServiceImpl
+deactivate EmployeeWorkExperienceService
+EmployeeWorkExperienceControllerImpl -> CXFServlet: << persisted EmployeeWorkExperience >>
+deactivate EmployeeWorkExperienceControllerImpl
+CXFServlet -> User: marshalled EmployeeWorkExperience XML
+deactivate CXFServlet
+@enduml

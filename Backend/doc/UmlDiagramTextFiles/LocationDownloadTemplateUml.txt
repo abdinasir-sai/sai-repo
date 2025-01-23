@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template Location Scenario
+participant User
+User -> CXFServlet: Location
+activate CXFServlet
+CXFServlet -> Location: << downloadTemplate >>
+activate Location
+Location -> CXFServlet: << instance >>
+deactivate Location
+CXFServlet -> LocationController: downloadTemplate(:String fileName)
+activate LocationController
+LocationController -> LocationControllerImpl: ResponseBuilder(workbook,fileName)
+activate LocationControllerImpl
+LocationControllerImpl -> LocationController: response(:ResponseEntity)
+deactivate LocationControllerImpl
+LocationController -> CXFServlet: << Location  >>
+deactivate LocationController
+CXFServlet -> User: marshalled Location XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById AbsentSchedule Scenario
+participant User
+User -> CXFServlet: GET, AbsentSchedule
+activate CXFServlet
+CXFServlet -> AbsentSchedule: << findAllById >>
+activate AbsentSchedule
+AbsentSchedule -> CXFServlet: << instance >>
+deactivate AbsentSchedule
+CXFServlet -> AbsentScheduleControllerImpl: findAllById(:List<AbsentSchedule> id)
+activate AbsentScheduleControllerImpl
+AbsentScheduleControllerImpl -> AbsentScheduleService: findAllById(:List<AbsentSchedule> id)
+activate AbsentScheduleService
+AbsentScheduleService -> AbsentScheduleJPARepository: findAllById(:List<AbsentSchedule> id)
+activate AbsentScheduleJPARepository
+AbsentScheduleJPARepository -> EntityManager: response(:List<AbsentSchedule>findAllById)
+activate EntityManager
+EntityManager -> AbsentScheduleJPARepository: << persisted List AbsentSchedule >>
+deactivate EntityManager
+AbsentScheduleJPARepository -> AbsentScheduleService: << persisted List AbsentSchedule >>
+deactivate AbsentScheduleJPARepository
+AbsentScheduleService -> AbsentScheduleControllerImpl: << persisted List AbsentSchedule >>
+deactivate AbsentScheduleService
+AbsentScheduleControllerImpl -> CXFServlet: << persisted List AbsentSchedule >>
+deactivate AbsentScheduleControllerImpl
+CXFServlet -> User: marshalled AbsentSchedule XML
+deactivate CXFServlet
+@enduml

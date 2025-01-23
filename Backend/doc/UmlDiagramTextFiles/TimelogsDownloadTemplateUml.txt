@@ -1,0 +1,21 @@
+@startuml
+!theme cyborg-outline
+title  Download Template TimeLogs Scenario
+participant User
+User -> CXFServlet: TimeLogs
+activate CXFServlet
+CXFServlet -> TimeLogs: << downloadTemplate >>
+activate TimeLogs
+TimeLogs -> CXFServlet: << instance >>
+deactivate TimeLogs
+CXFServlet -> TimeLogsController: downloadTemplate(:String fileName)
+activate TimeLogsController
+TimeLogsController -> TimeLogsControllerImpl: ResponseBuilder(workbook,fileName)
+activate TimeLogsControllerImpl
+TimeLogsControllerImpl -> TimeLogsController: response(:ResponseEntity)
+deactivate TimeLogsControllerImpl
+TimeLogsController -> CXFServlet: << TimeLogs  >>
+deactivate TimeLogsController
+CXFServlet -> User: marshalled TimeLogs XML
+deactivate CXFServlet
+@enduml

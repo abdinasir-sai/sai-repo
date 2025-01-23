@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete Faq Scenario
+participant User
+User -> CXFServlet: DELETE, Faq
+activate CXFServlet
+CXFServlet -> Faq: << bulkdelete >>
+activate Faq
+Faq -> CXFServlet: << instance >>
+deactivate Faq
+CXFServlet -> FaqControllerImpl: bulkdelete(:List<Faq>)
+activate FaqControllerImpl
+FaqControllerImpl -> FaqService: bulkDelete(:List<Faq>)
+activate FaqService
+FaqService -> FaqJPARepository: deleteAll(:List<Faq>)
+activate FaqJPARepository
+FaqJPARepository -> EntityManager: delete(:List<Faq>)
+activate EntityManager
+EntityManager -> FaqJPARepository: << persisted Faq >>
+deactivate EntityManager
+FaqJPARepository -> FaqService: << persisted Faq >>
+deactivate FaqJPARepository
+FaqService -> FaqControllerImpl: << persisted Faq >>
+deactivate FaqService
+FaqControllerImpl -> CXFServlet: << persisted Faq >>
+deactivate FaqControllerImpl
+CXFServlet -> User: marshalled Faq XML
+deactivate CXFServlet
+@enduml

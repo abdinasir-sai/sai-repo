@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data Country Scenario
+participant User
+User -> CXFServlet: Country
+activate CXFServlet
+CXFServlet -> Country: << export >>
+activate Country
+Country -> CXFServlet: << instance >>
+deactivate Country
+CXFServlet -> CountryControllerImpl: export(:Country)
+activate CountryControllerImpl
+CountryControllerImpl -> CountryService: search(:Country)
+activate CountryService
+CountryService -> CountryJPARepository: search(:Country)
+activate CountryJPARepository
+CountryJPARepository -> EntityManager: save(:Country)
+activate EntityManager
+EntityManager -> CountryJPARepository: << persisted Country >>
+deactivate EntityManager
+CountryJPARepository -> CountryService: << persisted Country >>
+deactivate CountryJPARepository
+CountryService -> CountryControllerImpl: response(:List<Country>)
+CountryControllerImpl -> CountryService: export(:Country)
+CountryService -> CountryControllerImpl: << persisted Country.xlsx >>
+deactivate CountryService
+CountryControllerImpl -> CXFServlet: << persisted Country.xlsx >>
+deactivate CountryControllerImpl
+CXFServlet -> User: marshalled Country XML
+deactivate CXFServlet
+@enduml

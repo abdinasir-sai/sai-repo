@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Department Scenario
+participant User
+User -> CXFServlet: UPDATE, Department
+activate CXFServlet
+CXFServlet -> Department: << update >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: update(:Department)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: update(:Department)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: update(:Department)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: update(:Department)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted Department >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted Department >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted Department >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted Department >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Count Restrictions Scenario
+participant User
+User -> CXFServlet: GET, Restrictions
+activate CXFServlet
+CXFServlet -> Restrictions: << count >>
+activate Restrictions
+Restrictions -> CXFServlet: << instance >>
+deactivate Restrictions
+CXFServlet -> RestrictionsControllerImpl: count(:Restrictions)
+activate RestrictionsControllerImpl
+RestrictionsControllerImpl -> RestrictionsService: count(:Restrictions)
+activate RestrictionsService
+RestrictionsService -> RestrictionsJPARepository: count(:Restrictions)
+activate RestrictionsJPARepository
+RestrictionsJPARepository -> EntityManager: save(:Long)
+activate EntityManager
+EntityManager -> RestrictionsJPARepository: << persisted Count >>
+deactivate EntityManager
+RestrictionsJPARepository -> RestrictionsService: << persisted Count >>
+deactivate RestrictionsJPARepository
+RestrictionsService -> RestrictionsControllerImpl: << persisted Count >>
+deactivate RestrictionsService
+RestrictionsControllerImpl -> CXFServlet: << persisted Count >>
+deactivate RestrictionsControllerImpl
+CXFServlet -> User: marshalled Restrictions XML
+deactivate CXFServlet
+@enduml

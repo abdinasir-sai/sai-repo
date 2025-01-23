@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title FindAllById Department Scenario
+participant User
+User -> CXFServlet: GET, Department
+activate CXFServlet
+CXFServlet -> Department: << findAllById >>
+activate Department
+Department -> CXFServlet: << instance >>
+deactivate Department
+CXFServlet -> DepartmentControllerImpl: findAllById(:List<Department> id)
+activate DepartmentControllerImpl
+DepartmentControllerImpl -> DepartmentService: findAllById(:List<Department> id)
+activate DepartmentService
+DepartmentService -> DepartmentJPARepository: findAllById(:List<Department> id)
+activate DepartmentJPARepository
+DepartmentJPARepository -> EntityManager: response(:List<Department>findAllById)
+activate EntityManager
+EntityManager -> DepartmentJPARepository: << persisted List Department >>
+deactivate EntityManager
+DepartmentJPARepository -> DepartmentService: << persisted List Department >>
+deactivate DepartmentJPARepository
+DepartmentService -> DepartmentControllerImpl: << persisted List Department >>
+deactivate DepartmentService
+DepartmentControllerImpl -> CXFServlet: << persisted List Department >>
+deactivate DepartmentControllerImpl
+CXFServlet -> User: marshalled Department XML
+deactivate CXFServlet
+@enduml

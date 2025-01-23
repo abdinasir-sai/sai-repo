@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title Update Leaves Scenario
+participant User
+User -> CXFServlet: UPDATE, Leaves
+activate CXFServlet
+CXFServlet -> Leaves: << update >>
+activate Leaves
+Leaves -> CXFServlet: << instance >>
+deactivate Leaves
+CXFServlet -> LeavesControllerImpl: update(:Leaves)
+activate LeavesControllerImpl
+LeavesControllerImpl -> LeavesService: update(:Leaves)
+activate LeavesService
+LeavesService -> LeavesJPARepository: update(:Leaves)
+activate LeavesJPARepository
+LeavesJPARepository -> EntityManager: update(:Leaves)
+activate EntityManager
+EntityManager -> LeavesJPARepository: << persisted Leaves >>
+deactivate EntityManager
+LeavesJPARepository -> LeavesService: << persisted Leaves >>
+deactivate LeavesJPARepository
+LeavesService -> LeavesControllerImpl: << persisted Leaves >>
+deactivate LeavesService
+LeavesControllerImpl -> CXFServlet: << persisted Leaves >>
+deactivate LeavesControllerImpl
+CXFServlet -> User: marshalled Leaves XML
+deactivate CXFServlet
+@enduml

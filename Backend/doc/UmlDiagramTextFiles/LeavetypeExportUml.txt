@@ -1,0 +1,31 @@
+@startuml
+!theme cyborg-outline
+title Export Data LeaveType Scenario
+participant User
+User -> CXFServlet: LeaveType
+activate CXFServlet
+CXFServlet -> LeaveType: << export >>
+activate LeaveType
+LeaveType -> CXFServlet: << instance >>
+deactivate LeaveType
+CXFServlet -> LeaveTypeControllerImpl: export(:LeaveType)
+activate LeaveTypeControllerImpl
+LeaveTypeControllerImpl -> LeaveTypeService: search(:LeaveType)
+activate LeaveTypeService
+LeaveTypeService -> LeaveTypeJPARepository: search(:LeaveType)
+activate LeaveTypeJPARepository
+LeaveTypeJPARepository -> EntityManager: save(:LeaveType)
+activate EntityManager
+EntityManager -> LeaveTypeJPARepository: << persisted LeaveType >>
+deactivate EntityManager
+LeaveTypeJPARepository -> LeaveTypeService: << persisted LeaveType >>
+deactivate LeaveTypeJPARepository
+LeaveTypeService -> LeaveTypeControllerImpl: response(:List<LeaveType>)
+LeaveTypeControllerImpl -> LeaveTypeService: export(:LeaveType)
+LeaveTypeService -> LeaveTypeControllerImpl: << persisted LeaveType.xlsx >>
+deactivate LeaveTypeService
+LeaveTypeControllerImpl -> CXFServlet: << persisted LeaveType.xlsx >>
+deactivate LeaveTypeControllerImpl
+CXFServlet -> User: marshalled LeaveType XML
+deactivate CXFServlet
+@enduml

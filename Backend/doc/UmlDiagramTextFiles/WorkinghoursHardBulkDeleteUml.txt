@@ -1,0 +1,29 @@
+@startuml
+!theme cyborg-outline
+title BulkDelete WorkingHours Scenario
+participant User
+User -> CXFServlet: DELETE, WorkingHours
+activate CXFServlet
+CXFServlet -> WorkingHours: << bulkdelete >>
+activate WorkingHours
+WorkingHours -> CXFServlet: << instance >>
+deactivate WorkingHours
+CXFServlet -> WorkingHoursControllerImpl: bulkdelete(:List<WorkingHours>)
+activate WorkingHoursControllerImpl
+WorkingHoursControllerImpl -> WorkingHoursService: bulkDelete(:List<WorkingHours>)
+activate WorkingHoursService
+WorkingHoursService -> WorkingHoursJPARepository: deleteAll(:List<WorkingHours>)
+activate WorkingHoursJPARepository
+WorkingHoursJPARepository -> EntityManager: delete(:List<WorkingHours>)
+activate EntityManager
+EntityManager -> WorkingHoursJPARepository: << persisted WorkingHours >>
+deactivate EntityManager
+WorkingHoursJPARepository -> WorkingHoursService: << persisted WorkingHours >>
+deactivate WorkingHoursJPARepository
+WorkingHoursService -> WorkingHoursControllerImpl: << persisted WorkingHours >>
+deactivate WorkingHoursService
+WorkingHoursControllerImpl -> CXFServlet: << persisted WorkingHours >>
+deactivate WorkingHoursControllerImpl
+CXFServlet -> User: marshalled WorkingHours XML
+deactivate CXFServlet
+@enduml
